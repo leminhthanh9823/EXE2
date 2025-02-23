@@ -1,0 +1,127 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --inter: 'Inter', sans-serif;
+  --primary-color: #4baf47;
+  --secondary-color: #0e0e0e;
+  --sub-bg: #f5f5f5;
+  --heading-color: #0e0e0e;
+  --paragraph: #303030;
+  --span: #888888;
+  --border: #d9d9d9;
+  --white: #ffffff;
+  --black: #000000;
+  --border-1px: 1px solid #d9d9d9;
+  --border-2px: 2px solid #d9d9d9;
+  --transition: all 0.4s ease-in-out;
+  --shadow: 0px 4px 55px 0px #4baf4726;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  outline: none;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: var(--inter);
+  color: var(--paragraph);
+  background-color: var(--white);
+  line-height: 28px;
+  font-weight: 400;
+  text-transform: capitalize;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+  padding: 0;
+  color: var(--heading-color);
+  font-family: var(--inter);
+}
+
+h1 {
+  font-size: 60px;
+  font-weight: 700;
+  line-height: 80px;
+}
+
+h2 {
+  font-size: 40px;
+  font-weight: 700;
+  line-height: 52px;
+}
+
+h3 {
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 36px;
+}
+
+h4 {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+h5 {
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 19px;
+}
+
+h6 {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+p {
+  margin: 0;
+  padding: 0;
+  line-height: 28px;
+  font-size: 16px;
+}
+
+a {
+  text-decoration: none;
+  display: inline-block;
+  color: var(--heading-color);
+  transition: var(--transition);
+}
+
+a:hover {
+  color: var(--heading-color);
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+  text-decoration: none;
+}
+
+li {
+  list-style: none;
+}
+
+button {
+  border: none;
+  background-color: transparent;
+}
+
+input {
+  border: none;
+  outline: none;
+}
+
+.bor-bottom {
+  border-bottom: 1px solid var(--border);
+}

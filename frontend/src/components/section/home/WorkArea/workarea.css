@@ -1,0 +1,108 @@
+/* Base styles for work__item */
+.work__item {
+    overflow: hidden;
+    position: relative;
+    padding: 30px;
+    border: var(--border-1px);
+    background-color: white;
+    border-radius: 8px;
+    transition: var(--transition);
+}
+
+.work__item-icon {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 15px;
+}
+
+.work__item-icon span {
+    font-weight: 700;
+    font-size: 60px;
+    line-height: 80px;
+    -webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-color: var(--border);
+    color: transparent;
+    transition: var(--transition);
+}
+
+.fa-arrow-right:before {
+    content: "\f061";
+}
+.work__item-arrow {
+    font-size: 20px;
+    position: relative;
+    transform: translateX(1);
+    transition: 0.7s;
+    
+}
+
+.work__item-arrow::before {
+    width: 100px;
+    position: absolute;
+    content: "Know More";
+    font-weight: 600;
+    color: var(--primary-color);
+    font-size: 14px;
+    left: -95px;
+    transition: opacity 0.4s ease, left 0.4s ease;
+    opacity: 0;
+    margin-right: 40px;
+}
+
+
+.work__item-leaf {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+    transition: var(--transition);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+}
+
+.work__item-leaf img {
+    width: 100px;
+    height: 100px;
+    transition: var(--transition);
+}
+
+/* Hover Effects */
+.work__item:hover {
+    background-color: var(--primary-color-light);
+    border-color: var(--primary-color);
+}
+
+.work__item:hover .work__item-icon span {
+    color: var(--primary-color);
+    -webkit-text-stroke-width: 0;
+    font-size: 62px; /* Optional size change on hover */
+}
+
+.work__item:hover .work__item-arrow {
+    transform: translateX(10px);
+    margin-left: 40px;
+    
+}
+
+.work__item:hover .work__item-arrow::before {
+    left: -50px;
+    opacity: 1;
+}
+
+.work__item:hover .work__item-leaf img {
+    transform: scale(1.1);
+}
+
+.work__item:hover .work__item-leaf {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.work__item:hover .work__item-arrow i {
+    margin-left: 30px;
+    color: var(--primary-color);
+    transition: var(--transition);
+}

@@ -1,0 +1,129 @@
+footer {
+  background-image: url(../../../public/assets/images/footer-two-bg.jpg);
+}
+
+.footer__item {
+    padding: 40px 20px;
+}
+
+.footer__item-title {
+  margin-bottom: 30px;
+}
+.footer__item-title h4 {
+  font-size: 20px;
+  line-height: 10px;
+  text-transform: capitalize;
+}
+.footer__item-title-line {
+  display: inline-block;
+  width: 33px;
+  height: 2px;
+  background-color: var(--primary-color);
+  margin-top: 16px;
+  margin-right: 4px;
+}
+.footer__item-title-line2 {
+  display: inline-block;
+  width: 0px;
+  height: 2px;
+  background-color: var(--primary-color);
+  transition: var(--transition);
+}
+.footer__item p {
+  color: var(--heading-color);
+}
+.footer__item-map-popup {
+  margin-top: 30px;
+  font-weight: 500;
+  font-size: 14px;
+  color: var(--primary-color);
+}
+.footer__item-map-popup:hover {
+  color: var(--primary-color);
+}
+.footer__item ul li a:hover {
+  color: var(--primary-color);
+}
+.footer__item-blog li {
+  display: flex;
+  align-items: center;
+}
+.footer__item-blog span {
+  font-size: 14px;
+  color: var(--primary-color);
+  margin-top: 15px;
+}
+.footer__item:hover .footer__item-title-line2 {
+  width: 89px;
+}
+.footer__copyright {
+  text-align: center;
+  padding: 30px 0;
+  background-color: var(--primary-color);
+}
+.footer__copyright p {
+  color: var(--white);
+}
+.footer__copyright a {
+  color: var(--white);
+}
+
+.footer-two__wrp {
+  overflow: hidden;
+}
+.footer-two__wrp p {
+  color: var(--white);
+}
+.footer-two__wrp h4 {
+  color: var(--white);
+}
+.footer-two__wrp ul li {
+  color: var(--white);
+}
+.footer-two__wrp ul li a {
+  color: var(--white);
+}
+.footer-two__wrp i {
+  color: var(--white) !important;
+}
+.footer-two__copyright {
+  padding: 60px 0;
+  background-color: transparent;
+}
+.footer-two__copyright p {
+  color: #717171;
+}
+.footer-two__copyright p a {
+  color: #717171;
+}
+.footer-two__copyright p a:hover {
+  color: var(--primary-color);
+}
+.footer-two__item .input-area {
+  position: relative;
+}
+.footer-two__item .input-area input {
+  width: 100%;
+  padding: 15px 20px;
+  border-radius: 8px;
+  border: none;
+}
+.footer-two__item .input-area button {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+}
+.footer-two__item .input-area button i {
+  color: var(--primary-color) !important;
+}
+.footer-two__item .social-icon a {
+  width: 36px;
+  height: 36px;
+  line-height: 36px;
+  text-align: center;
+  border-radius: 50%;
+  transition: var(--transition);
+  border: 1px solid var(--white);
+  font-size: 14px;
+  margin-right: 10px;
+}
