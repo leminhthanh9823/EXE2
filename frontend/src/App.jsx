@@ -19,6 +19,12 @@ import Header from "./components/header/header";
 import Footer from "./components/footer/footer";
 import MenuDetails from "./components/menu/menuDetails";
 
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import FoodLogList from "./components/FoodLogList";
+import { useState } from "react";
+import "./App.css";
+
 // protect routes that require authentication
 const ProtectedRoute = ({ children }) => {
   const { isAuthenticated, user } = useAuthStore();
@@ -94,6 +100,14 @@ function App() {
               <ProtectedRoute>
                 <MenuPage />
               </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/food-logs"
+            element={
+              <RedirectAuthenticatedUser>
+                <FoodLogList />
+              </RedirectAuthenticatedUser>
             }
           />
           <Route

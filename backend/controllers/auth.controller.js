@@ -1,4 +1,4 @@
-import User from "../models/user.model.js"; // Use .js extension
+import User from "../models/user.model.js"; 
 import bcryptjs from "bcryptjs";
 import generateVerificationCode from "../utils/generateVerificationCode.js";
 import generateTokenAndSetCookie from "../utils/generateTokenAndSetCookie.js";
