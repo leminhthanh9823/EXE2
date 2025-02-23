@@ -18,7 +18,7 @@ export default function Home() {
         <Carousel slides={slides} />
       </div>
       <WorkArea />
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 }

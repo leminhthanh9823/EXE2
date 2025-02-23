@@ -1,14 +1,23 @@
 import React from "react";
 import "./header.css";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { useAuthStore } from "../../store/authStore";
 export default function Header() {
+  const { isAuthenticated, logout } = useAuthStore();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logout(); // Clear auth state
+    navigate("/login"); // Redirect to login page
+  };
   return (
     <header className="header">
       <div className="header-section">
         <div className="container">
           <div className="header-wrapper">
             <div className="logo-menu">
-              <a href="index.html" className="logo">
+              <a href="/" className="logo">
                 <img src="assets/images/logo.svg" alt="logo" />
               </a>
             </div>
@@ -34,10 +43,11 @@ export default function Header() {
                 <a href="contact.html">Contact Us</a>
               </li>
               <li className="m-0 menu-btn ">
-                <a href="contact.html">
-                  <span>Get a quote</span>{" "}
-                  <i className="fa-solid fa-angles-right"></i>
-                </a>
+              {isAuthenticated && (
+        <button onClick={handleLogout} className="bg-red-500 px-3 py-1 rounded">
+          Logout
+        </button>
+      )}
               </li>
             </ul>
           </div>
