@@ -7,6 +7,7 @@ const userSchema = new mongoose.Schema(
     name: { type: String, required: true },
     lastLoginDate: { type: Date, default: Date.now },
     isVerified: { type: Boolean, default: false },
+    isAdmin: { type: Boolean, default: false},
     verificationToken: { type: String },
     verificationTokenExpireAt: { type: Date },
     resetPasswordToken: { type: String },

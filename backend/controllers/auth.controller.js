@@ -208,6 +208,20 @@ const checkAuth = async (req, res) => {
   }
 };
 
+const getUser = async (req, res) => {
+  console.log("req.userId: ", req.userId);
+  try {
+      const user = await User.findById(req.userId); // Assuming req.userId contains the authenticated user's ID
+      if (!user) {
+          return res.status(404).json({ message: 'User not found' });
+      }
+      res.status(200).json(user);
+  } catch (error) {
+     console.log("Error in getUser ", error);
+      res.status(500).json({ message: 'Server error' });
+  }
+};
+
 export {
   register,
   login,
@@ -216,4 +230,5 @@ export {
   forgotPassword,
   resetPassword,
   checkAuth,
+  getUser,
 }; // Use ES module export

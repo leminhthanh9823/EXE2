@@ -1,6 +1,17 @@
-import React from 'react'
-import './header.css'
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useAuthStore } from '../../store/authStore'; // Adjust the import path as needed
+import './header.css';
+
 export default function Header() {
+  const { logout } = useAuthStore();
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    await logout();
+    navigate("/login");
+  };
+
   return (
     <header className='header'>
       <div className='header-section'>
@@ -38,10 +49,15 @@ export default function Header() {
                   <i className='fa-solid fa-angles-right'></i>
                 </a>
               </li>
+              <li>
+                <button onClick={handleLogout} className="bg-red-500 text-white p-2 rounded">
+                  Logout
+                </button>
+              </li>
             </ul>
           </div>
         </div>
       </div>
     </header>
-  )
+  );
 }

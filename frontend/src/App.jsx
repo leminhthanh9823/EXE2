@@ -1,4 +1,4 @@
-import { Navigate, Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
 import FloatingShape from "./components/FloatingShape";
 
 import SignUpPage from "./pages/SignUpPage";
@@ -13,6 +13,8 @@ import LoadingSpinner from "./components/LoadingSpinner";
 import { Toaster } from "react-hot-toast";
 import { useAuthStore } from "./store/authStore";
 import { useEffect } from "react";
+import Realtimechat from "./pages/Realtimechat";
+import AdminChat from "./pages/AdminChat"; // Import the AdminChat component
 
 // protect routes that require authentication
 const ProtectedRoute = ({ children }) => {
@@ -44,6 +46,7 @@ const RedirectAuthenticatedUser = ({ children }) => {
 
 function App() {
   const { isCheckingAuth, checkAuth } = useAuthStore();
+  const navigate = useNavigate();
 
   useEffect(() => {
     checkAuth();
@@ -124,8 +127,28 @@ function App() {
             </RedirectAuthenticatedUser>
           }
         />
+
+        <Route
+          path="/realtimechat"
+          element={
+            <ProtectedRoute>
+              <Realtimechat />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/admin/chat"
+          element={
+            <ProtectedRoute>
+              <AdminChat />
+            </ProtectedRoute>
+          }
+        />
+
         {/* catch all routes */}
         <Route path="*" element={<Navigate to="/" replace />} />
+
       </Routes>
       <Toaster />
     </div>
