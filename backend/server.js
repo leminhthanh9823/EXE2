@@ -3,7 +3,7 @@ import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
 import bodyParser from "body-parser";
-// import eventRoutes from "./routes/eventRoutes.js";
+import foodRoutes from "./routes/food_log.route.js";
 import authRoutes from "./routes/auth.route.js";
 import cookieParser from "cookie-parser";
 import path from "path";
@@ -19,9 +19,11 @@ app.use(cors(corsOptions));
 app.use(bodyParser.json());
 app.use(express.json());
 app.use(cookieParser());
-// Routes
-// app.use("/api/events", eventRoutes);
+app.use(express.urlencoded({ extended: true }));
+
+app.use("/api/logs", foodRoutes);
 app.use("/api/auth", authRoutes);
+app.use('/uploads', express.static('public/uploads'));
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "/frontend/dist")));
