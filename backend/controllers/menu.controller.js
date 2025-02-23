@@ -1,7 +1,7 @@
-const Meal = require('../models/menu');
+import Meal from '../models/menu.js';
 
 // Lấy danh sách các bữa ăn
-exports.getAllMeals = async (req, res) => {
+export const getAllMeals = async (req, res) => {
   try {
     const meals = await Meal.find();
     res.json(meals);
@@ -11,7 +11,7 @@ exports.getAllMeals = async (req, res) => {
 };
 
 // Thêm một bữa ăn mới
-exports.createMeal = async (req, res) => {
+export const createMeal = async (req, res) => {
   try {
     const meal = new Meal(req.body);
     const savedMeal = await meal.save();
@@ -22,7 +22,7 @@ exports.createMeal = async (req, res) => {
 };
 
 // Lấy chi tiết một bữa ăn theo id
-exports.getMealById = async (req, res) => {
+export const getMealById = async (req, res) => {
   try {
     const meal = await Meal.findById(req.params.id);
     if (!meal) return res.status(404).json({ message: 'Meal not found' });
@@ -33,7 +33,7 @@ exports.getMealById = async (req, res) => {
 };
 
 // Cập nhật một bữa ăn theo id
-exports.updateMeal = async (req, res) => {
+export const updateMeal = async (req, res) => {
   try {
     const meal = await Meal.findByIdAndUpdate(req.params.id, req.body, { new: true });
     if (!meal) return res.status(404).json({ message: 'Meal not found' });
@@ -44,7 +44,7 @@ exports.updateMeal = async (req, res) => {
 };
 
 // Xoá một bữa ăn theo id
-exports.deleteMeal = async (req, res) => {
+export const deleteMeal = async (req, res) => {
   try {
     const meal = await Meal.findByIdAndDelete(req.params.id);
     if (!meal) return res.status(404).json({ message: 'Meal not found' });

@@ -1,20 +1,21 @@
-const express = require('express');
+import express from 'express';
+import { getAllMeals, createMeal, getMealById, updateMeal, deleteMeal } from '../controllers/menu.controller.js';
+
 const router = express.Router();
-const mealController = require('../controllers/menu.controller');
 
 // Lấy danh sách các bữa ăn
-router.get('/', mealController.getAllMeals);
+router.get('/', getAllMeals);
 
 // Thêm một bữa ăn mới
-router.post('/', mealController.createMeal);
+router.post('/', createMeal);
 
 // Lấy chi tiết một bữa ăn theo id
-router.get('/:id', mealController.getMealById);
+router.get('/:id', getMealById);
 
 // Cập nhật một bữa ăn theo id
-router.put('/:id', mealController.updateMeal);
+router.put('/:id', updateMeal);
 
 // Xoá một bữa ăn theo id
-router.delete('/:id', mealController.deleteMeal);
+router.delete('/:id', deleteMeal);
 
-module.exports = router;
+export default router;

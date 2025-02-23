@@ -1,0 +1,45 @@
+/* AdminMeals.css */
+body {
+    background-color: #f0f2f5;
+    font-family: 'Roboto', sans-serif;
+  }
+  
+  /* Container tổng */
+  .admin-container {
+    margin-top: 2rem;
+  }
+  
+  /* Tiêu đề */
+  .header {
+    color: #3f51b5;
+    text-align: center;
+    margin-bottom: 1.5rem;
+  }
+  
+  /* Form và bảng sử dụng Paper có style */
+  .formPaper {
+    padding: 2rem;
+    margin-bottom: 2rem;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .tablePaper {
+    padding: 1.5rem;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Nút bấm */
+  button {
+    text-transform: none;
+    font-weight: bold;
+    border-radius: 4px;
+  }
+  
+  button:hover {
+    opacity: 0.9;
+  }
+  
