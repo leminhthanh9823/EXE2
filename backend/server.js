@@ -7,6 +7,7 @@ import foodRoutes from "./routes/food_log.route.js";
 import authRoutes from "./routes/auth.route.js";
 import cookieParser from "cookie-parser";
 import path from "path";
+import menuRoutes from './routes/menu.route.js';
 const app = express();
 
 // Middleware
@@ -24,6 +25,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/api/logs", foodRoutes);
 app.use("/api/auth", authRoutes);
 app.use('/uploads', express.static('public/uploads'));
+app.use("/api/menu", menuRoutes)
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "/frontend/dist")));

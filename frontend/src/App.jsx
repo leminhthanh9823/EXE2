@@ -13,6 +13,7 @@ import LoadingSpinner from "./components/LoadingSpinner";
 import { Toaster } from "react-hot-toast";
 import { useAuthStore } from "./store/authStore";
 import { useEffect } from "react";
+import AdminMeals from "./components/admin/menu";
 
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -118,6 +119,14 @@ function App() {
             <RedirectAuthenticatedUser>
               <LoginPage />
             </RedirectAuthenticatedUser>
+          }
+        />
+        <Route
+          path="/admin/menu"
+          element={
+            
+              <AdminMeals/>
+           
           }
         />
         <Route path="/verify-email" element={<EmailVerificationPage />} />
