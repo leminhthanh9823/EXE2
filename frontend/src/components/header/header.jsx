@@ -1,41 +1,42 @@
-import React from 'react'
-import './header.css'
+import React from "react";
+import "./header.css";
+import { Link } from "react-router-dom";
 export default function Header() {
   return (
-    <header className='header'>
-      <div className='header-section'>
-        <div className='container'>
-          <div className='header-wrapper'>
-            <div className='logo-menu'>
-              <a href='index.html' className='logo'>
-                <img src='assets/images/logo.svg' alt='logo' />
+    <header className="header">
+      <div className="header-section">
+        <div className="container">
+          <div className="header-wrapper">
+            <div className="logo-menu">
+              <a href="index.html" className="logo">
+                <img src="assets/images/logo.svg" alt="logo" />
               </a>
             </div>
-            <div className='header-bar d-xl-none'>
+            <div className="header-bar d-xl-none">
               <span></span>
               <span></span>
               <span></span>
             </div>
-            <ul className='main-menu'>
+            <ul className="main-menu">
               <li>
-                <a href='#'>Home </a>
+                <Link to="/">Home </Link>
               </li>
               <li>
-                <a href='#'>About Us </a>
+                <Link to="/my-menu">My Menu </Link>
               </li>
               <li>
-                <a href='#'>Services </a>
+                <a href="#">Services </a>
               </li>
               <li>
-                <a href='#'>Blog </a>
+                <a href="#">Blog </a>
               </li>
               <li>
-                <a href='contact.html'>Contact Us</a>
+                <a href="contact.html">Contact Us</a>
               </li>
-              <li className='m-0 menu-btn '>
-                <a href='contact.html'>
-                  <span>Get a quote</span>{' '}
-                  <i className='fa-solid fa-angles-right'></i>
+              <li className="m-0 menu-btn ">
+                <a href="contact.html">
+                  <span>Get a quote</span>{" "}
+                  <i className="fa-solid fa-angles-right"></i>
                 </a>
               </li>
             </ul>
@@ -43,5 +44,5 @@ export default function Header() {
         </div>
       </div>
     </header>
-  )
+  );
 }
