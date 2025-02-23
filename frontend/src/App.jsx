@@ -7,12 +7,18 @@ import EmailVerificationPage from "./pages/EmailVerificationPage";
 import DashboardPage from "./pages/DashboardPage";
 import ForgotPasswordPage from "./pages/ForgotPasswordPage";
 import ResetPasswordPage from "./pages/ResetPasswordPage";
-import Home from './pages/home/Home';
+import Home from "./pages/home/Home";
 import LoadingSpinner from "./components/LoadingSpinner";
 
 import { Toaster } from "react-hot-toast";
 import { useAuthStore } from "./store/authStore";
 import { useEffect } from "react";
+
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import FoodLogList from "./components/FoodLogList";
+import { useState } from "react";
+import "./App.css";
 
 // protect routes that require authentication
 const ProtectedRoute = ({ children }) => {
@@ -88,6 +94,14 @@ function App() {
             <ProtectedRoute>
               <Home />
             </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/food-logs"
+          element={
+            <RedirectAuthenticatedUser>
+              <FoodLogList />
+            </RedirectAuthenticatedUser>
           }
         />
         <Route

@@ -4,6 +4,7 @@ import { Mail, Lock, Loader } from "lucide-react";
 import { Link } from "react-router-dom";
 import Input from "../components/Input";
 import { useAuthStore } from "../store/authStore";
+import toast from "react-hot-toast";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
@@ -13,9 +14,17 @@ const LoginPage = () => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    const data = await login(email, password);
-    if (data.user !== null) {
-      window.location.href = "/";
+    try {
+      const data = await login(email, password);
+      if (data.user !== null) {
+        localStorage.setItem("user", JSON.stringify(data.user)); // Lưu vào localStorage
+        window.location.href = "/"; // Chuyển hướng về trang chủ
+      } else {
+        toast.error("Đăng nhập thất bại! Vui lòng kiểm tra lại thông tin.");
+      }
+    } catch (error) {
+      console.error("Lỗi đăng nhập:", error);
+      toast.error("Đăng nhập thất bại! Vui lòng thử lại.");
     }
   };
 
