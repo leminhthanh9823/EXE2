@@ -1,6 +1,5 @@
-/* menu.css */
+/* AdminUsers.css */
 
-/* Tổng thể trang */
 body {
     background-color: #f0f2f5;
     font-family: 'Roboto', sans-serif;
@@ -8,20 +7,17 @@ body {
     padding: 0;
   }
   
-  /* Container chính */
   .admin-container {
     margin-top: 2rem;
     padding: 2rem;
   }
   
-  /* Tiêu đề */
   .header {
     color: #3f51b5;
     text-align: center;
     margin-bottom: 2rem;
   }
   
-  /* Style cho bảng danh sách */
   .tableContainer {
     background-color: #ffffff;
     border-radius: 8px;
@@ -35,24 +31,14 @@ body {
     transform: scale(1.01);
   }
   
-  /* Style cho modal (form) */
-  .modalContent {
+  .modalContent,
+  .confirmModal {
     background-color: #ffffff;
     padding: 2rem;
     border-radius: 8px;
     box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.2);
   }
   
-  /* Style cho Confirm Modal */
-  .confirmModal {
-    background-color: #ffffff;
-    padding: 1.5rem;
-    border-radius: 8px;
-    box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.3);
-    text-align: center;
-  }
-  
-  /* Style cho các nút */
   button,
   .MuiButton-root {
     text-transform: none;

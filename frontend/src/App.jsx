@@ -14,6 +14,7 @@ import { Toaster } from "react-hot-toast";
 import { useAuthStore } from "./store/authStore";
 import { useEffect } from "react";
 import AdminMeals from "./components/admin/menu";
+import AdminUsers from "./components/admin/manageuser";
 
 // protect routes that require authentication
 const ProtectedRoute = ({ children }) => {
@@ -112,6 +113,14 @@ function App() {
           element={
             
               <AdminMeals/>
+           
+          }
+        />
+        <Route
+          path="/admin/user"
+          element={
+            
+              <AdminUsers/>
            
           }
         />

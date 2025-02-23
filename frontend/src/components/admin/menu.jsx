@@ -1,30 +1,57 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import {
   Container,
   Typography,
-  TextField,
   Button,
-  Select,
-  MenuItem,
-  FormControl,
-  InputLabel,
-  Grid,
-  Paper,
+  Modal,
+  Box,
+  TextField,
   Table,
+  TableBody,
+  TableCell,
+  TableContainer,
   TableHead,
   TableRow,
-  TableCell,
-  TableBody,
+  Paper,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
   IconButton,
+  TablePagination,
   Stack,
+  Fade,
 } from '@mui/material';
-import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
-import '../admin/css/menu.css'
+import EditIcon from '@mui/icons-material/Edit';
+import axios from 'axios';
+import './css/menu.css';
+import Header from '../header/header';
+
+// Style cho modal thêm/chỉnh sửa
+const modalStyle = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 400,
+  outline: 'none',
+};
+
+// Style cho Confirm Modal
+const confirmModalStyle = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 350,
+  outline: 'none',
+};
 
 const AdminMeals = () => {
   const [meals, setMeals] = useState([]);
+  const [open, setOpen] = useState(false);
+  const [editingMeal, setEditingMeal] = useState(null);
   const [formData, setFormData] = useState({
     name: '',
     description: '',
@@ -33,9 +60,16 @@ const AdminMeals = () => {
     ingredients: '',
     instructions: '',
   });
-  const [editingMeal, setEditingMeal] = useState(null);
+  
+  // State cho phân trang
+  const [page, setPage] = useState(0);
+  const rowsPerPage = 8;
 
-  // Lấy danh sách các bữa ăn từ API
+  // State cho Confirm Modal khi xoá
+  const [confirmOpen, setConfirmOpen] = useState(false);
+  const [mealToDelete, setMealToDelete] = useState(null);
+
+  // Lấy danh sách meal từ API
   const fetchMeals = async () => {
     try {
       const res = await axios.get('http://localhost:5000/api/menu');
@@ -49,46 +83,53 @@ const AdminMeals = () => {
     fetchMeals();
   }, []);
 
+  // Mở, đóng modal thêm/chỉnh sửa
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => {
+    setOpen(false);
+    setEditingMeal(null);
+    setFormData({
+      name: '',
+      description: '',
+      category: 'Breakfast',
+      calories: '',
+      ingredients: '',
+      instructions: '',
+    });
+  };
+
   // Xử lý thay đổi dữ liệu form
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
-  // Xử lý submit form để tạo hoặc cập nhật meal
+  // Xử lý submit form: thêm mới nếu không chỉnh sửa, hoặc cập nhật nếu đang chỉnh sửa
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      let response;
       const payload = {
         ...formData,
         calories: Number(formData.calories),
-        ingredients: formData.ingredients.split(',').map((i) => i.trim()),
+        ingredients: formData.ingredients.split(',').map((item) => item.trim()),
       };
 
       if (editingMeal) {
-        response = await axios.put(`http://localhost:5000/api/menu/${editingMeal._id}`, payload);
-        setMeals(meals.map((meal) => (meal._id === editingMeal._id ? response.data : meal)));
-        setEditingMeal(null);
+        // Cập nhật meal
+        const res = await axios.put(`http://localhost:5000/api/menu/${editingMeal._id}`, payload);
+        setMeals(meals.map((meal) => (meal._id === editingMeal._id ? res.data : meal)));
       } else {
-        response = await axios.post('http://localhost:5000/api/menu', payload);
-        setMeals([...meals, response.data]);
+        // Thêm meal mới
+        const res = await axios.post('http://localhost:5000/api/menu', payload);
+        setMeals([...meals, res.data]);
       }
-      // Reset form
-      setFormData({
-        name: '',
-        description: '',
-        category: 'Breakfast',
-        calories: '',
-        ingredients: '',
-        instructions: '',
-      });
+      handleClose();
     } catch (error) {
       console.error('Error saving meal:', error);
     }
   };
 
-  // Chuẩn bị form để chỉnh sửa meal
+  // Chuẩn bị chỉnh sửa meal
   const handleEdit = (meal) => {
     setEditingMeal(meal);
     setFormData({
@@ -99,135 +140,43 @@ const AdminMeals = () => {
       ingredients: meal.ingredients.join(', '),
       instructions: meal.instructions,
     });
+    handleOpen();
   };
 
-  // Xoá meal
-  const handleDelete = async (id) => {
+  // Mở confirm modal để xoá meal
+  const openConfirmModal = (meal) => {
+    setMealToDelete(meal);
+    setConfirmOpen(true);
+  };
+
+  // Xác nhận xoá meal
+  const confirmDelete = async () => {
+    if (!mealToDelete) return;
     try {
-      await axios.delete(`http://localhost:5000/api/menu/${id}`);
-      setMeals(meals.filter((meal) => meal._id !== id));
+      await axios.delete(`http://localhost:5000/api/menu/${mealToDelete._id}`);
+      setMeals(meals.filter((meal) => meal._id !== mealToDelete._id));
+      setConfirmOpen(false);
+      setMealToDelete(null);
     } catch (error) {
       console.error('Error deleting meal:', error);
     }
   };
 
+  // Xử lý chuyển trang
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+
   return (
-    <Container maxWidth="lg" sx={{ marginTop: 4 }}>
-      <Typography variant="h4" gutterBottom align="center">
-        Quản lý Meal
-      </Typography>
-
-      {/* Form tạo / cập nhật meal */}
-      <Paper sx={{ padding: 3, marginBottom: 4 }}>
-        <form onSubmit={handleSubmit}>
-          <Grid container spacing={2}>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                label="Tên món ăn"
-                variant="outlined"
-                fullWidth
-                name="name"
-                value={formData.name}
-                onChange={handleChange}
-                required
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <FormControl fullWidth required>
-                <InputLabel>Loại bữa ăn</InputLabel>
-                <Select
-                  name="category"
-                  value={formData.category}
-                  label="Loại bữa ăn"
-                  onChange={handleChange}
-                >
-                  <MenuItem value="Breakfast">Breakfast</MenuItem>
-                  <MenuItem value="Lunch">Lunch</MenuItem>
-                  <MenuItem value="Dinner">Dinner</MenuItem>
-                  <MenuItem value="Snack">Snack</MenuItem>
-                </Select>
-              </FormControl>
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                label="Mô tả"
-                variant="outlined"
-                fullWidth
-                multiline
-                rows={3}
-                name="description"
-                value={formData.description}
-                onChange={handleChange}
-              />
-            </Grid>
-            <Grid item xs={12} sm={4}>
-              <TextField
-                label="Calories"
-                variant="outlined"
-                fullWidth
-                name="calories"
-                type="number"
-                value={formData.calories}
-                onChange={handleChange}
-              />
-            </Grid>
-            <Grid item xs={12} sm={8}>
-              <TextField
-                label="Thành phần (cách nhau bởi dấu phẩy)"
-                variant="outlined"
-                fullWidth
-                name="ingredients"
-                value={formData.ingredients}
-                onChange={handleChange}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                label="Hướng dẫn"
-                variant="outlined"
-                fullWidth
-                multiline
-                rows={3}
-                name="instructions"
-                value={formData.instructions}
-                onChange={handleChange}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <Stack direction="row" spacing={2} justifyContent="center">
-                <Button variant="contained" color="primary" type="submit">
-                  {editingMeal ? 'Cập nhật' : 'Thêm mới'}
-                </Button>
-                {editingMeal && (
-                  <Button
-                    variant="outlined"
-                    color="secondary"
-                    onClick={() => {
-                      setEditingMeal(null);
-                      setFormData({
-                        name: '',
-                        description: '',
-                        category: 'Breakfast',
-                        calories: '',
-                        ingredients: '',
-                        instructions: '',
-                      });
-                    }}
-                  >
-                    Hủy
-                  </Button>
-                )}
-              </Stack>
-            </Grid>
-          </Grid>
-        </form>
-      </Paper>
-
-      {/* Bảng hiển thị danh sách meal */}
-      <Paper sx={{ padding: 2 }}>
-        <Typography variant="h6" gutterBottom>
-          Danh sách Meal
-        </Typography>
+    <Container maxWidth="lg" className="admin-container">
+        <Header/>
+      
+      <Stack direction="row" justifyContent="flex-start" sx={{ mb: 2 }}>
+        <Button variant="contained" color="primary" onClick={handleOpen}>
+          Thêm mới
+        </Button>
+      </Stack>
+      <TableContainer component={Paper} className="tableContainer">
         <Table>
           <TableHead>
             <TableRow>
@@ -241,7 +190,7 @@ const AdminMeals = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {meals.map((meal) => (
+            {meals.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((meal) => (
               <TableRow key={meal._id}>
                 <TableCell>{meal.name}</TableCell>
                 <TableCell>{meal.category}</TableCell>
@@ -253,7 +202,7 @@ const AdminMeals = () => {
                   <IconButton color="primary" onClick={() => handleEdit(meal)}>
                     <EditIcon />
                   </IconButton>
-                  <IconButton color="error" onClick={() => handleDelete(meal._id)}>
+                  <IconButton color="error" onClick={() => openConfirmModal(meal)}>
                     <DeleteIcon />
                   </IconButton>
                 </TableCell>
@@ -261,8 +210,118 @@ const AdminMeals = () => {
             ))}
           </TableBody>
         </Table>
-      </Paper>
-      <br></br>
+        <TablePagination
+          component="div"
+          count={meals.length}
+          page={page}
+          onPageChange={handleChangePage}
+          rowsPerPage={rowsPerPage}
+          rowsPerPageOptions={[rowsPerPage]}
+        />
+      </TableContainer>
+      
+      {/* Modal thêm/chỉnh sửa */}
+      <Modal open={open} onClose={handleClose} closeAfterTransition>
+        <Fade in={open}>
+          <Box sx={modalStyle} className="modalContent">
+            <Typography variant="h6" gutterBottom>
+              {editingMeal ? 'Chỉnh sửa Meal' : 'Thêm mới Meal'}
+            </Typography>
+            <form onSubmit={handleSubmit}>
+              <TextField
+                label="Tên món ăn"
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
+                fullWidth
+                required
+                margin="normal"
+              />
+              <TextField
+                label="Mô tả"
+                name="description"
+                value={formData.description}
+                onChange={handleChange}
+                fullWidth
+                multiline
+                rows={2}
+                margin="normal"
+              />
+              <FormControl fullWidth margin="normal">
+                <InputLabel>Loại bữa ăn</InputLabel>
+                <Select
+                  name="category"
+                  value={formData.category}
+                  label="Loại bữa ăn"
+                  onChange={handleChange}
+                >
+                  <MenuItem value="Breakfast">Breakfast</MenuItem>
+                  <MenuItem value="Lunch">Lunch</MenuItem>
+                  <MenuItem value="Dinner">Dinner</MenuItem>
+                  <MenuItem value="Snack">Snack</MenuItem>
+                </Select>
+              </FormControl>
+              <TextField
+                label="Calories"
+                name="calories"
+                type="number"
+                value={formData.calories}
+                onChange={handleChange}
+                fullWidth
+                margin="normal"
+              />
+              <TextField
+                label="Thành phần (cách nhau bởi dấu phẩy)"
+                name="ingredients"
+                value={formData.ingredients}
+                onChange={handleChange}
+                fullWidth
+                margin="normal"
+              />
+              <TextField
+                label="Hướng dẫn"
+                name="instructions"
+                value={formData.instructions}
+                onChange={handleChange}
+                fullWidth
+                multiline
+                rows={3}
+                margin="normal"
+              />
+              <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 2 }}>
+                <Button onClick={handleClose} sx={{ mr: 2 }}>
+                  Hủy
+                </Button>
+                <Button variant="contained" color="primary" type="submit">
+                  {editingMeal ? 'Cập nhật' : 'Thêm'}
+                </Button>
+              </Box>
+            </form>
+          </Box>
+        </Fade>
+      </Modal>
+
+      {/* Confirm Modal cho xoá */}
+      <Modal open={confirmOpen} onClose={() => setConfirmOpen(false)} closeAfterTransition>
+        <Fade in={confirmOpen}>
+          <Box sx={confirmModalStyle} className="confirmModal">
+            <Typography variant="h6" gutterBottom>
+              Xác nhận xoá
+            </Typography>
+            <Typography variant="body1" sx={{ mb: 2 }}>
+              Bạn có chắc muốn xoá meal này không?
+            </Typography>
+            <Stack direction="row" justifyContent="center" spacing={2}>
+              <Button variant="outlined" color="secondary" onClick={() => setConfirmOpen(false)}>
+                Hủy
+              </Button>
+              <Button variant="contained" color="error" onClick={confirmDelete}>
+                Xoá
+              </Button>
+            </Stack>
+          </Box>
+        </Fade>
+      </Modal>
     </Container>
   );
 };

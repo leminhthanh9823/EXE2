@@ -8,6 +8,7 @@ import authRoutes from "./routes/auth.route.js";
 import cookieParser from "cookie-parser";
 import path from "path";
 import menuRoutes from './routes/menu.route.js';
+import userRoutes  from './routes/user.route.js'
 const app = express();
 
 // Middleware
@@ -24,6 +25,7 @@ app.use(cookieParser());
 // app.use("/api/events", eventRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/menu", menuRoutes)
+app.use('/api/users', userRoutes)
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "/frontend/dist")));
