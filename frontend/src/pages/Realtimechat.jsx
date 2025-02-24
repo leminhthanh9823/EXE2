@@ -57,7 +57,7 @@ const Realtimechat = () => {
 
     return (
         <div className="flex flex-col w-full h-screen bg-gray-100">
-            <div className="flex-1 overflow-y-auto p-4 max-w-4xl mx-auto w-full">
+            <div className="flex-1 overflow-y-auto bg-white shadow rounded p-4 mb-4 max-w-4xl mx-auto w-full">
                 {messages.map((msg, index) => (
                     <div key={index} className={`my-2 ${msg.userName === userName ? 'text-right' : 'text-left'}`}>
                         <div className="font-bold mb-1">{msg.userName}</div>
@@ -67,7 +67,7 @@ const Realtimechat = () => {
                     </div>
                 ))}
             </div>
-            <form onSubmit={sendMessage} className="flex p-4 bg-white shadow max-w-4xl pb-auto mx-auto w-full">
+            <form onSubmit={sendMessage} className="flex p-4 bg-white shadow mb-4 max-w-4xl mx-auto w-full">
                 <input
                     type="text"
                     value={message}

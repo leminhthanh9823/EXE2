@@ -51,7 +51,7 @@ const AdminChat = () => {
 
   return (
     <div className="flex flex-col w-full h-screen bg-gray-100">
-      <div className="flex-1 overflow-y-auto p-4 max-w-6xl mx-auto w-full">
+      <div className="flex-1 overflow-y-auto p-4 mb-4 max-w-6xl mx-auto w-full">
         <div className="flex">
           <div className="w-1/4 p-4 bg-white shadow rounded">
             <h2 className="text-lg font-bold mb-4">Users</h2>
@@ -67,7 +67,7 @@ const AdminChat = () => {
               ))}
             </ul>
           </div>
-          <div className="w-3/4 p-4 bg-white shadow rounded ml-4">
+          <div className="w-3/4 p-4 bg-white shadow rounded mb-4 ml-4">
             <h2 className="text-lg font-bold mb-4">Chat with {selectedUser}</h2>
             {filteredChats.map((chat, index) => (
               <div key={index} className={`my-2 ${chat.userName === userName ? 'text-right' : 'text-left'}`}>
@@ -80,7 +80,7 @@ const AdminChat = () => {
           </div>
         </div>
       </div>
-      <form onSubmit={sendMessage} className="flex p-4 bg-white shadow max-w-6xl mx-auto w-full">
+      <form onSubmit={sendMessage} className="flex p-4 bg-white shadow max-w-4xl mx-auto w-full">
         <input
           type="text"
           value={message}
