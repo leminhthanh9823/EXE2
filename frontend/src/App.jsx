@@ -1,4 +1,4 @@
-import { Navigate, Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
 import FloatingShape from "./components/FloatingShape";
 
 import SignUpPage from "./pages/SignUpPage";
@@ -24,6 +24,8 @@ import "react-toastify/dist/ReactToastify.css";
 import FoodLogList from "./components/FoodLogList";
 import { useState } from "react";
 import "./App.css";
+import Realtimechat from "./pages/Realtimechat";
+import AdminChat from "./pages/AdminChat"; // Import the AdminChat component
 
 // protect routes that require authentication
 const ProtectedRoute = ({ children }) => {
@@ -120,6 +122,25 @@ function App() {
           />
           <Route path="/verify-email" element={<EmailVerificationPage />} />
           <Route path="*" element={<Navigate to="/" replace />} />
+
+          <Route
+          path="/realtimechat"
+          element={
+            <ProtectedRoute>
+              <Realtimechat />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/admin/chat"
+          element={
+            <ProtectedRoute>
+              <AdminChat />
+            </ProtectedRoute>
+          }
+        />
+
         </Routes>
       )}
       <Toaster />

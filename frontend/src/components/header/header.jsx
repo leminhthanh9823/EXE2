@@ -49,6 +49,11 @@ export default function Header() {
         </button>
       )}
               </li>
+              <li>
+                <button onClick={handleLogout} className="bg-red-500 text-white p-2 rounded">
+                  Logout
+                </button>
+              </li>
             </ul>
           </div>
         </div>
@@ -56,3 +61,4 @@ export default function Header() {
     </header>
   );
 }
+
