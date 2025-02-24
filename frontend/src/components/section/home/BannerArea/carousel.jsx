@@ -1,4 +1,5 @@
 import { useState } from "react";
+
 export default function Carousel({ slides }) {
   let [current, setCurrent] = useState(0);
 
@@ -20,8 +21,8 @@ export default function Carousel({ slides }) {
           transform: `translateX(-${current * 100}%)`,
         }}
       >
-        {slides.map((s) => {
-          return <img src={s} />;
+        {slides.map((s, index) => {
+          return <img key={index} src={s} alt={`Slide ${index}`} />; // Adding key to each img
         })}
       </div>
 
@@ -41,7 +42,7 @@ export default function Carousel({ slides }) {
               onClick={() => {
                 setCurrent(i);
               }}
-              key={"circle" + i}
+              key={"circle" + i} // The key is already added here
               className={`rounded-full w-5 h-5 cursor-pointer  ${
                 i == current ? "bg-white" : "bg-gray-500"
               }`}

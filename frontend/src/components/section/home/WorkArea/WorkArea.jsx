@@ -36,7 +36,7 @@ export default function WorkArea() {
         <section
             className="work pt-32 pb-32 bg-cover bg-center"
             style={{
-                backgroundImage: 'url("assets/images/banner1.jpg")',
+                backgroundImage: 'url("public/assets/images/banner1.jpg")',
             }}
         >
             <div className="container mx-auto">
