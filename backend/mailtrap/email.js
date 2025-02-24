@@ -10,10 +10,10 @@ export const sendVerificationEmail = async (email, verificationToken) => {
   try {
     console.log("co vao day 1", sender);
     console.log("co vao day 2", email);
-    
+
     const response = await transporter.sendMail({
       from: sender,
-      to: email ,
+      to: email,
       subject: "Verify your email",
       html: VERIFICATION_EMAIL_TEMPLATE.replace(
         "{verificationCode}",

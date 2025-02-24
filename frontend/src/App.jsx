@@ -24,6 +24,7 @@ import "react-toastify/dist/ReactToastify.css";
 import FoodLogList from "./components/FoodLogList";
 import { useState } from "react";
 import "./App.css";
+import QRCodePage from "./components/menu/QRCodePage";
 
 // protect routes that require authentication
 const ProtectedRoute = ({ children }) => {
@@ -77,10 +78,7 @@ function App() {
             <Route path="/signup" element={<SignUpPage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/forgot-password" element={<ForgotPasswordPage />} />
-            <Route
-              path="/reset-password/:token"
-              element={<ResetPasswordPage />}
-            />
+
             <Route path="*" element={<Navigate to="/login" replace />} />
           </Routes>
         </div>
@@ -91,6 +89,26 @@ function App() {
             element={
               <ProtectedRoute>
                 <Home />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/reset-password/:token"
+            element={<ResetPasswordPage />}
+          />
+          <Route
+            path="/admin/meals"
+            element={
+              <ProtectedRoute>
+                <AdminMeals />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/qr/:transactionId"
+            element={
+              <ProtectedRoute>
+                <QRCodePage />
               </ProtectedRoute>
             }
           />
