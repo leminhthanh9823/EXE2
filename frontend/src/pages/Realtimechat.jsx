@@ -57,7 +57,6 @@ const Realtimechat = () => {
 
     return (
         <div className="flex flex-col w-full h-screen bg-gray-100">
-            <Header />
             <div className="flex-1 overflow-y-auto p-4 max-w-4xl mx-auto w-full">
                 {messages.map((msg, index) => (
                     <div key={index} className={`my-2 ${msg.userName === userName ? 'text-right' : 'text-left'}`}>
