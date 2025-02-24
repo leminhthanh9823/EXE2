@@ -7,52 +7,52 @@ import FoodLogModal from "./FoodLogModal";
 const API_URL = "http://localhost:5000/api/logs/food-log";
 
 const FoodLogList = () => {
-    const [foodLogs, setFoodLogs] = useState([]);
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const [selectedLog, setSelectedLog] = useState(null);
-    const [refresh, setRefresh] = useState(false);
-    const [loading, setLoading] = useState(true);
-  
-    useEffect(() => {
-      const fetchFoodLogs = async () => {
-        try {
-          setLoading(true);
-          const response = await axios.get(API_URL);
-          setFoodLogs(response.data.data);
-        } catch (error) {
-          toast.error("Lỗi khi lấy dữ liệu nhật ký ăn uống!");
-        } finally {
-          setLoading(false);
-        }
-      };
-  
-      fetchFoodLogs();
-    }, [refresh]);
-  
-    const handleOpenModal = (log = null) => {
-      setSelectedLog(log); // Set log for editing
-      setIsModalOpen(true);
-    };
-  
-    const handleCloseModal = () => {
-      setIsModalOpen(false);
-      setSelectedLog(null);
-    };
-  
-    const handleDeleteLog = async (logId) => {
+  const [foodLogs, setFoodLogs] = useState([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedLog, setSelectedLog] = useState(null);
+  const [refresh, setRefresh] = useState(false);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchFoodLogs = async () => {
       try {
-        await axios.delete(`${API_URL}/${logId}`);
-        toast.success("Nhật ký đã được xóa!");
-        setRefresh(!refresh);
+        setLoading(true);
+        const response = await axios.get(API_URL);
+        setFoodLogs(response.data.data);
       } catch (error) {
-        toast.error("Lỗi khi xóa nhật ký!");
+        toast.error("Lỗi khi lấy dữ liệu nhật ký ăn uống!");
+      } finally {
+        setLoading(false);
       }
     };
 
+    fetchFoodLogs();
+  }, [refresh]);
+
+  const handleOpenModal = (log = null) => {
+    setSelectedLog(log); // Set log for editing
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setSelectedLog(null);
+  };
+
+  const handleDeleteLog = async (logId) => {
+    try {
+      await axios.delete(`${API_URL}/${logId}`);
+      toast.success("Nhật ký đã được xóa!");
+      setRefresh(!refresh);
+    } catch (error) {
+      toast.error("Lỗi khi xóa nhật ký!");
+    }
+  };
+
   return (
     <div className="food-log-container">
-      <div className="timeline"></div>
       <h2>Nhật Ký Ăn Uống</h2>
+      <div className="timeline"></div>
 
       {loading ? (
         <p>Đang tải dữ liệu...</p>
@@ -69,17 +69,19 @@ const FoodLogList = () => {
               <p>Thời gian nhập: {new Date(log.createdAt).toLocaleString()}</p>
               {log.meals?.map((meal, mealIndex) => (
                 <div key={mealIndex}>
-                  <h4>{meal.name}</h4>
+                  <h3><strong>{meal.name}</strong></h3>
                   <ul>
                     {meal.foods?.map((food, foodIndex) => (
                       <li key={foodIndex}>
                         {food.name}
                         <div className="food-images">
-                          <img
-                            src={`http://localhost:5000/uploads/${food.filePath}`}
-                            alt={`${food.filePath}`}
-                            width="100"
-                          />
+                          {food.filePath && ( // Chỉ hiển thị ảnh nếu filePath có giá trị
+                            <img
+                              src={`http://localhost:5000/uploads/${food.filePath}`}
+                              alt={`${food.name}`}
+                              width="100"
+                            />
+                          )}
                         </div>
                       </li>
                     ))}

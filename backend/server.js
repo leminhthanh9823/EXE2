@@ -6,6 +6,7 @@ import foodRoutes from "./routes/food_log.route.js";
 import authRoutes from "./routes/auth.route.js";
 import adminRoutes from "./routes/admin.route.js"; // Import the admin routes
 import chatRoutes from "./routes/chat.route.js"; // Import the chat routes
+import voucherRoutes from "./routes/voucher.routes.js";
 import cookieParser from "cookie-parser";
 import path from "path";
 import menuRoutes from "./routes/menu.route.js";
@@ -41,7 +42,7 @@ app.use("/api/auth", authRoutes);
 app.use("/uploads", express.static("public/uploads"));
 app.use("/api/menu", menuRoutes);
 app.use("/api/transactions", transactionRoutes);
-
+app.use("/vouchers", voucherRoutes);
 // Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/admin", adminRoutes); // Use the admin routes
@@ -74,14 +75,14 @@ io.on("connection", (socket) => {
 
   socket.on("message", async (data) => {
     const { userName, message } = data;
-    console.log('Received message:', data); // Add this line for debugging
+    console.log("Received message:", data); // Add this line for debugging
     const chatMessage = new Chat({ userName, message });
     try {
       await chatMessage.save(); // Save the message to the database
-      console.log('Message saved:', chatMessage); // Add this line for debugging
+      console.log("Message saved:", chatMessage); // Add this line for debugging
       io.emit("message", data);
     } catch (error) {
-      console.error('Error saving message:', error); // Add this line for debugging
+      console.error("Error saving message:", error); // Add this line for debugging
     }
   });
 

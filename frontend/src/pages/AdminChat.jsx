@@ -51,7 +51,7 @@ const AdminChat = () => {
 
   return (
     <div className="flex flex-col w-full h-screen bg-gray-100">
-      <div className="flex-1 overflow-y-auto p-4 mb-4 max-w-6xl mx-auto w-full">
+      <div className="overflow-y-auto p-4 mb-4 max-w-6xl mx-auto w-full">
         <div className="flex">
           <div className="w-1/4 p-4 bg-white shadow rounded">
             <h2 className="text-lg font-bold mb-4">Users</h2>

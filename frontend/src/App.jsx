@@ -19,19 +19,17 @@ import Header from "./components/header/header";
 import Footer from "./components/footer/footer";
 import MenuDetails from "./components/menu/menuDetails";
 
-import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import FoodLogList from "./components/FoodLogList";
-import { useState } from "react";
 import "./App.css";
 import QRCodePage from "./components/menu/QRCodePage";
 import Realtimechat from "./pages/Realtimechat";
 import AdminChat from "./pages/AdminChat"; // Import the AdminChat component
+import VoucherList from "./pages/VoucherList";
 
 // protect routes that require authentication
 const ProtectedRoute = ({ children }) => {
   const { isAuthenticated, user } = useAuthStore();
-  console.log(isAuthenticated, user);
 
   if (!isAuthenticated) {
     return <Navigate to="/login" replace />;
@@ -125,9 +123,17 @@ function App() {
           <Route
             path="/food-logs"
             element={
-              <RedirectAuthenticatedUser>
+              <ProtectedRoute>
                 <FoodLogList />
-              </RedirectAuthenticatedUser>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/voucher-shop"
+            element={
+              <ProtectedRoute>
+                <VoucherList />
+              </ProtectedRoute>
             }
           />
           <Route
@@ -142,23 +148,22 @@ function App() {
           <Route path="*" element={<Navigate to="/" replace />} />
 
           <Route
-          path="/realtimechat"
-          element={
-            <ProtectedRoute>
-              <Realtimechat />
-            </ProtectedRoute>
-          }
-        />
+            path="/realtimechat"
+            element={
+              <ProtectedRoute>
+                <Realtimechat />
+              </ProtectedRoute>
+            }
+          />
 
-        <Route
-          path="/admin/chat"
-          element={
-            <ProtectedRoute>
-              <AdminChat />
-            </ProtectedRoute>
-          }
-        />
-
+          <Route
+            path="/admin/chat"
+            element={
+              <ProtectedRoute>
+                <AdminChat />
+              </ProtectedRoute>
+            }
+          />
         </Routes>
       )}
       <Toaster />

@@ -20,7 +20,10 @@ export default function Header() {
           <div className="header-wrapper">
             <div className="logo-menu">
               <a href="/" className="logo">
-                <img src="assets/images/logo.svg" alt="logo" />
+                <img
+                  src="assets/images/476495700_492431837268688_724087271959669646_n.png"
+                  alt="logo"
+                />
               </a>
             </div>
             <div className="header-bar d-xl-none">
@@ -48,11 +51,17 @@ export default function Header() {
                 </li>
               )}
               <li>
-                <a href="contact.html">Contact Us</a>
+                <a href="/food-logs">Your Diary</a>
+              </li>
+              <li>
+                <a href="/voucher-shop">Voucher</a>
               </li>
               <li className="m-0 menu-btn ">
                 {isAuthenticated && (
-                  <button onClick={handleLogout} className="bg-red-500 px-3 py-1 rounded">
+                  <button
+                    onClick={handleLogout}
+                    className="bg-red-500 px-3 py-1 rounded"
+                  >
                     Logout
                   </button>
                 )}

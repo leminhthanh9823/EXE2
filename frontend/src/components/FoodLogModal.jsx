@@ -75,9 +75,7 @@ const FoodLogModal = ({ isOpen, onClose, logData, onSuccess }) => {
         return;
       }
 
-      // Lọc các bữa ăn có món ăn được thêm vào
       const filteredMeals = log.meals.filter((meal) => meal.foods.length > 0);
-
       if (filteredMeals.length === 0) {
         toast.error("Vui lòng thêm ít nhất một món ăn!");
         return;
@@ -98,6 +96,8 @@ const FoodLogModal = ({ isOpen, onClose, logData, onSuccess }) => {
         });
       });
 
+      toast.info("Đang xử lý, vui lòng đợi...");
+
       if (logData) {
         await axios.put(`${API_URL}/${logData._id}`, formData);
         toast.success("Nhật ký ăn uống đã được cập nhật!");
@@ -110,7 +110,11 @@ const FoodLogModal = ({ isOpen, onClose, logData, onSuccess }) => {
       onClose();
     } catch (error) {
       console.error("Lỗi khi lưu nhật ký:", error);
-      toast.error("Lỗi khi lưu nhật ký!");
+      if (error.response) {
+        toast.error(`Lỗi: ${error.response.data.message}`);
+      } else {
+        toast.error("Lỗi khi lưu nhật ký!");
+      }
     }
   };
 
