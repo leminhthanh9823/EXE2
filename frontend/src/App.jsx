@@ -13,7 +13,6 @@ import LoadingSpinner from "./components/LoadingSpinner";
 import { Toaster } from "react-hot-toast";
 import { useAuthStore } from "./store/authStore";
 import { useEffect } from "react";
-import AdminMeals from "./components/admin/menu";
 import MenuPage from "./components/menu/menu";
 import Header from "./components/header/header";
 import Footer from "./components/footer/footer";
@@ -26,6 +25,12 @@ import QRCodePage from "./components/menu/QRCodePage";
 import Realtimechat from "./pages/Realtimechat";
 import AdminChat from "./pages/AdminChat"; // Import the AdminChat component
 import VoucherList from "./pages/VoucherList";
+import MenuList from "./components/admin/MenuList";
+import MealList from "./components/admin/MealList";
+import MealDetails from "./components/admin/MealDetails";
+import MenuAdminDetails from "./components/admin/MenuAdminDetails";
+import CreateMenu from "./components/admin/CreateMenu";
+import CreateMeal from "./components/admin/CreateMeal";
 
 // protect routes that require authentication
 const ProtectedRoute = ({ children }) => {
@@ -97,14 +102,6 @@ function App() {
             element={<ResetPasswordPage />}
           />
           <Route
-            path="/admin/meals"
-            element={
-              <ProtectedRoute>
-                <AdminMeals />
-              </ProtectedRoute>
-            }
-          />
-          <Route
             path="/qr/:transactionId"
             element={
               <ProtectedRoute>
@@ -128,6 +125,12 @@ function App() {
               </ProtectedRoute>
             }
           />
+          <Route path="/admin/menus" element={<MenuList />} />
+          <Route path="/admin/meals" element={<MealList />} />
+          <Route path="/admin/menus/create" element={<CreateMenu />} />
+          <Route path="/admin/meals/create" element={<CreateMeal />} />
+          <Route path="/admin/menus/:id" element={<MenuAdminDetails />} />
+          <Route path="/admin/meals/:id" element={<MealDetails />} />
           <Route
             path="/voucher-shop"
             element={

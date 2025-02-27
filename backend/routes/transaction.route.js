@@ -4,7 +4,6 @@ import Transaction from "../models/transaction.model.js";
 
 const router = express.Router();
 
-// 🔹 Hàm tính checksum CRC-16
 const generateCheckSum = (text) => {
   let crc = 0xffff;
   const polynomial = 0x1021;
@@ -74,7 +73,6 @@ const generateStringHash = (bankCode, bankAccount, amount, message) => {
   return builder + generateCheckSum(builder);
 };
 
-// ✅ API tạo giao dịch mới
 router.post("/create", async (req, res) => {
   try {
     const { userId, amount, code, bankCode, bankAccount } = req.body;
@@ -95,7 +93,6 @@ router.post("/create", async (req, res) => {
   }
 });
 
-// ✅ API tạo QR code với dữ liệu hash
 router.get("/generate-qr/:transactionId", async (req, res) => {
   try {
     console.log("Generating QR Code for transaction:");

@@ -7,6 +7,7 @@ import authRoutes from "./routes/auth.route.js";
 import adminRoutes from "./routes/admin.route.js"; // Import the admin routes
 import chatRoutes from "./routes/chat.route.js"; // Import the chat routes
 import voucherRoutes from "./routes/voucher.routes.js";
+import mealRoutes from "./routes/meal.route.js";
 import cookieParser from "cookie-parser";
 import path from "path";
 import menuRoutes from "./routes/menu.route.js";
@@ -37,16 +38,24 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 
+//api auth người dùng
+app.use("/api/auth", authRoutes);
+//api nhật ký
 app.use("/api/logs", foodRoutes);
-app.use("/api/auth", authRoutes);
+//api lấy ảnh
 app.use("/uploads", express.static("public/uploads"));
-app.use("/api/menu", menuRoutes);
+//api menu
+app.use("/api/menus", menuRoutes);
+//api meal
+app.use("/api/meals", mealRoutes);
+//api thanh toán
 app.use("/api/transactions", transactionRoutes);
+//api giao dịch
 app.use("/vouchers", voucherRoutes);
-// Routes
-app.use("/api/auth", authRoutes);
-app.use("/api/admin", adminRoutes); // Use the admin routes
-app.use("/api/chat", chatRoutes); // Use the chat routes
+// Use the admin routes
+app.use("/api/admin", adminRoutes);
+// Use the chat routes
+app.use("/api/chat", chatRoutes);
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "/frontend/dist")));

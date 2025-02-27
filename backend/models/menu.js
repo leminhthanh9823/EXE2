@@ -1,31 +1,22 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
-const mealSchema = new mongoose.Schema({
-  name: { 
-    type: String, 
-    required: true 
-  },
-  description: {
-    type: String
-  },
-  category: { 
-    type: String, 
-    enum: ['Breakfast', 'Lunch', 'Dinner', 'Snack'], 
-    required: true 
-  },
-  calories: {
-    type: Number
-  },
-  ingredients: [{
-    type: String
-  }],
-  instructions: {
-    type: String
-  },
-  createdAt: { 
-    type: Date, 
-    default: Date.now 
-  }
+const MenuSchema = new mongoose.Schema({
+  userId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
+  menuPackage: { type: String, enum: ["7-day", "10-day"], required: true },
+  days: [
+    {
+      day: { type: Number, required: true },
+      meals: {
+        breakfast: { type: mongoose.Schema.Types.ObjectId, ref: "Meal" },
+        lunch: { type: mongoose.Schema.Types.ObjectId, ref: "Meal" },
+        dinner: { type: mongoose.Schema.Types.ObjectId, ref: "Meal" }
+      }
+    }
+  ],
+  price: { type: Number, required: true },
+  createdAt: { type: Date, default: Date.now },
+  isDefault: { type: Boolean, default: true }
 });
 
-export default mongoose.model('Meal', mealSchema);
+const Menu = mongoose.model("Menu", MenuSchema);
+export default Menu;
