@@ -58,7 +58,6 @@ export const customizeMenu = async (req, res) => {
 export const getAllMenus = async (req, res) => {
   try {
     const { userId } = req.query;
-    console.log("User ID nhận được:", userId);
 
     let query = {};
     if (userId && userId.trim() !== "") {
@@ -81,7 +80,6 @@ export const getAllMenus = async (req, res) => {
       createdAt: menu.createdAt,
     }));
 
-    console.log("Menu đã tìm thấy:", formattedMenus);
     res.json(formattedMenus);
   } catch (error) {
     res.status(500).json({ message: "Lỗi server", error });

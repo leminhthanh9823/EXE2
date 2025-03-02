@@ -6,30 +6,30 @@ export default function WorkArea() {
         {
             id: 1,
             icon: "assets/images/work1.svg",
-            title: "Community Forestry",
+            title: "Fit Menu",
             description:
-                "We maintain a busy network of forestry and social development staff along with local facilitators in the areas we work.",
+                "We maintain a busy network of fitmenu and social development staff along with local facilitators in the areas we work.",
         },
         {
             id: 2,
             icon: "assets/images/work2.svg",
             title: "Individuals",
             description:
-                "We maintain a busy network of forestry and social development staff along with local facilitators in the areas we work.",
+                "We maintain a busy network of fitmenu and social development staff along with local facilitators in the areas we work.",
         },
         {
             id: 3,
             icon: "assets/images/work3.svg",
             title: "Companies",
             description:
-                "We maintain a busy network of forestry and social development staff along with local facilitators in the areas we work.",
+                "We maintain a busy network of fitmenu and social development staff along with local facilitators in the areas we work.",
         },
         {
             id: 4,
             icon: "assets/images/work4.svg",
             title: "Education",
             description:
-                "We maintain a busy network of forestry and social development staff along with local facilitators in the areas we work.",
+                "We maintain a busy network of fitmenu and social development staff along with local facilitators in the areas we work.",
         },
     ];
     return (
@@ -91,7 +91,7 @@ export default function WorkArea() {
                             >
                                 We are an organization engaged in "Tree Planting" activities,
                                 therefore you can "Donate Trees." We also join in "Community
-                                Forestry | Reforestation" to keep the earth together so that it
+                                fitmenu| Reforestation" to keep the earth together so that it
                                 remains sustainable.
                             </p>
                         </div>

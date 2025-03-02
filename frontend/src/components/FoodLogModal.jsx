@@ -83,7 +83,10 @@ const FoodLogModal = ({ isOpen, onClose, logData, onSuccess }) => {
 
       const formData = new FormData();
       formData.append("userId", user._id);
-      formData.append("date", log.date);
+      formData.append(
+        "date",
+        log.date || new Date().toISOString().split("T")[0]
+      );
       formData.append("meals", JSON.stringify(filteredMeals));
       formData.append("notes", log.notes);
       formData.append("calories", log.calories);
@@ -125,10 +128,10 @@ const FoodLogModal = ({ isOpen, onClose, logData, onSuccess }) => {
       <div className="modal-content">
         <h2>{logData ? "Chỉnh sửa Nhật Ký" : "Thêm Nhật Ký"}</h2>
         <form onSubmit={handleSubmit}>
-          <label>Ngày:</label>
           <input
+            hidden
             type="date"
-            value={log.date}
+            value={log.date || new Date().toISOString().split("T")[0]}
             onChange={(e) => setLog({ ...log, date: e.target.value })}
             required
           />

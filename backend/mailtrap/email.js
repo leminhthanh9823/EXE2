@@ -8,8 +8,6 @@ import { transporter, sender } from "./mailtrap.config.js";
 // Send verification email
 export const sendVerificationEmail = async (email, verificationToken) => {
   try {
-    console.log("co vao day 1", sender);
-    console.log("co vao day 2", email);
 
     const response = await transporter.sendMail({
       from: sender,

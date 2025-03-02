@@ -144,7 +144,7 @@ export default function Footer() {
       </div>
       <div className='footer__copyright footer-two__copyright'>
         <p>
-          &copy; Copyright 2023 <a href='#0'>foresty</a> All Rights Reserved
+          &copy; Copyright 2025 <a href='#0'>Fit Menu</a> All Rights Reserved
         </p>
       </div>
     </footer>

@@ -15,7 +15,16 @@ const MealList = () => {
 
   return (
     <div className="p-6 max-w-4xl mx-auto">
+      
+      <div className="flex items-center justify-between mb-4">
       <h1 className="text-2xl font-bold mb-4">Danh Sách Món Ăn</h1>
+        <button
+          onClick={() => navigate("/admin/meals/create")}
+          className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition"
+        >
+          Thêm Mới
+        </button>
+      </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {meals.map((meal) => (
           <div

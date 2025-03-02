@@ -72,7 +72,7 @@ export const createFoodLog = async (req, res) => {
 export const updateFoodLog = async (req, res) => {
   try {
     const { id } = req.params;
-    const { menuId, date, meals } = req.body;
+    const { menuId, date, meals, notes } = req.body;
     const parsedMeals = JSON.parse(meals);
 
     const foodLog = await FoodLog.findById(id);
@@ -84,6 +84,7 @@ export const updateFoodLog = async (req, res) => {
     foodLog.menuId = menuId;
     foodLog.date = date;
     foodLog.meals = parsedMeals;
+    foodLog.description = notes;
 
     // Handle file uploads
     req.files.forEach((file) => {

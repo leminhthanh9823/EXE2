@@ -8,6 +8,7 @@ import adminRoutes from "./routes/admin.route.js"; // Import the admin routes
 import chatRoutes from "./routes/chat.route.js"; // Import the chat routes
 import voucherRoutes from "./routes/voucher.routes.js";
 import mealRoutes from "./routes/meal.route.js";
+import zalopay from "./routes/zalopay.route.js";
 import cookieParser from "cookie-parser";
 import path from "path";
 import menuRoutes from "./routes/menu.route.js";
@@ -56,6 +57,8 @@ app.use("/vouchers", voucherRoutes);
 app.use("/api/admin", adminRoutes);
 // Use the chat routes
 app.use("/api/chat", chatRoutes);
+//zalopay
+app.use("/api/zalopay", zalopay);
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "/frontend/dist")));

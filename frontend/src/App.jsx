@@ -15,6 +15,7 @@ import { useAuthStore } from "./store/authStore";
 import { useEffect } from "react";
 import MenuPage from "./components/menu/menu";
 import Header from "./components/header/header";
+import AdminHeader from "./components/header/admimHeader";
 import Footer from "./components/footer/footer";
 import MenuDetails from "./components/menu/menuDetails";
 
@@ -31,6 +32,7 @@ import MealDetails from "./components/admin/MealDetails";
 import MenuAdminDetails from "./components/admin/MenuAdminDetails";
 import CreateMenu from "./components/admin/CreateMenu";
 import CreateMeal from "./components/admin/CreateMeal";
+import TransactionList from "./pages/user/TransactionList";
 
 // protect routes that require authentication
 const ProtectedRoute = ({ children }) => {
@@ -48,6 +50,27 @@ const ProtectedRoute = ({ children }) => {
   return (
     <div className="min-h-screen flex flex-col">
       <Header />
+      <main className="flex-grow">{children}</main>
+      <Footer />
+    </div>
+  );
+};
+// protect routes that require authentication
+const ProtectedAdminRoute = ({ children }) => {
+  const { isAuthenticated, user } = useAuthStore();
+
+  if (!isAuthenticated || !user.isVerified || user.isAdmin === false) {
+    return <Navigate to="/login" replace />;
+  }
+
+  if (user && !user.isVerified) {
+    // Check if user exists first
+    return <Navigate to="/verify-email" replace />;
+  }
+
+  return (
+    <div className="min-h-screen flex flex-col">
+      <AdminHeader />
       <main className="flex-grow">{children}</main>
       <Footer />
     </div>
@@ -125,12 +148,62 @@ function App() {
               </ProtectedRoute>
             }
           />
-          <Route path="/admin/menus" element={<MenuList />} />
-          <Route path="/admin/meals" element={<MealList />} />
-          <Route path="/admin/menus/create" element={<CreateMenu />} />
-          <Route path="/admin/meals/create" element={<CreateMeal />} />
-          <Route path="/admin/menus/:id" element={<MenuAdminDetails />} />
-          <Route path="/admin/meals/:id" element={<MealDetails />} />
+          <Route
+            path="/transactions"
+            element={
+              <ProtectedRoute>
+                <TransactionList />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/admin/menus"
+            element={
+              <ProtectedAdminRoute>
+                <MenuList />
+              </ProtectedAdminRoute>
+            }
+          />
+          <Route
+            path="/admin/meals"
+            element={
+              <ProtectedAdminRoute>
+                <MealList />
+              </ProtectedAdminRoute>
+            }
+          />
+          <Route
+            path="/admin/menus/create"
+            element={
+              <ProtectedAdminRoute>
+                <CreateMenu />
+              </ProtectedAdminRoute>
+            }
+          />
+          <Route
+            path="/admin/meals/create"
+            element={
+              <ProtectedAdminRoute>
+                <CreateMeal />
+              </ProtectedAdminRoute>
+            }
+          />
+          <Route
+            path="/admin/menus/:id"
+            element={
+              <ProtectedAdminRoute>
+                <MenuAdminDetails />
+              </ProtectedAdminRoute>
+            }
+          />
+          <Route
+            path="/admin/meals/:id"
+            element={
+              <ProtectedAdminRoute>
+                <MealDetails />
+              </ProtectedAdminRoute>
+            }
+          />
           <Route
             path="/voucher-shop"
             element={
@@ -162,9 +235,9 @@ function App() {
           <Route
             path="/admin/chat"
             element={
-              <ProtectedRoute>
+              <ProtectedAdminRoute>
                 <AdminChat />
-              </ProtectedRoute>
+              </ProtectedAdminRoute>
             }
           />
         </Routes>

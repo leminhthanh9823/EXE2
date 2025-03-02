@@ -39,7 +39,13 @@ const MenuDetails = () => {
 
   useEffect(() => {
     // Danh sách màu header ngẫu nhiên
-    const colors = ["bg-red-400", "bg-green-400", "bg-blue-400", "bg-yellow-400", "bg-purple-400"];
+    const colors = [
+      "bg-red-400",
+      "bg-green-400",
+      "bg-blue-400",
+      "bg-yellow-400",
+      "bg-purple-400",
+    ];
     setHeaderColor(colors[Math.floor(Math.random() * colors.length)]);
   }, [currentDayIndex]); // Mỗi lần đổi ngày, màu header sẽ thay đổi
 
@@ -63,16 +69,17 @@ const MenuDetails = () => {
       }
 
       const response = await axios.post(
-        "http://localhost:5000/api/transactions/create",
+        "http://localhost:5000/api/zalopay/create",
         {
           userId: user._id,
           amount,
           code: uuidv4(),
         }
       );
-
+      console.log("ZaloPay response:", response.data);
+      
       if (response.data.success) {
-        navigate(`/qr/${response.data.transaction._id}`);
+        navigate("\transactions");
       } else {
         console.error("Transaction creation failed:", response.data);
       }
@@ -111,20 +118,26 @@ const MenuDetails = () => {
         {/* Ô vuông to chứa thông tin ngày */}
         <div className="w-80 h-80 flex flex-col justify-between border-2 border-gray-400 bg-gray-100 rounded-lg mx-6">
           {/* Header với màu ngẫu nhiên */}
-          <div className={`w-full py-3 text-center text-white font-bold ${headerColor} border-b-2 border-gray-300`}>
-            Ngày {currentDayData.day} {currentDayIndex === todayIndex ? "(Hôm nay)" : ""}
+          <div
+            className={`w-full py-3 text-center text-white font-bold ${headerColor} border-b-2 border-gray-300`}
+          >
+            Ngày {currentDayData.day}{" "}
+            {currentDayIndex === todayIndex ? "(Hôm nay)" : ""}
           </div>
 
           {/* Nội dung bữa ăn */}
           <div className="flex flex-col justify-center items-center flex-grow px-4 text-center">
             <p>
-              <strong>Sáng:</strong> {currentDayData.meals.breakfast?.name || "Không có"}
+              <strong>Sáng:</strong>{" "}
+              {currentDayData.meals.breakfast?.name || "Không có"}
             </p>
             <p>
-              <strong>Trưa:</strong> {currentDayData.meals.lunch?.name || "Không có"}
+              <strong>Trưa:</strong>{" "}
+              {currentDayData.meals.lunch?.name || "Không có"}
             </p>
             <p>
-              <strong>Tối:</strong> {currentDayData.meals.dinner?.name || "Không có"}
+              <strong>Tối:</strong>{" "}
+              {currentDayData.meals.dinner?.name || "Không có"}
             </p>
           </div>
         </div>

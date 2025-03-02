@@ -5,10 +5,12 @@ dotenv.config();
 
 // Create a transporter using SMTP
 export const transporter = nodemailer.createTransport({
-  host: "localhost", 
-  port: 1025,
+  service: "gmail",
   secure: false,
-  auth: null,
+  auth: {
+    user: process.env.SMTP_USER,
+    pass: process.env.SMTP_PASS,
+  },
 });
 
 // Default sender details
