@@ -12,6 +12,12 @@ export default function Header() {
     logout(); // Clear auth state
     navigate("/login"); // Redirect to login page
   };
+  const handleLogin = () => {
+    navigate("/login"); // Redirect to login page
+  };
+  const handleSignUp = () => {
+    navigate("/signup"); // Redirect to login page
+  };
 
   return (
     <header className="header">
@@ -57,13 +63,28 @@ export default function Header() {
                 <a href="/voucher-shop">Voucher</a>
               </li>
               <li className="m-0 menu-btn ">
-                {isAuthenticated && (
+                {user ? (
                   <button
                     onClick={handleLogout}
-                    className="bg-red-500 px-3 py-1 rounded"
+                    className="bg-red-500 text-white px-3 py-1 rounded"
                   >
                     Logout
                   </button>
+                ) : (
+                  <div>
+                    <button
+                      onClick={handleLogin}
+                      className="bg-blue-500 text-white px-3 py-1 rounded mr-2"
+                    >
+                      Login
+                    </button>
+                    <button
+                      onClick={handleSignUp}
+                      className="bg-green-500 text-white px-3 py-1 rounded"
+                    >
+                      Signup
+                    </button>
+                  </div>
                 )}
               </li>
             </ul>

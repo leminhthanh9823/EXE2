@@ -80,7 +80,7 @@ const MenuDetails = () => {
       });
 
       const response = await axios.post(
-        "https://fitmenu.store/api/transactions/create",
+        "http://localhost:5000/api/transactions/create",
         {
           userId: user._id,
           menuId: menuId,

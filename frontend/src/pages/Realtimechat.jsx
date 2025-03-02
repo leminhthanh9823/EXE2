@@ -4,7 +4,7 @@ import axios from "axios";
 import "tailwindcss/tailwind.css";
 import Header from "../components/header/header";
 
-const socket = io("https://fitmenu.store"); // Ensure this matches your server URL
+const socket = io("http://localhost:5000"); // Ensure this matches your server URL
 
 const Realtimechat = () => {
   const [message, setMessage] = useState("");
@@ -15,7 +15,7 @@ const Realtimechat = () => {
     // Fetch the current user's information
     const fetchUser = async () => {
       try {
-        const response = await axios.get("https://fitmenu.store/api/auth/me"); // Adjust the endpoint as needed
+        const response = await axios.get("http://localhost:5000/api/auth/me"); // Adjust the endpoint as needed
         setUserName(response.data.name);
       } catch (error) {
         console.error("Error fetching user:", error);
@@ -26,7 +26,7 @@ const Realtimechat = () => {
     const fetchMessages = async () => {
       try {
         const response = await axios.get(
-          "https://fitmenu.store/api/chat/messages"
+          "http://localhost:5000/api/chat/messages"
         );
         setMessages(response.data);
       } catch (error) {

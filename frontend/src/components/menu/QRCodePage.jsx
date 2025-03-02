@@ -19,7 +19,7 @@ const QRCodePage = () => {
     const fetchQRCode = async () => {
       try {
         const response = await axios.get(
-          `https://fitmenu.store/api/transactions/generate-qr/${transactionId}`
+          `http://localhost:5000/api/transactions/generate-qr/${transactionId}`
         );
 
         if (response.data.success) {
@@ -46,7 +46,7 @@ const QRCodePage = () => {
       });
       try {
         const response = await axios.get(
-          `https://fitmenu.store/api/transactions/status/${transactionId}?userId=${userId}&menuId=${menuId}`
+          `http://localhost:5000/api/transactions/status/${transactionId}?userId=${userId}&menuId=${menuId}`
         );
 
         if (response.data.status === "completed") {

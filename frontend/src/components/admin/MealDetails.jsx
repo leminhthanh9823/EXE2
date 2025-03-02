@@ -18,7 +18,7 @@ const MealDetail = () => {
 
   useEffect(() => {
     axios
-      .get(`https://fitmenu.store/api/meals/${id}`)
+      .get(`http://localhost:5000/api/meals/${id}`)
       .then((response) => {
         setMeal(response.data);
         setFormData(response.data); // Điền dữ liệu vào form
@@ -32,7 +32,7 @@ const MealDetail = () => {
 
   const handleSave = () => {
     axios
-      .put(`https://fitmenu.store/api/meals/${id}`, formData)
+      .put(`http://localhost:5000/api/meals/${id}`, formData)
       .then((response) => {
         setMeal(response.data);
         setEditing(false);

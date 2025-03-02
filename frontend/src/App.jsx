@@ -110,6 +110,18 @@ function App() {
             <Route path="/forgot-password" element={<ForgotPasswordPage />} />
 
             <Route path="*" element={<Navigate to="/login" replace />} />
+            <Route
+              path="/"
+              element={
+                <div className="min-h-screen flex flex-col">
+                  <Header />
+                  <main className="flex-grow">
+                    <Home />
+                  </main>
+                  <Footer />
+                </div>
+              }
+            />
           </Routes>
         </div>
       ) : (
@@ -117,9 +129,13 @@ function App() {
           <Route
             path="/"
             element={
-              <ProtectedRoute>
-                <Home />
-              </ProtectedRoute>
+              <div className="min-h-screen flex flex-col">
+                <Header />
+                <main className="flex-grow">
+                  <Home />
+                </main>
+                <Footer />
+              </div>
             }
           />
           <Route

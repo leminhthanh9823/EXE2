@@ -4,7 +4,7 @@ import axios from "axios";
 import "tailwindcss/tailwind.css";
 import Header from "../components/header/header";
 
-const socket = io("https://fitmenu.store"); // Ensure this matches your server URL
+const socket = io("http://localhost:5000"); // Ensure this matches your server URL
 
 const AdminChat = () => {
   const [message, setMessage] = useState("");
@@ -17,7 +17,7 @@ const AdminChat = () => {
     const fetchChats = async () => {
       try {
         const response = await axios.get(
-          "https://fitmenu.store/api/admin/chats"
+          "http://localhost:5000/api/admin/chats"
         );
         setChats(response.data);
         const uniqueUsers = [
