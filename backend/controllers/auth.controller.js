@@ -1,4 +1,4 @@
-import User from "../models/user.model.js"; 
+import User from "../models/user.model.js";
 import bcryptjs from "bcryptjs";
 import generateVerificationCode from "../utils/generateVerificationCode.js";
 import generateTokenAndSetCookie from "../utils/generateTokenAndSetCookie.js";
@@ -73,7 +73,7 @@ const login = async (req, res) => {
     if (!isPasswordCorrect) {
       return res.status(400).json({ message: "Invalid credentials" });
     }
-    generateTokenAndSetCookie(res, user._id);
+    const token = generateTokenAndSetCookie(res, user._id);
 
     user.lastLoginDate = new Date();
     await user.save();
@@ -81,6 +81,7 @@ const login = async (req, res) => {
     return res.status(200).json({
       success: true,
       message: "Logged in successfully",
+      token: token,
       user: {
         _id: user._id,
         email: user.email,
@@ -211,14 +212,14 @@ const checkAuth = async (req, res) => {
 const getUser = async (req, res) => {
   console.log("req.userId: ", req.userId);
   try {
-      const user = await User.findById(req.userId); // Assuming req.userId contains the authenticated user's ID
-      if (!user) {
-          return res.status(404).json({ message: 'User not found' });
-      }
-      res.status(200).json(user);
+    const user = await User.findById(req.userId); // Assuming req.userId contains the authenticated user's ID
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    res.status(200).json(user);
   } catch (error) {
-     console.log("Error in getUser ", error);
-      res.status(500).json({ message: 'Server error' });
+    console.log("Error in getUser ", error);
+    res.status(500).json({ message: "Server error" });
   }
 };
 

@@ -1,23 +1,29 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const QRCodePage = () => {
-  const { transactionId } = useParams(); // Lấy transactionId từ URL
+  const { transactionId } = useParams();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { userId, menuId } = location.state || {};
+
   const [qrCodeData, setQrCodeData] = useState(null);
+  const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
+  const [countdown, setCountdown] = useState(120);
 
   useEffect(() => {
+    if (!transactionId) return;
+
     const fetchQRCode = async () => {
       try {
         const response = await axios.get(
           `https://fitmenu.store/api/transactions/generate-qr/${transactionId}`
         );
-        console.log("QR Code Response:", response.data);
 
         if (response.data.success) {
-          setQrCodeData(response.data.qrCode); // Assuming qrCode contains the base64 image data
+          setQrCodeData(response.data.qrCode);
         } else {
           setError("Không thể lấy mã QR");
         }
@@ -29,25 +35,60 @@ const QRCodePage = () => {
       }
     };
 
-    if (transactionId) {
-      fetchQRCode();
-    }
-  }, [transactionId]);
+    fetchQRCode();
+
+    // Kiểm tra trạng thái giao dịch mỗi 5s
+    const intervalId = setInterval(async () => {
+      console.log("Checking transaction status:", {
+        transactionId,
+        userId,
+        menuId,
+      });
+      try {
+        const response = await axios.get(
+          `https://fitmenu.store/api/transactions/status/${transactionId}?userId=${userId}&menuId=${menuId}`
+        );
+
+        if (response.data.status === "completed") {
+          clearInterval(intervalId);
+          navigate("/payment/success");
+        } else if (response.data.status === "failed") {
+          clearInterval(intervalId);
+          navigate("/payment/failed");
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    }, 5000);
+
+    // Bộ đếm thời gian 120s
+    const countdownInterval = setInterval(() => {
+      setCountdown((prev) => prev - 1);
+    }, 1000);
+
+    const timeoutId = setTimeout(() => {
+      clearInterval(intervalId);
+      navigate("/");
+    }, 120000);
+
+    return () => {
+      clearInterval(intervalId);
+      clearInterval(countdownInterval);
+      clearTimeout(timeoutId);
+    };
+  }, [transactionId, userId, menuId, navigate]);
 
   return (
-    <div className="container">
+    <div>
       <h2>Quét mã QR để thanh toán</h2>
-
-      {loading && <p>Đang tải...</p>}
-      {error && <p style={{ color: "red" }}>{error}</p>}
-
-      {qrCodeData && (
-        <div>
-          <h3>Mã QR:</h3>
-          {/* Display the QR code image */}
-          <img src={qrCodeData} alt="QR Code" width="200" />
-        </div>
+      {loading ? (
+        <p>Đang tải mã QR...</p>
+      ) : error ? (
+        <p style={{ color: "red" }}>{error}</p>
+      ) : (
+        <img src={qrCodeData} alt="QR Code" width="200" />
       )}
+      <p>Thời gian còn lại: {countdown}s</p>
     </div>
   );
 };

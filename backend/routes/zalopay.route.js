@@ -16,13 +16,10 @@ const ZALOPAY_ENDPOINT = "https://openapi.zalopay.vn/v2/create";
 // Tạo giao dịch mới
 router.post("/create", async (req, res) => {
   try {
-    const { userId, amount, menuId, code } = req.body; // Nhận menuId từ request
-
     const embed_data = {
-      redirecturl: "https://fitmenu.food/transactions",
-      menuId, // Thêm menuId vào embed_data
+      redirecturl: "https://fitmenu.store/transactions",
     };
-
+    const { userId, amount, code } = req.body;
     const app_trans_id = `${Date.now()}`; // Mã giao dịch duy nhất
     const order = {
       app_id: ZALOPAY_APP_ID,
@@ -34,7 +31,7 @@ router.post("/create", async (req, res) => {
       bank_code: "zalopayapp",
       description: `Thanh toán đơn hàng #${app_trans_id}`,
       timestamp: Date.now(),
-      callback_url: `https://fitmenu.store/api/api/zalopay/callback`,
+      callback_url: `https://fitmenu.store/api/zalopay/callback`,
     };
     console.log("ZaloPay order:", order);
 
@@ -49,12 +46,9 @@ router.post("/create", async (req, res) => {
       params: order,
     });
     console.log("ZaloPay response:", response.data);
-
-    // Lưu giao dịch vào DB, thêm menuId vào
+    // Lưu giao dịch vào DB
     const newTransaction = new Transaction({
       code: app_trans_id,
-      userId,
-      menuId,
       amount,
       status: "pending",
     });
@@ -86,61 +80,38 @@ router.get("/status/:transactionId", async (req, res) => {
   }
 });
 
-router.post("/callback", async (req, res) => {
-  let result = {};
+// app.post('/callback', (req, res) => {
+//   let result = {};
 
-  try {
-    let dataStr = req.body.data;
-    let reqMac = req.body.mac;
+//   try {
+//     let dataStr = req.body.data;
+//     let reqMac = req.body.mac;
 
-    let mac = CryptoJS.HmacSHA256(dataStr, ZALOPAY_KEY_2).toString();
-    console.log("mac =", mac);
+//     let mac = CryptoJS.HmacSHA256(dataStr, ZALOPAY_KEY_2).toString();
+//     console.log("mac =", mac);
 
-    if (reqMac !== mac) {
-      result.return_code = -1;
-      result.return_message = "mac not equal";
-    } else {
-      let dataJson = JSON.parse(dataStr);
-      console.log(
-        "update order's status = success where app_trans_id =",
-        dataJson["app_trans_id"]
-      );
+//     // kiểm tra callback hợp lệ (đến từ ZaloPay server)
+//     if (reqMac !== mac) {
+//       // callback không hợp lệ
+//       result.return_code = -1;
+//       result.return_message = "mac not equal";
+//     }
+//     else {
+//       // thanh toán thành công
+//       // merchant cập nhật trạng thái cho đơn hàng
+//       let dataJson = JSON.parse(dataStr, config.key2);
+//       console.log("update order's status = success where app_trans_id =", dataJson["app_trans_id"]);
 
-      let embedData = JSON.parse(dataJson.embed_data);
-      let menuId = embedData.menuId;
-      let userId = dataJson.app_user;
+//       result.return_code = 1;
+//       result.return_message = "success";
+//     }
+//   } catch (ex) {
+//     result.return_code = 0; // ZaloPay server sẽ callback lại (tối đa 3 lần)
+//     result.return_message = ex.message;
+//   }
 
-      if (!menuId) {
-        console.error("Không tìm thấy menuId trong embed_data");
-      } else {
-        try {
-          const response = await axios.post(
-            `https://fitmenu.store/${menuId}/customize`,
-            { userId }
-          );
-          await Transaction.findOneAndUpdate(
-            { menuId: menuId, userId: userId },
-            { status: "completed" },
-            { new: true }
-          );
-          console.log("Menu mới được tạo:", response.data);
-        } catch (error) {
-          console.error(
-            "Lỗi khi tạo menu:",
-            error.response?.data || error.message
-          );
-        }
-      }
-
-      result.return_code = 1;
-      result.return_message = "success";
-    }
-  } catch (ex) {
-    result.return_code = 0;
-    result.return_message = ex.message;
-  }
-
-  res.json(result);
-});
+//   // thông báo kết quả cho ZaloPay server
+//   res.json(result);
+// });
 
 export default router;

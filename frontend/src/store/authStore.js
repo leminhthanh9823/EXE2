@@ -41,12 +41,15 @@ export const useAuthStore = create((set) => ({
         email,
         password,
       });
+      console.log(response.data);
+
       set({
         isAuthenticated: true,
         user: response.data.user,
         error: null,
         isLoading: false,
       });
+
       return response.data;
     } catch (error) {
       set({

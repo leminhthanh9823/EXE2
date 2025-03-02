@@ -38,6 +38,12 @@ app.use(bodyParser.json());
 app.use(express.json());
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
+// app.use(
+//   cors({
+//     origin: "https://fitmenu.food", // Domain frontend của bạn
+//     credentials: true, // Cho phép gửi cookie
+//   })
+// );
 
 //api auth người dùng
 app.use("/api/auth", authRoutes);
@@ -83,8 +89,6 @@ mongoose
 
 // Socket.IO setup
 io.on("connection", (socket) => {
-  console.log("a user connected");
-
   socket.on("message", async (data) => {
     const { userName, message } = data;
     console.log("Received message:", data); // Add this line for debugging
@@ -98,9 +102,7 @@ io.on("connection", (socket) => {
     }
   });
 
-  socket.on("disconnect", () => {
-    console.log("user disconnected");
-  });
+  socket.on("disconnect", () => {});
 });
 
 // Start the server

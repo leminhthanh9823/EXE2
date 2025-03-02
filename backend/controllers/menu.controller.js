@@ -1,5 +1,6 @@
 import Menu from "../models/menu.js";
 import Meal from "../models/Meal.js";
+import User from "../models/user.model.js";
 
 export const createMenu = async (req, res) => {
   try {
@@ -54,7 +55,11 @@ export const customizeMenu = async (req, res) => {
   }
 };
 
-// Lấy danh sách tất cả menu
+const getAdminUserIds = async () => {
+  const adminUsers = await User.find({ isAdmin: true }, "_id");
+  return adminUsers.map((user) => user._id);
+};
+
 export const getAllMenus = async (req, res) => {
   try {
     const { userId } = req.query;
@@ -68,6 +73,11 @@ export const getAllMenus = async (req, res) => {
       "days.meals.breakfast days.meals.lunch days.meals.dinner"
     );
 
+    const adminUserIds = await getAdminUserIds();
+    const normal_menus = await Menu.find({
+      userId: { $in: adminUserIds },
+    }).populate("days.meals.breakfast days.meals.lunch days.meals.dinner");
+
     // Chuẩn hóa dữ liệu trước khi gửi về React
     const formattedMenus = menus.map((menu) => ({
       _id: menu._id,
@@ -79,6 +89,73 @@ export const getAllMenus = async (req, res) => {
       days: menu.days,
       createdAt: menu.createdAt,
     }));
+
+    const formattedNormalMenus = normal_menus.map((menu) => ({
+      _id: menu._id,
+      userId: menu.userId,
+      name: `Thực đơn ${menu.menuPackage}`,
+      details: `Gói: ${menu.menuPackage} - Giá: ${menu.price} VNĐ`,
+      price: menu.price,
+      menuPackage: menu.menuPackage,
+      days: menu.days,
+      createdAt: menu.createdAt,
+    }));
+
+    res.json({ myMenus: formattedMenus, menus: formattedNormalMenus });
+  } catch (error) {
+    res.status(500).json({ message: "Lỗi server", error });
+  }
+};
+
+// Lấy danh sách tất cả menu
+export const getAllMenusAdmin = async (req, res) => {
+  try {
+    const { userId } = req.query;
+
+    let query = {};
+    if (userId && userId.trim() !== "") {
+      query.userId = userId;
+    }
+
+    const menus = await Menu.find(query).populate(
+      "days.meals.breakfast days.meals.lunch days.meals.dinner"
+    );
+
+    // Chuẩn hóa dữ liệu trước khi gửi về React
+    const formattedMenus = await Promise.all(
+      menus.map(async (menu) => {
+        try {
+          if (!menu.userId) throw new Error("User ID is missing"); // Kiểm tra null
+          const user = await User.findById(menu.userId).select("email").exec(); // .exec() giúp xử lý tốt hơn
+
+          return {
+            _id: menu._id,
+            userId: menu.userId,
+            userEmail: user ? user.email : "Không tìm thấy user",
+            name: `Thực đơn ${menu.menuPackage}`,
+            details: `Gói: ${menu.menuPackage} - Giá: ${menu.price} VNĐ`,
+            price: menu.price,
+            menuPackage: menu.menuPackage,
+            days: menu.days,
+            createdAt: menu.createdAt,
+          };
+        } catch (error) {
+          console.error("Lỗi khi lấy user:", error);
+          return {
+            _id: menu._id,
+            userId: menu.userId,
+            userEmail: null,
+            name: `Thực đơn ${menu.menuPackage}`,
+            details: `Gói: ${menu.menuPackage} - Giá: ${menu.price} VNĐ`,
+            price: menu.price,
+            menuPackage: menu.menuPackage,
+            days: menu.days,
+            createdAt: menu.createdAt,
+            error: "Lỗi lấy user",
+          };
+        }
+      })
+    );
 
     res.json(formattedMenus);
   } catch (error) {

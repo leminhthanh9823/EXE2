@@ -19,6 +19,7 @@ const MenuPage = () => {
 
   useEffect(() => {
     const fetchMyMenus = async () => {
+      setLoading(true);
       try {
         const user = JSON.parse(localStorage.getItem("user"));
         if (!user || !user._id) return;
@@ -26,17 +27,10 @@ const MenuPage = () => {
         const response = await axios.get(
           `https://fitmenu.store/api/menus?userId=${user._id}`
         );
+        console.log("API Response:", response.data);
 
-        setMyMenus(response.data);
-      } catch (err) {
-        setError(err.message);
-      }
-    };
-
-    const fetchMenus = async () => {
-      try {
-        const response = await axios.get("https://fitmenu.store/api/menus");
-        setMenus(response.data);
+        setMyMenus(response.data.myMenus);
+        setMenus(response.data.menus);
       } catch (err) {
         setError(err.message);
       } finally {
@@ -44,10 +38,7 @@ const MenuPage = () => {
       }
     };
 
-    (async () => {
-      await fetchMyMenus();
-      await fetchMenus();
-    })();
+    fetchMyMenus();
   }, []);
 
   if (loading)

@@ -8,7 +8,7 @@ const MenuList = () => {
 
   useEffect(() => {
     axios
-      .get("https://fitmenu.store/api/menus")
+      .get("https://fitmenu.store/api/menus/admins")
       .then((response) => setMenus(response.data))
       .catch((error) => console.error("Lỗi khi lấy danh sách menu:", error));
   }, []);
@@ -35,6 +35,10 @@ const MenuList = () => {
           <div key={menu._id} className="border p-4 rounded-lg shadow-md">
             <h2 className="text-lg font-semibold">{menu.menuPackage}</h2>
             <p className="text-gray-700">Giá: {menu.price} VND</p>
+            <p className="text-gray-700">
+              Email Người dùng:{" "}
+              {menu.userEmail?.toLowerCase() || "Không có email"}
+            </p>
             <button
               onClick={() => handleViewMenu(menu)}
               className="mt-2 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"

@@ -33,6 +33,8 @@ import MenuAdminDetails from "./components/admin/MenuAdminDetails";
 import CreateMenu from "./components/admin/CreateMenu";
 import CreateMeal from "./components/admin/CreateMeal";
 import TransactionList from "./pages/user/TransactionList";
+import PaymentFailed from "./components/transaction_status/PaymentFailed";
+import PaymentSuccess from "./components/transaction_status/PaymentSuccess";
 
 // protect routes that require authentication
 const ProtectedRoute = ({ children }) => {
@@ -153,6 +155,22 @@ function App() {
             element={
               <ProtectedRoute>
                 <TransactionList />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/payment/success"
+            element={
+              <ProtectedRoute>
+                <PaymentSuccess />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/payment/failed"
+            element={
+              <ProtectedRoute>
+                <PaymentFailed />
               </ProtectedRoute>
             }
           />

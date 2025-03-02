@@ -63,25 +63,38 @@ const MenuDetails = () => {
 
   const handlePurchase = async () => {
     try {
+      const user = JSON.parse(localStorage.getItem("user"));
       let amount = menu.price;
       let menuId = menu._id;
+
+      // Nếu price là chuỗi có dấu phẩy (VD: "699,000"), chuyển thành số
       if (typeof amount === "string") {
         amount = parseInt(amount.replace(/,/g, ""), 10);
       }
 
+      console.log("Sending transaction:", {
+        userId: user._id,
+        menuId: menuId,
+        amount,
+        code: uuidv4(),
+      });
+
       const response = await axios.post(
-        "https://fitmenu.store/api/zalopay/create",
+        "https://fitmenu.store/api/transactions/create",
         {
           userId: user._id,
+          menuId: menuId,
           amount,
-          menuId,
           code: uuidv4(),
         }
       );
-      console.log("ZaloPay response:", response.data);
 
+      console.log("API Response:", response.data);
       if (response.data.success) {
-        navigate("\transactions");
+        // Điều hướng đến trang QR kèm transactionId
+        navigate(`/qr/${response.data.transaction._id}`, {
+          state: { userId: user._id, menuId: menuId },
+        });
       } else {
         console.error("Transaction creation failed:", response.data);
       }
