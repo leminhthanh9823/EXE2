@@ -1,4 +1,4 @@
-import Menu from "../models/Menu.js";
+import Menu from "../models/menu.js";
 import Meal from "../models/Meal.js";
 
 export const createMenu = async (req, res) => {

@@ -34,7 +34,7 @@ router.post("/create", async (req, res) => {
       bank_code: "zalopayapp",
       description: `Thanh toán đơn hàng #${app_trans_id}`,
       timestamp: Date.now(),
-      callback_url: `https://fitmenu.store/api/zalopay/callback`,
+      callback_url: `https://fitmenu.store/api/api/zalopay/callback`,
     };
     console.log("ZaloPay order:", order);
 

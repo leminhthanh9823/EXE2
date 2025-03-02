@@ -104,6 +104,6 @@ io.on("connection", (socket) => {
 });
 
 // Start the server
-server.listen(5000, () => {
+server.listen(5000, "0.0.0.0", () => {
   console.log("Server is running on https://fitmenu.store");
 });
