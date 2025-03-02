@@ -64,20 +64,22 @@ const MenuDetails = () => {
   const handlePurchase = async () => {
     try {
       let amount = menu.price;
+      let menuId = menu._id;
       if (typeof amount === "string") {
         amount = parseInt(amount.replace(/,/g, ""), 10);
       }
 
       const response = await axios.post(
-        "http://localhost:5000/api/zalopay/create",
+        "https://fitmenu.store/api/zalopay/create",
         {
           userId: user._id,
           amount,
+          menuId,
           code: uuidv4(),
         }
       );
       console.log("ZaloPay response:", response.data);
-      
+
       if (response.data.success) {
         navigate("\transactions");
       } else {

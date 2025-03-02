@@ -3,7 +3,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import "./FoodLogList.css";
 
-const API_URL = "http://localhost:5000/api/logs/food-log";
+const API_URL = "https://fitmenu.store/api/logs/food-log";
 
 const FoodLogModal = ({ isOpen, onClose, logData, onSuccess }) => {
   const [log, setLog] = useState({

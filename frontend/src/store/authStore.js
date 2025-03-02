@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import axios from "axios";
 
-const REACT_APP_API_URL = "http://localhost:5000/api/auth";
+const REACT_APP_API_URL = "https://fitmenu.store/api/auth";
 
 axios.defaults.withCredentials = true;
 

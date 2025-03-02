@@ -9,7 +9,7 @@ const TransactionList = () => {
 
   const fetchTransactions = async () => {
     try {
-      const response = await fetch("http://localhost:5000/api/transactions");
+      const response = await fetch("https://fitmenu.store/api/transactions");
       const data = await response.json();
       setTransactions(data);
     } catch (error) {
@@ -19,13 +19,17 @@ const TransactionList = () => {
 
   const checkTransactionStatus = async (transactionId) => {
     try {
-      const response = await fetch(`http://localhost:5000/api/zalopay/status/${transactionId}`);
+      const response = await fetch(
+        `https://fitmenu.store/api/zalopay/status/${transactionId}`
+      );
       const data = await response.json();
 
       alert(
-        data.status === "completed" ? "✅ Giao dịch thành công!" :
-        data.status === "failed" ? "❌ Giao dịch thất bại!" :
-        "⏳ Giao dịch đang xử lý..."
+        data.status === "completed"
+          ? "✅ Giao dịch thành công!"
+          : data.status === "failed"
+          ? "❌ Giao dịch thất bại!"
+          : "⏳ Giao dịch đang xử lý..."
       );
 
       fetchTransactions();
@@ -41,7 +45,9 @@ const TransactionList = () => {
         {transactions.map((t) => (
           <li key={t._id}>
             {t.code} - {t.amount} VND - {t.status}
-            <button onClick={() => checkTransactionStatus(t.code)}>Kiểm Tra</button>
+            <button onClick={() => checkTransactionStatus(t.code)}>
+              Kiểm Tra
+            </button>
           </li>
         ))}
       </ul>

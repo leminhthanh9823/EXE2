@@ -24,7 +24,7 @@ const MenuPage = () => {
         if (!user || !user._id) return;
 
         const response = await axios.get(
-          `http://localhost:5000/api/menus?userId=${user._id}`
+          `https://fitmenu.store/api/menus?userId=${user._id}`
         );
 
         setMyMenus(response.data);
@@ -35,7 +35,7 @@ const MenuPage = () => {
 
     const fetchMenus = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/api/menus");
+        const response = await axios.get("https://fitmenu.store/api/menus");
         setMenus(response.data);
       } catch (err) {
         setError(err.message);

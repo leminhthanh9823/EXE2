@@ -21,7 +21,7 @@ const app = express();
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: "http://localhost:5173", // Your frontend URL
+    origin: process.env.CLIENT_URL, // Your frontend URL
     methods: ["GET", "POST"],
     credentials: true,
   },
@@ -29,7 +29,7 @@ const io = new Server(server, {
 
 // Middleware
 const corsOptions = {
-  origin: "http://localhost:5173", // Your frontend URL
+  origin: process.env.CLIENT_URL, // Your frontend URL
   credentials: true, // Allow credentials such as cookies or tokens
 };
 
@@ -105,5 +105,5 @@ io.on("connection", (socket) => {
 
 // Start the server
 server.listen(5000, () => {
-  console.log("Server is running on http://localhost:5000");
+  console.log("Server is running on https://fitmenu.store");
 });

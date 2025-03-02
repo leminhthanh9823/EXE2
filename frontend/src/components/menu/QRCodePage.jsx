@@ -11,9 +11,11 @@ const QRCodePage = () => {
   useEffect(() => {
     const fetchQRCode = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/api/transactions/generate-qr/${transactionId}`);
+        const response = await axios.get(
+          `https://fitmenu.store/api/transactions/generate-qr/${transactionId}`
+        );
         console.log("QR Code Response:", response.data);
-        
+
         if (response.data.success) {
           setQrCodeData(response.data.qrCode); // Assuming qrCode contains the base64 image data
         } else {

@@ -8,7 +8,7 @@ const MenuAdminDetails = () => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/api/menus/${id}`)
+      .get(`https://fitmenu.store/api/menus/${id}`)
       .then((response) => setMenu(response.data))
       .catch((error) => console.error("Lỗi khi lấy chi tiết menu:", error));
   }, [id]);

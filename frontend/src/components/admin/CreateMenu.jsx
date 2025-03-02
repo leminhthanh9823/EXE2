@@ -12,7 +12,7 @@ const CreateMenu = () => {
   // Lấy danh sách món ăn từ API
   useEffect(() => {
     axios
-      .get("http://localhost:5000/api/meals")
+      .get("https://fitmenu.store/api/meals")
       .then((response) => setMealOptions(response.data))
       .catch((error) => console.error("Lỗi khi tải danh sách món ăn", error));
   }, []);
@@ -44,7 +44,7 @@ const CreateMenu = () => {
   // Hàm gửi dữ liệu lên server
   const handleSubmit = async () => {
     try {
-      await axios.post("http://localhost:5000/api/menus/create", {
+      await axios.post("https://fitmenu.store/api/menus/create", {
         userId,
         menuPackage,
         meals,
