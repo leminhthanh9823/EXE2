@@ -19,7 +19,7 @@ router.post("/create", async (req, res) => {
     const { userId, amount, menuId, code } = req.body; // Nhận menuId từ request
 
     const embed_data = {
-      redirecturl: "https://fitmenu.store/transactions",
+      redirecturl: "https://fitmenu.food/transactions",
       menuId, // Thêm menuId vào embed_data
     };
 
@@ -86,7 +86,7 @@ router.get("/status/:transactionId", async (req, res) => {
   }
 });
 
-app.post("/callback", async (req, res) => {
+router.post("/callback", async (req, res) => {
   let result = {};
 
   try {

@@ -70,7 +70,7 @@ if (process.env.NODE_ENV === "production") {
 
 // Connect to MongoDB
 mongoose
-  .connect("mongodb://localhost:27017/exe", {
+  .connect(process.env.MONGO_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })

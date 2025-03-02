@@ -79,7 +79,7 @@ const VoucherList = () => {
   };
 
   return (
-    <div className="container mx-auto p-4" style={{height: "1000px"}}>
+    <div className="container mx-auto p-4" style={{ height: "1000px" }}>
       <h2 className="text-2xl font-bold mb-4 text-center">Danh sách Voucher</h2>
 
       {/* Hiển thị điểm của người dùng */}
