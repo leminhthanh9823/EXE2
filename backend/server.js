@@ -38,6 +38,7 @@ app.use(bodyParser.json());
 app.use(express.json());
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
+
 // app.use(
 //   cors({
 //     origin: "https://fitmenu.food", // Domain frontend của bạn
@@ -90,13 +91,13 @@ mongoose
 // Socket.IO setup
 io.on("connection", (socket) => {
   socket.on("message", async (data) => {
-    const { userName, message } = data;
+    const { userName, message, to } = data;
     console.log("Received message:", data); // Add this line for debugging
-    const chatMessage = new Chat({ userName, message });
+    const chatMessage = new Chat({ userName, message, to });
     try {
       await chatMessage.save(); // Save the message to the database
       console.log("Message saved:", chatMessage); // Add this line for debugging
-      io.emit("message", data);
+      io.emit("message", chatMessage);
     } catch (error) {
       console.error("Error saving message:", error); // Add this line for debugging
     }

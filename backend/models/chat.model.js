@@ -4,6 +4,7 @@ const chatSchema = new mongoose.Schema(
   {
     userName: { type: String, required: true },
     message: { type: String, required: true },
+    to: { type: String, required: true }, // Add recipient field
     timestamp: { type: Date, default: Date.now },
   },
   { timestamps: true }
