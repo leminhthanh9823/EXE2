@@ -41,7 +41,7 @@ export default function Header() {
         <div className="header-wrapper">
           <div className="logo-menu">
             <a href="/" className="logo">
-              <img src="assets/images/logo.png" alt="logo" />
+              <img src="assets/images/476495700_492431837268688_7240872719589669646_n.png" alt="logo" style={{ width: "50%", height: "50%" }} />
             </a>
           </div>
 
@@ -97,7 +97,7 @@ export default function Header() {
                   onClick={() => setDropdownOpen(!dropdownOpen)}
                 >
                   <img
-                    src={user.avatar || "assets/images/default-avatar.png"} // If the user has an avatar, use it, otherwise use a default one
+                    src={user.avatar || "https://static.vecteezy.com/system/resources/thumbnails/009/734/564/small_2x/default-avatar-profile-icon-of-social-media-user-vector.jpg"} // If the user has an avatar, use it, otherwise use a default one
                     alt="User Avatar"
                     className="avatar-img"
                   />

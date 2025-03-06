@@ -17,7 +17,7 @@ export const getFoodLogs = async (req, res) => {
 
 export const createFoodLog = async (req, res) => {
   try {
-    const { userId, menuId, date, meals } = req.body;
+    const { userId, menuId, date, meals, notes } = req.body;
     const parsedMeals = JSON.parse(meals); // Chuyển meals từ string JSON thành mảng
     let userPoint = await UserPoint.findOne({ userId });
     if (!userPoint) {
@@ -54,6 +54,7 @@ export const createFoodLog = async (req, res) => {
       menuId,
       date,
       meals: parsedMeals,
+      notes: notes || "",
     });
 
     await newFoodLog.save();

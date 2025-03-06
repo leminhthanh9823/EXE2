@@ -56,9 +56,10 @@ export default function WorkArea() {
                                     }}
                                 >
                                     <img
-                                        src="assets/images/leaf.svg"
+                                        src="assets/images/476495700_492431837268688_7240872719589669646_n.png"
                                         alt="Leaf Icon"
                                         className="mr-2"
+                                        style={{ width: "30%", height: "30%" }}
                                     />
                                     Sứ mệnh của chúng tôi
                                 </h5>

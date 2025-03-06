@@ -15,6 +15,7 @@ ul {
     height: 98px;
     position: relative;
     z-index: 999;
+    background-color: #fff;
 }
 
 .header-section {
@@ -88,10 +89,23 @@ ul {
 
 /* Ẩn menu trên điện thoại */
 @media (max-width: 768px) {
-    .main-menu {
+    .header-wrapper {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .header-wrapper .logo-menu {
+        width: 100%;
         display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .header-wrapper .main-menu {
+        display: none;
         flex-direction: column;
         position: absolute;
+        top: 100%;
         left: 0;
         width: 100%;
         background-color: #fff;
@@ -105,14 +119,25 @@ ul {
         transition: transform 0.3s ease, opacity 0.3s ease, visibility 0.3s ease;
     }
 
-    /* Khi menu mở */
-    .main-menu.open {
+    .header-wrapper .main-menu.open {
+        display: flex;
         transform: translateY(0);
         opacity: 1;
         visibility: visible;
     }
 
-    /* Button menu */
+    .header-wrapper .main-menu li {
+        width: 100%;
+        text-align: left;
+        margin: 10px 0;
+    }
+
+    .header-wrapper .main-menu .menu-btn a {
+        margin-left: 0;
+        width: 100%;
+        text-align: center;
+    }
+
     .header-bar {
         display: flex;
         flex-direction: column;
@@ -128,7 +153,6 @@ ul {
         transition: all 0.3s ease-in-out;
     }
 
-    /* Khi menu mở, biểu tượng menu chuyển thành dấu "X" */
     .header-bar.active span:nth-child(1) {
         transform: rotate(45deg) translate(5px, 5px);
     }
@@ -141,21 +165,22 @@ ul {
         transform: rotate(-45deg) translate(5px, -5px);
     }
 }
+
 /* User avatar */
 .user-avatar {
     position: relative;
     cursor: pointer;
-  }
-  
-  .avatar-img {
+}
+
+.avatar-img {
     width: 40px;
     height: 40px;
     border-radius: 50%;
     object-fit: cover;
-  }
-  
-  /* Dropdown Menu */
-  .dropdown-menu {
+}
+
+/* Dropdown Menu */
+.dropdown-menu {
     position: absolute;
     top: 100%;
     right: 0;
@@ -166,17 +191,16 @@ ul {
     display: flex;
     flex-direction: column;
     width: 150px;
-  }
-  
-  .dropdown-item {
+}
+
+.dropdown-item {
     padding: 10px;
     text-align: left;
     background-color: white;
     border: none;
     cursor: pointer;
-  }
-  
-  .dropdown-item:hover {
+}
+
+.dropdown-item:hover {
     background-color: #f1f1f1;
-  }
-  
+}
