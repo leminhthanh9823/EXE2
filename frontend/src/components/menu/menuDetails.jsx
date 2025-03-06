@@ -56,7 +56,9 @@ const MenuDetails = () => {
 
   const handlePurchase = async () => {
     try {
-      const amount = parseInt(menu.price.replace(/,/g, ""), 10) || 0;
+      const priceString = String(menu.price); // Chuyển thành string để tránh lỗi
+      const amount = parseInt(priceString.replace(/,/g, ""), 10) || 0;
+
       const response = await axios.post(
         "http://localhost:5000/api/transactions/create",
         {
