@@ -9,7 +9,7 @@ const TransactionList = () => {
 
   const fetchTransactions = async () => {
     try {
-      const response = await fetch("https://fitmenu.store/api/transactions");
+      const response = await fetch("http://localhost:5000/api/transactions");
       const data = await response.json();
       setTransactions(data);
     } catch (error) {
@@ -20,7 +20,7 @@ const TransactionList = () => {
   const checkTransactionStatus = async (transactionId) => {
     try {
       const response = await fetch(
-        `https://fitmenu.store/api/zalopay/status/${transactionId}`
+        `http://localhost:5000/api/zalopay/status/${transactionId}`
       );
       const data = await response.json();
 

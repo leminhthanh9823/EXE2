@@ -11,7 +11,7 @@ const VoucherList = () => {
   // Lấy danh sách voucher
   const fetchVouchers = useCallback(async () => {
     try {
-      const response = await axios.get("https://fitmenu.store/vouchers");
+      const response = await axios.get("http://localhost:5000/vouchers");
       if (response.data && response.data.data) {
         setVouchers(response.data.data);
       }
@@ -29,7 +29,7 @@ const VoucherList = () => {
 
     try {
       const response = await axios.get(
-        `https://fitmenu.store/api/auth/points/${userId}`
+        `http://localhost:5000/api/auth/points/${userId}`
       );
       if (response.data && response.data.points !== undefined) {
         setUserPoints(response.data.points);
@@ -58,7 +58,7 @@ const VoucherList = () => {
 
     try {
       const response = await axios.post(
-        "https://fitmenu.store/vouchers/redeem",
+        "http://localhost:5000/vouchers/redeem",
         {
           userId,
           voucherCode,

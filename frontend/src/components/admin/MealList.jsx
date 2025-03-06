@@ -8,7 +8,7 @@ const MealList = () => {
 
   useEffect(() => {
     axios
-      .get("https://fitmenu.store/api/meals")
+      .get("http://localhost:5000/api/meals")
       .then((response) => setMeals(response.data))
       .catch((error) => console.error("Lỗi khi lấy danh sách món ăn:", error));
   }, []);

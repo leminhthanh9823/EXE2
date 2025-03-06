@@ -175,3 +175,29 @@ export const getMenuById = async (req, res) => {
     res.status(500).json({ error: "Lỗi khi lấy chi tiết menu" });
   }
 };
+
+export const updateMenu = async (req, res) => {
+  try {
+    const { menuId } = req.params;
+    const { days } = req.body;
+
+    console.log("📌 Dữ liệu nhận từ frontend:", days); // Log dữ liệu từ frontend
+
+    const updatedMenu = await Menu.findByIdAndUpdate(
+      menuId,
+      { days },
+      { new: true }
+    );
+
+    if (!updatedMenu) {
+      console.log("❌ Không tìm thấy menu với ID:", menuId);
+      return res.status(404).json({ message: "Không tìm thấy menu" });
+    }
+
+    console.log("✅ Menu đã được cập nhật:", updatedMenu);
+    res.json(updatedMenu);
+  } catch (error) {
+    console.error("❌ Lỗi server khi cập nhật menu:", error);
+    res.status(500).json({ message: "Lỗi server khi cập nhật menu", error });
+  }
+};

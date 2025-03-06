@@ -25,7 +25,7 @@ const MenuPage = () => {
         if (!user || !user._id) return;
 
         const response = await axios.get(
-          `https://fitmenu.store/api/menus?userId=${user._id}`
+          `http://localhost:5000/api/menus?userId=${user._id}`
         );
         console.log("API Response:", response.data);
 

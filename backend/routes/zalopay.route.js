@@ -17,7 +17,7 @@ const ZALOPAY_ENDPOINT = "https://openapi.zalopay.vn/v2/create";
 router.post("/create", async (req, res) => {
   try {
     const embed_data = {
-      redirecturl: "https://fitmenu.store/transactions",
+      redirecturl: "http://localhost:5000/transactions",
     };
     const { userId, amount, code } = req.body;
     const app_trans_id = `${Date.now()}`; // Mã giao dịch duy nhất
@@ -31,7 +31,7 @@ router.post("/create", async (req, res) => {
       bank_code: "zalopayapp",
       description: `Thanh toán đơn hàng #${app_trans_id}`,
       timestamp: Date.now(),
-      callback_url: `https://fitmenu.store/api/zalopay/callback`,
+      callback_url: `http://localhost:5000/api/zalopay/callback`,
     };
     console.log("ZaloPay order:", order);
 

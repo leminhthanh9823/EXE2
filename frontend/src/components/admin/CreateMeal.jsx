@@ -13,7 +13,7 @@ const CreateMeal = () => {
 
   const handleCreateMeal = async () => {
     try {
-      await axios.post("https://fitmenu.store/api/meals/create", meal);
+      await axios.post("http://localhost:5000/api/meals/create", meal);
       alert("Món ăn đã được tạo!");
     } catch (error) {
       alert("Lỗi khi tạo món ăn");

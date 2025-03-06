@@ -8,7 +8,7 @@ const MenuList = () => {
 
   useEffect(() => {
     axios
-      .get("https://fitmenu.store/api/menus/admins")
+      .get("http://localhost:5000/api/menus/admins")
       .then((response) => setMenus(response.data))
       .catch((error) => console.error("Lỗi khi lấy danh sách menu:", error));
   }, []);

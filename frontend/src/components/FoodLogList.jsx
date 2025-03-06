@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 import "./FoodLogList.css";
 import FoodLogModal from "./FoodLogModal";
 
-const API_URL = "https://fitmenu.store/api/logs/food-log";
+const API_URL = "http://localhost:5000/api/logs/food-log";
 
 const FoodLogList = () => {
   const [foodLogs, setFoodLogs] = useState([]);
@@ -79,7 +79,7 @@ const FoodLogList = () => {
                         <div className="food-images">
                           {food.filePath && ( // Chỉ hiển thị ảnh nếu filePath có giá trị
                             <img
-                              src={`https://fitmenu.store/uploads/${food.filePath}`}
+                              src={`http://localhost:5000/uploads/${food.filePath}`}
                               alt={`${food.name}`}
                               width="100"
                             />
