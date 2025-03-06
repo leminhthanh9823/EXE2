@@ -6,30 +6,30 @@ export default function WorkArea() {
         {
             id: 1,
             icon: "assets/images/work1.svg",
-            title: "Fit Menu",
+            title: <strong>Mục tiêu</strong>,
             description:
-                "We maintain a busy network of fitmenu and social development staff along with local facilitators in the areas we work.",
+                "Chúng tôi không chỉ cung cấp giải pháp mà còn đồng hành cùng bạn trên hành trình hướng tới một lối sống lành mạnh và bền vững.",
         },
         {
             id: 2,
             icon: "assets/images/work2.svg",
-            title: "Individuals",
+            title: <strong>Tối ưu</strong>,
             description:
-                "We maintain a busy network of fitmenu and social development staff along with local facilitators in the areas we work.",
+                "Tiết kiệm thời gian và chi phí của bạn bằng cách tối ưu hóa quy trình lựa chọn thực phẩm và lên kế hoạch dinh dưỡng chi tiết.",
         },
         {
             id: 3,
             icon: "assets/images/work3.svg",
-            title: "Companies",
+            title: <strong>Sức khỏe</strong>,
             description:
-                "We maintain a busy network of fitmenu and social development staff along with local facilitators in the areas we work.",
+                "Chúng tôi tập trung vào cung cấp thông tin dinh dưỡng chuẩn xác và giải pháp cá nhân hóa để nâng cao sức khỏe toàn diện của bạn.",
         },
         {
             id: 4,
             icon: "assets/images/work4.svg",
-            title: "Education",
+            title: <strong>Thói quen</strong>,
             description:
-                "We maintain a busy network of fitmenu and social development staff along with local facilitators in the areas we work.",
+                "Chúng tôi giúp bạn hình thành lối sống khoa học, duy trì dinh dưỡng bền vững và tận hưởng sự cân bằng trong từng bữa ăn.",
         },
     ];
     return (
@@ -60,7 +60,7 @@ export default function WorkArea() {
                                         alt="Leaf Icon"
                                         className="mr-2"
                                     />
-                                    HOW WE WORK
+                                    Sứ mệnh của chúng tôi
                                 </h5>
                                 <h2
                                     className="wow fadeInUp text-3xl font-bold mt-4"
@@ -73,7 +73,7 @@ export default function WorkArea() {
                                         animationName: "fadeInUp",
                                     }}
                                 >
-                                    We work together for bettering tomorrow
+                                    Hàng đầu trong thiết kế thực đơn eatclean
                                 </h2>
                             </div>
                         </div>
@@ -89,10 +89,10 @@ export default function WorkArea() {
                                     animationName: "fadeInUp",
                                 }}
                             >
-                                We are an organization engaged in "Tree Planting" activities,
-                                therefore you can "Donate Trees." We also join in "Community
-                                fitmenu| Reforestation" to keep the earth together so that it
-                                remains sustainable.
+                                Chúng tôi muốn trở thành nền tảng hàng đầu trong lĩnh vực tư vấn 
+                                và thiết kế thực đơn Eat Clean, góp phần thay đổi nhận thức cộng đồng 
+                                về dinh dưỡng, giúp khách hàng duy trì lối sống khỏe mạnh thông qua 
+                                chế độ ăn uống cân bằng và phù hợp với nhu cầu cá nhân.
                             </p>
                         </div>
                     </div>
