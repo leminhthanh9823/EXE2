@@ -30,7 +30,7 @@ const FoodLogList = () => {
   }, [refresh]);
 
   const handleOpenModal = (log = null) => {
-    setSelectedLog(log); // Set log for editing
+    setSelectedLog(log);
     setIsModalOpen(true);
   };
 
@@ -77,10 +77,10 @@ const FoodLogList = () => {
                       <li key={foodIndex}>
                         {food.name}
                         <div className="food-images">
-                          {food.filePath && ( // Chỉ hiển thị ảnh nếu filePath có giá trị
+                          {food.filePath && (
                             <img
                               src={`http://localhost:5000/uploads/${food.filePath}`}
-                              alt={`${food.name}`}
+                              alt={food.name}
                               width="100"
                             />
                           )}
@@ -104,12 +104,10 @@ const FoodLogList = () => {
         ))
       )}
 
-      {/* Nút thêm mới */}
       <div className="log-entry add-log" onClick={() => handleOpenModal()}>
         <span>+</span>
       </div>
 
-      {/* Modal nhập dữ liệu */}
       {isModalOpen && (
         <FoodLogModal
           isOpen={isModalOpen}

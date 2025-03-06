@@ -127,3 +127,43 @@ footer {
   font-size: 14px;
   margin-right: 10px;
 }
+@media (max-width: 1024px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  .footer__item-title {
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .footer__item-title::after {
+    content: "▼";
+    font-size: 14px;
+    transition: transform 0.3s;
+  }
+
+  .footer__item-title.active::after {
+    transform: rotate(180deg);
+  }
+
+  .footer__item ul, .footer__item div {
+    transition: max-height 0.3s ease-in-out;
+  }
+}
+
+
+@media (max-width: 480px) {
+  .footer__copyright {
+    padding: 15px 0;
+  }
+
+  .footer__copyright p {
+    font-size: 14px;
+  }
+}

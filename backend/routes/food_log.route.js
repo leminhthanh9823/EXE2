@@ -5,7 +5,8 @@ import fs from "fs"; // Import fs để kiểm tra thư mục
 import {
   getFoodLogs,
   createFoodLog,
-  deleteFoodLog
+  updateFoodLog,
+  deleteFoodLog,
 } from "../controllers/food_log.controller.js";
 import { authenticateUser } from "../middleware/authenticateUser.js";
 
@@ -31,5 +32,6 @@ const upload = multer({ storage });
 
 router.get("/food-log", authenticateUser, getFoodLogs);
 router.post("/food-log", authenticateUser, upload.any(), createFoodLog);
+router.put("/food-log/:id", authenticateUser, upload.any(), updateFoodLog);
 router.delete("/food-log/:id", authenticateUser, deleteFoodLog);
 export default router;

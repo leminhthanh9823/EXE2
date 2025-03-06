@@ -35,6 +35,7 @@ import CreateMeal from "./components/admin/CreateMeal";
 import TransactionList from "./pages/user/TransactionList";
 import PaymentFailed from "./components/transaction_status/PaymentFailed";
 import PaymentSuccess from "./components/transaction_status/PaymentSuccess";
+import Profile from "./components/profile/Profile";
 
 // protect routes that require authentication
 const ProtectedRoute = ({ children }) => {
@@ -133,6 +134,18 @@ function App() {
                 <Header />
                 <main className="flex-grow">
                   <Home />
+                </main>
+                <Footer />
+              </div>
+            }
+          />
+          <Route
+            path="/profile"
+            element={
+              <div className="min-h-screen flex flex-col">
+                <Header />
+                <main className="flex-grow">
+                  <Profile />
                 </main>
                 <Footer />
               </div>

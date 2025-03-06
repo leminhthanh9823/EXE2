@@ -41,7 +41,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // app.use(
 //   cors({
-//     origin: "https://fitmenu.food", // Domain frontend của bạn
+//     origin: "http://localhost:5173", // Domain frontend của bạn
 //     credentials: true, // Cho phép gửi cookie
 //   })
 // );
@@ -108,5 +108,5 @@ io.on("connection", (socket) => {
 
 // Start the server
 server.listen(5000, "0.0.0.0", () => {
-  console.log("Server is running on https://fitmenu.store");
+  console.log("Server is running on http://localhost:5000");
 });

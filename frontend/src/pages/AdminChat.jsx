@@ -16,9 +16,13 @@ const AdminChat = () => {
   useEffect(() => {
     const fetchChats = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/api/chat/messages");
+        const response = await axios.get(
+          "http://localhost:5000/api/chat/messages"
+        );
         setChats(response.data);
-        const uniqueUsers = [...new Set(response.data.map((chat) => chat.userName))];
+        const uniqueUsers = [
+          ...new Set(response.data.map((chat) => chat.userName)),
+        ];
         setUsers(uniqueUsers);
       } catch (error) {
         console.error("Error fetching chats:", error);
@@ -43,8 +47,7 @@ const AdminChat = () => {
       const data = { userName, message, to: selectedUser };
       console.log("Sending message:", data);
       try {
-        const response = await axios.post("http://localhost:5000/api/chat/messages", data);
-        socket.emit("message", response.data);
+        await axios.post("http://localhost:5000/api/chat/messages", data);
         setMessage("");
       } catch (error) {
         console.error("Error sending message:", error);
@@ -53,34 +56,48 @@ const AdminChat = () => {
   };
 
   const filteredChats = selectedUser
-    ? chats.filter((chat) => (chat.userName === selectedUser && chat.to === userName) || (chat.userName === userName && chat.to === selectedUser))
+    ? chats.filter(
+        (chat) =>
+          (chat.userName === selectedUser && chat.to === userName) ||
+          (chat.userName === userName && chat.to === selectedUser)
+      )
     : [];
 
   return (
     <div className="flex flex-col w-full h-screen bg-gray-100">
-      <Header />
       <div className="overflow-y-auto p-4 mb-4 max-w-6xl mx-auto w-full">
         <div className="flex">
           <div className="w-1/4 p-4 bg-white shadow rounded">
             <h2 className="text-lg font-bold mb-4">Users</h2>
             <ul>
-              {users.filter((user) => user !== "Admin").map((user, index) => (
-                <li
-                  key={index}
-                  className="cursor-pointer p-2 mb-2 border rounded hover:bg-gray-200"
-                  onClick={() => setSelectedUser(user)}
-                >
-                  {user}
-                </li>
-              ))}
+              {users
+                .filter((user) => user !== "Admin")
+                .map((user, index) => (
+                  <li
+                    key={index}
+                    className="cursor-pointer p-2 mb-2 border rounded hover:bg-gray-200"
+                    onClick={() => setSelectedUser(user)}
+                  >
+                    {user}
+                  </li>
+                ))}
             </ul>
           </div>
           <div className="w-3/4 p-4 bg-white shadow rounded mb-4 ml-4">
             <h2 className="text-lg font-bold mb-4">Chat with {selectedUser}</h2>
             {filteredChats.map((chat, index) => (
-              <div key={index} className={`my-2 ${chat.userName === userName ? "text-right" : "text-left"}`}>
+              <div
+                key={index}
+                className={`my-2 ${
+                  chat.userName === userName ? "text-right" : "text-left"
+                }`}
+              >
                 <div className="font-bold mb-1">{chat.userName}</div>
-                <div className={`inline-block p-4 rounded shadow ${chat.userName === userName ? "bg-green-100" : "bg-white"}`}>
+                <div
+                  className={`inline-block p-4 rounded shadow ${
+                    chat.userName === userName ? "bg-green-100" : "bg-white"
+                  }`}
+                >
                   {chat.message}
                 </div>
               </div>
@@ -88,7 +105,10 @@ const AdminChat = () => {
           </div>
         </div>
       </div>
-      <form onSubmit={sendMessage} className="flex p-4 bg-white shadow max-w-4xl mx-auto w-full">
+      <form
+        onSubmit={sendMessage}
+        className="flex p-4 bg-white shadow max-w-4xl mx-auto w-full"
+      >
         <input
           type="text"
           value={message}

@@ -26,7 +26,9 @@ const Realtimechat = () => {
     // Fetch chat messages from the server
     const fetchMessages = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/api/chat/messages");
+        const response = await axios.get(
+          "http://localhost:5000/api/chat/messages"
+        );
         setMessages(response.data);
       } catch (error) {
         console.error("Error fetching messages:", error);
@@ -52,7 +54,10 @@ const Realtimechat = () => {
       const data = { userName, message, to: selectedUser };
       console.log("Sending message:", data);
       try {
-        const response = await axios.post("http://localhost:5000/api/chat/messages", data);
+        const response = await axios.post(
+          "http://localhost:5000/api/chat/messages",
+          data
+        );
         socket.emit("message", response.data);
         setMessage("");
       } catch (error) {
@@ -62,23 +67,36 @@ const Realtimechat = () => {
   };
 
   const filteredMessages = messages.filter(
-    (msg) => (msg.userName === userName && msg.to === selectedUser) || (msg.userName === selectedUser && msg.to === userName)
+    (msg) =>
+      (msg.userName === userName && msg.to === selectedUser) ||
+      (msg.userName === selectedUser && msg.to === userName)
   );
 
   return (
     <div className="flex flex-col w-full h-screen bg-gray-100">
-      <Header />
       <div className="overflow-y-auto bg-white shadow rounded p-4 mb-4 max-w-4xl mx-auto w-full">
         {filteredMessages.map((msg, index) => (
-          <div key={index} className={`my-2 ${msg.userName === userName ? "text-right" : "text-left"}`}>
+          <div
+            key={index}
+            className={`my-2 ${
+              msg.userName === userName ? "text-right" : "text-left"
+            }`}
+          >
             <div className="font-bold mb-1">{msg.userName}</div>
-            <div className={`inline-block p-4 rounded shadow ${msg.userName === userName ? "bg-green-100" : "bg-white"}`}>
+            <div
+              className={`inline-block p-4 rounded shadow ${
+                msg.userName === userName ? "bg-green-100" : "bg-white"
+              }`}
+            >
               {msg.message}
             </div>
           </div>
         ))}
       </div>
-      <form onSubmit={sendMessage} className="flex p-4 bg-white shadow mb-4 max-w-4xl mx-auto w-full">
+      <form
+        onSubmit={sendMessage}
+        className="flex p-4 bg-white shadow mb-4 max-w-4xl mx-auto w-full"
+      >
         <input
           type="text"
           value={message}

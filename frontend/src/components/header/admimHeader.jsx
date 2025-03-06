@@ -1,21 +1,27 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "./header.css";
-import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuthStore } from "../../store/authStore";
 
 export default function AdminHeader() {
   const { isAuthenticated, user, logout } = useAuthStore();
   const navigate = useNavigate();
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  useEffect(() => {
+    // Đóng menu khi tải lại trang
+    setMenuOpen(false);
+  }, []);
 
   const handleLogout = () => {
-    logout(); // Clear auth state
-    navigate("/login"); // Redirect to login page
+    logout();
+    navigate("/login");
+    setMenuOpen(false); // Đóng menu sau khi logout
   };
 
   return (
     <header className="header">
-      <div className="header-section">
+      <div className="">
         <div className="container">
           <div className="header-wrapper">
             <div className="logo-menu">
@@ -26,30 +32,45 @@ export default function AdminHeader() {
                 />
               </a>
             </div>
-            <div className="header-bar d-xl-none">
+
+            {/* Nút mở menu trên điện thoại */}
+            <div
+              className={`header-bar d-xl-none ${menuOpen ? "active" : ""}`}
+              onClick={() => setMenuOpen(!menuOpen)}
+            >
               <span></span>
               <span></span>
               <span></span>
             </div>
-            <ul className="main-menu">
+
+            {/* Menu chính */}
+            <ul className={`main-menu ${menuOpen ? "open" : ""}`}>
               <li>
-                <Link to="/">Home </Link>
+                <Link to="/" onClick={() => setMenuOpen(false)}>
+                  Home
+                </Link>
               </li>
               <li>
-                <Link to="/admin/menus">Menu </Link>
+                <Link to="/admin/menus" onClick={() => setMenuOpen(false)}>
+                  Menu
+                </Link>
               </li>
               <li>
-                <a href="/admin/meals">Meal </a>
+                <Link to="/admin/meals" onClick={() => setMenuOpen(false)}>
+                  Meal
+                </Link>
               </li>
               <li>
-                <a href="/admin/chat">Chat</a>
+                <Link to="/admin/chat" onClick={() => setMenuOpen(false)}>
+                  Chat
+                </Link>
               </li>
-              
-              <li className="m-0 menu-btn ">
+
+              <li className="m-0 menu-btn">
                 {isAuthenticated && (
                   <button
                     onClick={handleLogout}
-                    className="bg-red-500 px-3 py-1 rounded"
+                    className="bg-red-500 text-white px-3 py-1 rounded"
                   >
                     Logout
                   </button>

@@ -39,11 +39,6 @@ const QRCodePage = () => {
 
     // Kiểm tra trạng thái giao dịch mỗi 5s
     const intervalId = setInterval(async () => {
-      console.log("Checking transaction status:", {
-        transactionId,
-        userId,
-        menuId,
-      });
       try {
         const response = await axios.get(
           `http://localhost:5000/api/transactions/status/${transactionId}?userId=${userId}&menuId=${menuId}`
@@ -61,25 +56,35 @@ const QRCodePage = () => {
       }
     }, 5000);
 
-    // Bộ đếm thời gian 120s
+    // Bộ đếm thời gian
     const countdownInterval = setInterval(() => {
-      setCountdown((prev) => prev - 1);
+      setCountdown((prev) => {
+        if (prev === 1) {
+          clearInterval(countdownInterval);
+          navigate(-1); // Quay lại trang trước đó khi countdown = 0
+          return 0;
+        }
+        return prev - 1;
+      });
     }, 1000);
-
-    const timeoutId = setTimeout(() => {
-      clearInterval(intervalId);
-      navigate("/");
-    }, 120000);
 
     return () => {
       clearInterval(intervalId);
       clearInterval(countdownInterval);
-      clearTimeout(timeoutId);
     };
   }, [transactionId, userId, menuId, navigate]);
 
   return (
-    <div>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
+        height: "100vh",
+        textAlign: "center",
+      }}
+    >
       <h2>Quét mã QR để thanh toán</h2>
       {loading ? (
         <p>Đang tải mã QR...</p>

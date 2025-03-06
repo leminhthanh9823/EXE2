@@ -43,68 +43,132 @@ const MenuPage = () => {
 
   if (loading)
     return (
-      <div className="flex justify-center items-center h-screen">
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+          paddingBottom: "env(safe-area-inset-bottom)",
+        }}
+      >
         <CircularProgress />
       </div>
     );
 
   if (error)
     return (
-      <Typography className="text-red-500 text-center mt-4">{error}</Typography>
+      <Typography
+        style={{ color: "red", textAlign: "center", marginTop: "16px" }}
+      >
+        {error}
+      </Typography>
     );
 
   return (
-    <div className="p-6 max-w-4xl mx-auto">
-      <h1 className="text-2xl font-bold mb-4">Thực Đơn Của Tôi</h1>
+    <div
+      style={{
+        padding: "24px",
+        maxWidth: "800px",
+        margin: "0 auto",
+        paddingTop: "env(safe-area-inset-top)",
+        paddingBottom: "env(safe-area-inset-bottom)",
+      }}
+    >
+      <h1
+        style={{ fontSize: "22px", fontWeight: "bold", marginBottom: "12px" }}
+      >
+        Thực Đơn Của Tôi
+      </h1>
 
       {menus.length > 0 ? (
         <>
-          {/* Thực đơn đang theo dõi (menu đầu tiên) */}
           {/* Thực đơn của tôi */}
           {myMenus.length > 0 ? (
             myMenus.map((menu) => (
               <Card
                 key={menu._id}
-                className="border border-gray-200 shadow-md mb-6 p-4"
+                role="button"
+                style={{
+                  border: "1px solid #ddd",
+                  boxShadow: "0px 2px 4px rgba(0,0,0,0.1)",
+                  padding: "14px",
+                  cursor: "pointer",
+                  pointerEvents: "auto",
+                }}
+                onClick={() => navigate("/menu-details", { state: { menu } })}
+                onTouchStart={() =>
+                  navigate("/menu-details", { state: { menu } })
+                }
               >
                 <CardContent>
-                  <h3 className="text-lg font-semibold">{menu.name}</h3>
-                  <p className="text-gray-600 text-sm mb-2">{menu.details}</p>
-                  <Button
-                    variant="outlined"
-                    size="small"
-                    onClick={() =>
-                      navigate("/menu-details", { state: { menu } })
-                    }
+                  <h3 style={{ fontSize: "16px", fontWeight: "bold" }}>
+                    {menu.name}
+                  </h3>
+                  <p
+                    style={{
+                      color: "#666",
+                      fontSize: "13px",
+                      marginBottom: "6px",
+                    }}
                   >
+                    {menu.details}
+                  </p>
+                  <Button variant="outlined" size="small">
                     Xem Chi Tiết
                   </Button>
                 </CardContent>
               </Card>
             ))
           ) : (
-            <Typography className="text-center text-gray-500 mt-4">
+            <Typography
+              style={{ textAlign: "center", color: "#888", marginTop: "12px" }}
+            >
               Bạn chưa có thực đơn nào.
             </Typography>
           )}
+
           {/* Danh sách gợi ý (các menu còn lại) */}
-          <h2 className="text-xl font-bold mb-3">Gợi Ý Thực Đơn Khác</h2>
-          <Grid container spacing={3}>
+          <h2
+            style={{
+              fontSize: "18px",
+              fontWeight: "bold",
+              marginBottom: "10px",
+            }}
+          >
+            Gợi Ý Thực Đơn Khác
+          </h2>
+          <Grid container spacing={2}>
             {menus.map((menu) => (
-              <Grid item xs={12} md={6} key={menu._id}>
-                <Card className="border border-gray-200 shadow-md p-4">
+              <Grid item xs={12} sm={6} key={menu._id}>
+                <Card
+                  role="button"
+                  style={{
+                    border: "1px solid #ddd",
+                    boxShadow: "0px 2px 4px rgba(0,0,0,0.1)",
+                    padding: "14px",
+                    cursor: "pointer",
+                    pointerEvents: "auto",
+                  }}
+                  onClick={() => navigate("/menu-details", { state: { menu } })}
+                  onTouchStart={() =>
+                    navigate("/menu-details", { state: { menu } })
+                  }
+                >
                   <CardContent>
-                    <h3 className="text-md font-semibold">{menu.name}</h3>
-                    <p className="text-gray-600 text-sm mb-2">{menu.details}</p>
-                    <Button
-                      variant="outlined"
-                      size="small"
-                      onClick={() =>
-                        navigate("/menu-details", {
-                          state: { menu },
-                        })
-                      }
+                    <h3 style={{ fontSize: "14px", fontWeight: "bold" }}>
+                      {menu.name}
+                    </h3>
+                    <p
+                      style={{
+                        color: "#666",
+                        fontSize: "13px",
+                        marginBottom: "6px",
+                      }}
                     >
+                      {menu.details}
+                    </p>
+                    <Button variant="outlined" size="small">
                       Xem Chi Tiết
                     </Button>
                   </CardContent>
@@ -114,7 +178,9 @@ const MenuPage = () => {
           </Grid>
         </>
       ) : (
-        <Typography className="text-center text-gray-500 mt-4">
+        <Typography
+          style={{ textAlign: "center", color: "#888", marginTop: "12px" }}
+        >
           Không có thực đơn nào.
         </Typography>
       )}
