@@ -42,14 +42,11 @@ export default function Header() {
                 <Link to="/">Home </Link>
               </li>
               <li>
-                <Link to="/my-menu">My Menu </Link>
-              </li>
-              <li>
-                <a href="#">Services </a>
+                <Link to="/my-menu">Menu của tôi </Link>
               </li>
               {!user?.isAdmin ? (
                 <li>
-                  <a href="/realtimechat">Livechat Support </a>
+                  <a href="/realtimechat">Hỗ trợ </a>
                 </li>
               ) : (
                 <li>
@@ -57,10 +54,10 @@ export default function Header() {
                 </li>
               )}
               <li>
-                <a href="/food-logs">Your Diary</a>
+                <a href="/food-logs">Nhật ký của tôi</a>
               </li>
               <li>
-                <a href="/voucher-shop">Voucher</a>
+                <a href="/voucher-shop">Cửa hàng voucher</a>
               </li>
               <li className="m-0 menu-btn ">
                 {user ? (
