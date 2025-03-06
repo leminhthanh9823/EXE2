@@ -15,7 +15,7 @@ const FoodLogModal = ({ isOpen, onClose, logData, onSuccess }) => {
       { name: "Dinner", foods: [] },
     ],
     notes: "",
-    calories: "",
+    description: "",
   });
 
   useEffect(() => {
@@ -40,7 +40,7 @@ const FoodLogModal = ({ isOpen, onClose, logData, onSuccess }) => {
             menuId: "",
             meals: defaultMeals,
             notes: "",
-            calories: "",
+            description: "",
           }
     );
   }, [logData]);
