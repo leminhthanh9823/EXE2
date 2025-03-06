@@ -41,7 +41,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // app.use(
 //   cors({
-//     origin: "http://localhost:5173", // Domain frontend của bạn
+//     origin: "https://fitmenu.food", // Domain frontend của bạn
 //     credentials: true, // Cho phép gửi cookie
 //   })
 // );

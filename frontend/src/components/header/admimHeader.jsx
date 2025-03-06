@@ -65,6 +65,11 @@ export default function AdminHeader() {
                   Chat
                 </Link>
               </li>
+              <li>
+                <Link to="/admin/transactions" onClick={() => setMenuOpen(false)}>
+                  Quản lý Transaction
+                </Link>
+              </li>
 
               <li className="m-0 menu-btn">
                 {isAuthenticated && (

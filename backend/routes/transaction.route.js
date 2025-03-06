@@ -207,7 +207,7 @@ router.get("/status/:transactionId", async (req, res) => {
 
     const transaction = await Transaction.findById(transactionId);
     console.log("Checking transaction status:", transaction);
-    
+
     if (!transaction) {
       return res
         .status(404)
@@ -239,6 +239,61 @@ router.get("/status/:transactionId", async (req, res) => {
   } catch (error) {
     console.error("Lỗi khi kiểm tra trạng thái giao dịch:", error);
     return res.status(500).json({ status: "error", message: "Lỗi server" });
+  }
+});
+
+router.get("/", async (req, res) => {
+  try {
+    const transactions = await Transaction.find()
+      .populate("menuId", "menuPackage") // Lấy title của menu
+      .populate("userId", "email"); // Lấy name của user
+
+    res.json(transactions);
+  } catch (error) {
+    res.status(500).json({ message: "Lỗi khi lấy danh sách giao dịch" });
+  }
+});
+
+router.put("/:id", async (req, res) => {
+  const { id } = req.params;
+  const { status } = req.body;
+
+  try {
+    // Kiểm tra giao dịch có tồn tại không
+    const transaction = await Transaction.findById(id);
+    if (!transaction) {
+      return res.status(404).json({ message: "Giao dịch không tồn tại!" });
+    }
+
+    // Cập nhật trạng thái giao dịch
+    transaction.status = status;
+    await transaction.save();
+    if (transaction.status === "completed") {
+      const originalMenu = await Menu.findById(transaction.menuId);
+      console.log("Original menu:", transaction.menuId);
+      if (!originalMenu) {
+        return res
+          .status(404)
+          .json({ status: "error", message: "Không tìm thấy menu" });
+      }
+
+      // Tạo menu mới cho user
+      const newMenu = new Menu({
+        userId: transaction.userId,
+        menuPackage: originalMenu.menuPackage,
+        days: originalMenu.days,
+        price: originalMenu.price,
+        isDefault: false,
+      });
+
+      await newMenu.save();
+    }
+    res
+      .status(200)
+      .json({ message: "Cập nhật trạng thái thành công!", transaction });
+  } catch (error) {
+    console.error("Lỗi khi cập nhật trạng thái:", error);
+    res.status(500).json({ message: "Lỗi máy chủ khi cập nhật trạng thái!" });
   }
 });
 

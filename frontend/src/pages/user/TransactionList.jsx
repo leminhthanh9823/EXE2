@@ -33,6 +33,7 @@ const TransactionList = () => {
       );
 
       fetchTransactions();
+      window.location.reload();
     } catch (error) {
       alert("⚠ Không thể kiểm tra giao dịch!");
     }

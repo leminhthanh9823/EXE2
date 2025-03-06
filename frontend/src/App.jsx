@@ -33,6 +33,7 @@ import MenuAdminDetails from "./components/admin/MenuAdminDetails";
 import CreateMenu from "./components/admin/CreateMenu";
 import CreateMeal from "./components/admin/CreateMeal";
 import TransactionList from "./pages/user/TransactionList";
+import TransactionListAdmin from "./components/admin/TransactionList";
 import PaymentFailed from "./components/transaction_status/PaymentFailed";
 import PaymentSuccess from "./components/transaction_status/PaymentSuccess";
 import Profile from "./components/profile/Profile";
@@ -208,6 +209,14 @@ function App() {
             element={
               <ProtectedAdminRoute>
                 <MenuList />
+              </ProtectedAdminRoute>
+            }
+          />
+          <Route
+            path="/admin/transactions"
+            element={
+              <ProtectedAdminRoute>
+                <TransactionListAdmin />
               </ProtectedAdminRoute>
             }
           />

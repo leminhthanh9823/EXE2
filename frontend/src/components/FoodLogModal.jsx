@@ -138,7 +138,9 @@ const FoodLogModal = ({ isOpen, onClose, logData, onSuccess }) => {
 
           {log.meals.map((meal, mealIndex) => (
             <div key={mealIndex}>
-              <h1 style={{fontWeight: "bold", fontSize: "30px"}}>{meal.name}</h1>
+              <h1 style={{ fontWeight: "bold", fontSize: "30px" }}>
+                {meal.name}
+              </h1>
               {meal.foods.map((food, foodIndex) => (
                 <div key={foodIndex}>
                   <input
@@ -155,7 +157,11 @@ const FoodLogModal = ({ isOpen, onClose, logData, onSuccess }) => {
                   />
                 </div>
               ))}
-              <button style={{padding: "10px", margin: "20px"}} type="button" onClick={() => addFood(mealIndex)}>
+              <button
+                style={{ padding: "10px", margin: "20px" }}
+                type="button"
+                onClick={() => addFood(mealIndex)}
+              >
                 + Thêm món
               </button>
             </div>

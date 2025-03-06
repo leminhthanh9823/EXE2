@@ -77,7 +77,8 @@ export const getAllMenus = async (req, res) => {
     const normal_menus = await Menu.find({
       userId: { $in: adminUserIds },
     }).populate("days.meals.breakfast days.meals.lunch days.meals.dinner");
-
+    console.log("🚀 ~ file: menu.controller.js ~ line 94 ~ getAllMenus ~ normal_menus", normal_menus);
+    
     // Chuẩn hóa dữ liệu trước khi gửi về React
     const formattedMenus = menus.map((menu) => ({
       _id: menu._id,
