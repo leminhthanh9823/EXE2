@@ -128,9 +128,8 @@ ul {
 
     .header-wrapper .main-menu li {
         width: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;    
+        text-align: left;
+        margin: 10px 0;
     }
 
     .header-wrapper .main-menu .menu-btn a {

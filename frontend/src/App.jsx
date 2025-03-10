@@ -37,16 +37,6 @@ import TransactionListAdmin from "./components/admin/TransactionList";
 import PaymentFailed from "./components/transaction_status/PaymentFailed";
 import PaymentSuccess from "./components/transaction_status/PaymentSuccess";
 import Profile from "./components/profile/Profile";
-import Food from "./components/blogs/food";
-import CanhChua from "./components/blogs/canhChua";
-import Practice from "./components/practice/practice";
-import Teriyaki from "./components/blogs/teriyaki";
-import MienNamHuong from "./components/blogs/mienNamHuong";
-import DauMiso from "./components/blogs/dauMiso";
-import Practice1 from "./components/practice/practice1";
-import Practice3 from "./components/practice/practice3";
-import Practice2 from "./components/practice/practice2";
-import Practice4 from "./components/practice/practice4";
 
 // protect routes that require authentication
 const ProtectedRoute = ({ children }) => {
@@ -286,88 +276,9 @@ function App() {
               </ProtectedRoute>
             }
           />
-          <Route
-            path="/food-blog"
-            element={
-              <ProtectedRoute>
-                <Food />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/canh-chua"
-            element={
-              <ProtectedRoute>
-                <CanhChua />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/teriyaki"
-            element={
-              <ProtectedRoute>
-                <Teriyaki />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/mien-nam"
-            element={
-              <ProtectedRoute>
-                <MienNamHuong />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/dau-phu"
-            element={
-              <ProtectedRoute>
-                <DauMiso />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/practice"
-            element={
-              <ProtectedRoute>
-                <Practice />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/practice1"
-            element={
-              <ProtectedRoute>
-                <Practice1 />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/practice2"
-            element={
-              <ProtectedRoute>
-                <Practice2 />
-              </ProtectedRoute>
-            }
-          />{" "}
-          <Route
-            path="/practice4"
-            element={
-              <ProtectedRoute>
-                <Practice4 />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/practice3"
-            element={
-              <ProtectedRoute>
-                <Practice3 />
-              </ProtectedRoute>
-            }
-          />
           <Route path="/verify-email" element={<EmailVerificationPage />} />
           <Route path="*" element={<Navigate to="/" replace />} />
+
           <Route
             path="/realtimechat"
             element={
@@ -376,6 +287,7 @@ function App() {
               </ProtectedRoute>
             }
           />
+
           <Route
             path="/admin/chat"
             element={

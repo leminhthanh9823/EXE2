@@ -27,7 +27,7 @@ const TransactionList = () => {
     try {
       const response = await axios.get(API_URL);
       console.log("Danh sách giao dịch:", response.data);
-
+      
       setTransactions(response.data);
     } catch (error) {
       console.error("Lỗi khi tải giao dịch:", error);
