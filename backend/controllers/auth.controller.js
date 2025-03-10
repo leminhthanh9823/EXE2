@@ -86,6 +86,7 @@ const login = async (req, res) => {
         _id: user._id,
         email: user.email,
         name: user.name,
+        isAdmin: user.isAdmin,
         isVerified: user.isVerified,
       },
     });
@@ -223,12 +224,11 @@ const getUser = async (req, res) => {
   }
 };
 
-const updateUser = async (req,res) => {
+const updateUser = async (req, res) => {
   try {
-    
     const user = await User.findById(req.body.userId);
-    if(!user){
-      return res.status(404).json({message: "Không Tìm Thấy Người Dùng"});
+    if (!user) {
+      return res.status(404).json({ message: "Không Tìm Thấy Người Dùng" });
     }
     user.name = req.body.name || user.name;
     user.email = req.body.email || user.email;
@@ -241,12 +241,12 @@ const updateUser = async (req,res) => {
     user.foodAllergies = req.body.foodAllergies || user.foodAllergies;
     user.medicalConditions = req.body.medicalConditions || user.medicalConditions;
     await user.save();
-    res.status(200).json({message: "Cập Nhật Thông Tin Thành Công"});
-  }catch(error){
+    res.status(200).json({ message: "Cập Nhật Thông Tin Thành Công" });
+  } catch (error) {
     console.log("Error in updateUser ", error);
-    res.status(500).json({message: "Lỗi Server"});
+    res.status(500).json({ message: "Lỗi Server" });
   }
-}
+};
 
 export {
   register,
@@ -257,5 +257,5 @@ export {
   resetPassword,
   checkAuth,
   getUser,
-  updateUser
+  updateUser,
 };

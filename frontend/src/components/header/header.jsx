@@ -41,7 +41,10 @@ export default function Header() {
         <div className="header-wrapper">
           <div className="logo-menu">
             <a href="/" className="logo">
-              <img src="assets/images/476495700_492431837268688_7240872719589669646_n.png" alt="logo" style={{ width: "50%", height: "50%" }} />
+              <img style={{ width: "90px" }}
+                src="https://i.postimg.cc/4NNvB9Wm/476495700-492431837268688-7240872719589669646-n.png"
+                alt="logo"
+              />
             </a>
           </div>
 

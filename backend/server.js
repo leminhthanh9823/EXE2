@@ -37,14 +37,12 @@ app.use(cors(corsOptions));
 app.use(bodyParser.json());
 app.use(express.json());
 app.use(cookieParser());
-app.use(express.urlencoded({ extended: true }));
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Credentials", "true");
+  next();
+});
 
-// app.use(
-//   cors({
-//     origin: "https://fitmenu.food", // Domain frontend của bạn
-//     credentials: true, // Cho phép gửi cookie
-//   })
-// );
+app.use(express.urlencoded({ extended: true }));
 
 //api auth người dùng
 app.use("/api/auth", authRoutes);

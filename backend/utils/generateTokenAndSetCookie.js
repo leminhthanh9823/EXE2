@@ -13,6 +13,7 @@ const generateTokenAndSetCookie = (res, userId) => {
     sameSite: "none", // Để cookie được gửi từ domain khác
     maxAge: 7 * 24 * 60 * 60 * 1000, // 7 ngày
   });
+  return token;
 };
 
 export default generateTokenAndSetCookie;

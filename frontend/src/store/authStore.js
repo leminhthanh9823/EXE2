@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import axios from "axios";
-
+import Cookies from "js-cookie";
 const REACT_APP_API_URL = "http://localhost:5000/api/auth";
 
 axios.defaults.withCredentials = true;
@@ -37,10 +37,16 @@ export const useAuthStore = create((set) => ({
   login: async (email, password) => {
     set({ isLoading: true, error: null });
     try {
-      const response = await axios.post(`${REACT_APP_API_URL}/login`, {
-        email,
-        password,
-      });
+      const response = await axios.post(
+        `${REACT_APP_API_URL}/login`,
+        {
+          email,
+          password,
+        },
+        {
+          withCredentials: true,
+        }
+      );
       console.log(response.data);
 
       set({
@@ -49,6 +55,17 @@ export const useAuthStore = create((set) => ({
         error: null,
         isLoading: false,
       });
+
+      const token = response.data.token;
+
+      // Set cookie với token
+      Cookies.set("token", token, {
+        expires: 1, // Hết hạn sau 1 ngày
+        secure: true, // Chỉ hoạt động trên HTTPS
+        sameSite: "None",
+      });
+
+      localStorage.setItem("user", JSON.stringify(response.data.user));
 
       return response.data;
     } catch (error) {
@@ -70,6 +87,8 @@ export const useAuthStore = create((set) => ({
         error: null,
         isLoading: false,
       });
+      Cookies.remove("token");
+      localStorage.removeItem("user");
     } catch (error) {
       set({ error: "Error logging out", isLoading: false });
       throw error;
