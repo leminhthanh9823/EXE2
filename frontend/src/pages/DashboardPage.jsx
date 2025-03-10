@@ -8,7 +8,6 @@ const DashboardPage = () => {
   const handleLogout = () => {
     logout();
   };
-
   return (
     <motion.div
       initial={{ opacity: 0, scale: 0.9 }}
@@ -33,11 +32,6 @@ const DashboardPage = () => {
           </h3>
           <p className="text-gray-300">Name: {user.name}</p>
           <p className="text-gray-300">Email: {user.email}</p>
-          <p className="text-gray-300">Health Goals: {user.healthGoals}</p>
-          <p className="text-gray-300">Activity Level: {user.activityLevel}</p>
-          <p className="text-gray-300">Daily Work: {user.dailyWork}</p>
-          <p className="text-gray-300">Food Allergies: {user.foodAllergies}</p>
-          <p className="text-gray-300">Medical Conditions: {user.medicalConditions}</p>
         </motion.div>
         <motion.div
           className="p-4 bg-gray-800 bg-opacity-50 rounded-lg border border-gray-700"
@@ -58,6 +52,7 @@ const DashboardPage = () => {
           </p>
           <p className="text-gray-300">
             <span className="font-bold">Last Login: </span>
+
             {formatDate(user.lastLoginDate)}
           </p>
         </motion.div>
@@ -74,8 +69,8 @@ const DashboardPage = () => {
           whileTap={{ scale: 0.95 }}
           onClick={handleLogout}
           className="w-full py-3 px-4 bg-gradient-to-r from-green-500 to-emerald-600 text-white 
-          font-bold rounded-lg shadow-lg hover:from-green-600 hover:to-emerald-700
-          focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 focus:ring-offset-gray-900"
+				font-bold rounded-lg shadow-lg hover:from-green-600 hover:to-emerald-700
+				 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 focus:ring-offset-gray-900"
         >
           Logout
         </motion.button>
@@ -83,5 +78,4 @@ const DashboardPage = () => {
     </motion.div>
   );
 };
-
 export default DashboardPage;
