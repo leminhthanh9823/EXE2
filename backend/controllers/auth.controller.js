@@ -235,6 +235,11 @@ const updateUser = async (req,res) => {
     user.height = req.body.height || user.height;
     user.weight = req.body.weight || user.weight;
     user.age = req.body.age || user.age;
+    user.healthGoals = req.body.healthGoals || user.healthGoals;
+    user.activityLevel = req.body.activityLevel || user.activityLevel;
+    user.dailyWork = req.body.dailyWork || user.dailyWork;
+    user.foodAllergies = req.body.foodAllergies || user.foodAllergies;
+    user.medicalConditions = req.body.medicalConditions || user.medicalConditions;
     await user.save();
     res.status(200).json({message: "Cập Nhật Thông Tin Thành Công"});
   }catch(error){
