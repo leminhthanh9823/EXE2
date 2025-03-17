@@ -12,7 +12,7 @@ import {
 import CheckIcon from "@mui/icons-material/Check";
 import CloseIcon from "@mui/icons-material/Close";
 
-const API_URL = "http://localhost:5000/api/transactions";
+const API_URL = "https://localhost:5000/api/transactions";
 
 const TransactionList = () => {
   const [transactions, setTransactions] = useState([]);

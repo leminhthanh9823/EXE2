@@ -118,7 +118,7 @@ export const useAuthStore = create((set) => ({
     set({ isCheckingAuth: true, error: null });
     try {
       const response = await axios.get(`${REACT_APP_API_URL}/check-auth`);
-      console.log(response.data);
+      console.log("Check-auth response:", response.data);
 
       if (response.data.user) {
         set({
@@ -127,13 +127,23 @@ export const useAuthStore = create((set) => ({
           isCheckingAuth: false,
         });
       } else {
-        set({
-          user: null,
-          isAuthenticated: false,
-          isCheckingAuth: false,
-        });
+        const storedUser = localStorage.getItem("user");
+        if (storedUser) {
+          set({
+            user: JSON.parse(storedUser),
+            isAuthenticated: true,
+            isCheckingAuth: false,
+          });
+        } else {
+          set({
+            user: null,
+            isAuthenticated: false,
+            isCheckingAuth: false,
+          });
+        }
       }
     } catch (error) {
+      console.log("Check-auth error:", error);
       set({ error: null, isCheckingAuth: false, isAuthenticated: false });
     }
   },

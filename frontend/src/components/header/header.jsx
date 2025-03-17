@@ -8,21 +8,25 @@ export default function Header() {
   const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [showMarch8, setShowMarch8] = useState(false);
 
   useEffect(() => {
-    // Close the menu when the page is refreshed
     setMenuOpen(false);
+    const today = new Date();
+    if (today.getMonth() === 2 ) {
+      setShowMarch8(true);
+    }
   }, []);
 
   const handleLogout = () => {
     logout();
     navigate("/login");
-    setDropdownOpen(false); // Close the dropdown after logout
+    setDropdownOpen(false);
   };
 
   const handleProfile = () => {
     navigate("/profile");
-    setDropdownOpen(false); // Close the dropdown when profile is clicked
+    setDropdownOpen(false);
   };
 
   const handleLogin = () => {
@@ -38,27 +42,52 @@ export default function Header() {
   return (
     <header className="header">
       <div className="container">
+        {showMarch8 && (
+          <div className="flower-fall">
+            <div className="flower"></div>
+            <div className="flower"></div>
+            <div className="flower"></div>
+            <div className="flower"></div>
+            <div className="flower"></div>
+            <div className="flower"></div>
+            <div className="flower"></div>
+            <div className="flower"></div>
+            <div className="flower"></div>
+            <div className="flower"></div>
+            <div className="flower"></div>
+            <div className="flower"></div>
+            <div className="flower"></div>
+            <div className="flower"></div>
+            <div className="flower"></div>
+          </div>
+        )}
+
         <div className="header-wrapper">
           <div className="logo-menu">
             <a href="/" className="logo">
-              <img style={{ width: "90px" }}
+              <img
+                style={{ width: "90px" }}
                 src="https://i.postimg.cc/4NNvB9Wm/476495700-492431837268688-7240872719589669646-n.png"
                 alt="logo"
               />
             </a>
+            {/* Đặt header-bar cùng dòng với logo */}
+            <div
+              className={`header-bar d-xl-none ${menuOpen ? "active" : ""}`}
+              onClick={() => setMenuOpen(!menuOpen)}
+            >
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
           </div>
 
-          {/* Toggle menu button for mobile */}
-          <div
-            className={`header-bar d-xl-none ${menuOpen ? "active" : ""}`}
-            onClick={() => setMenuOpen(!menuOpen)}
-          >
-            <span></span>
-            <span></span>
-            <span></span>
-          </div>
+          {showMarch8 && (
+            <div className="march8-section">
+              <h1 className="march8-greeting">Chúc mừng ngày 8/3</h1>
+            </div>
+          )}
 
-          {/* Main Menu */}
           <ul className={`main-menu ${menuOpen ? "open" : ""}`}>
             <li>
               <Link to="/" onClick={() => setMenuOpen(false)}>
@@ -100,7 +129,10 @@ export default function Header() {
                   onClick={() => setDropdownOpen(!dropdownOpen)}
                 >
                   <img
-                    src={user.avatar || "https://static.vecteezy.com/system/resources/thumbnails/009/734/564/small_2x/default-avatar-profile-icon-of-social-media-user-vector.jpg"} // If the user has an avatar, use it, otherwise use a default one
+                    src={
+                      user.avatar ||
+                      "https://static.vecteezy.com/system/resources/thumbnails/009/734/564/small_2x/default-avatar-profile-icon-of-social-media-user-vector.jpg"
+                    }
                     alt="User Avatar"
                     className="avatar-img"
                   />
