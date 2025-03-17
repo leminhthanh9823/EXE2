@@ -87,6 +87,82 @@ ul {
     color: var(--primary-color);
 }
 
+/* Phần 8/3: Dòng chữ */
+.march8-section {
+    position: relative;
+    display: flex;
+    align-items: center;
+    flex-grow: 1;
+    justify-content: center;
+}
+
+.march8-greeting {
+    font-size: 1.5rem;
+    color: #ff69b4;
+    white-space: nowrap;
+    animation: fadeIn 2s ease-in-out infinite alternate;
+    z-index: 2;
+}
+
+/* Hiệu ứng hoa rơi rải khắp header */
+.flower-fall {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 98px; /* Giới hạn chiều cao trong header */
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.flower {
+    position: absolute;
+    width: 30px; /* Tăng kích thước hoa */
+    height: 30px;
+    background: url("https://images.rawpixel.com/image_png_800/cHJpdmF0ZS9sci9pbWFnZXMvd2Vic2l0ZS8yMDI0LTA4L3Jhd3BpeGVsX29mZmljZV8yMl9waG90b2dyYXBoX29mX2dlcmJlcmFfZmxvd2VyX3RvcF92aWV3X2lzb2xhdF81MDkwNmJiZC04OTFkLTQ5NzctODJjOC0wOTU2OTljNDg1MjgucG5n.png") no-repeat center;
+    background-size: contain;
+    opacity: 0.7;
+    animation: fall linear infinite;
+}
+
+@keyframes fall {
+    0% {
+        transform: translateY(-50px) rotate(0deg);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(150px) rotate(360deg); /* Giới hạn rơi trong header */
+        opacity: 0;
+    }
+}
+
+/* Phân bố cánh hoa khắp header */
+.flower:nth-child(1) { left: 5%; animation-duration: 4s; }
+.flower:nth-child(2) { left: 15%; animation-duration: 5s; animation-delay: 0.5s; }
+.flower:nth-child(3) { left: 25%; animation-duration: 6s; animation-delay: 1s; }
+.flower:nth-child(4) { left: 35%; animation-duration: 4.5s; animation-delay: 1.5s; }
+.flower:nth-child(5) { left: 45%; animation-duration: 5s; }
+.flower:nth-child(6) { left: 55%; animation-duration: 6s; animation-delay: 2s; }
+.flower:nth-child(7) { left: 65%; animation-duration: 4s; animation-delay: 0.8s; }
+.flower:nth-child(8) { left: 75%; animation-duration: 5.5s; animation-delay: 1.2s; }
+.flower:nth-child(9) { left: 85%; animation-duration: 6s; }
+.flower:nth-child(10) { left: 95%; animation-duration: 4.5s; animation-delay: 2.5s; }
+.flower:nth-child(11) { left: 10%; animation-duration: 5s; animation-delay: 3s; }
+.flower:nth-child(12) { left: 20%; animation-duration: 6s; animation-delay: 1.8s; }
+.flower:nth-child(13) { left: 30%; animation-duration: 4s; animation-delay: 2.2s; }
+.flower:nth-child(14) { left: 40%; animation-duration: 5.5s; animation-delay: 0.3s; }
+.flower:nth-child(15) { left: 50%; animation-duration: 6s; animation-delay: 1.5s; }
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0.5;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
 /* Ẩn menu trên điện thoại */
 @media (max-width: 768px) {
     .header-wrapper {
@@ -101,6 +177,14 @@ ul {
         align-items: center;
     }
 
+    .march8-section {
+        display: none; /* Ẩn dòng chữ trên mobile */
+    }
+
+    .flower-fall {
+        height: 98px; /* Giữ nguyên chiều cao header trên mobile */
+    }
+
     .header-wrapper .main-menu {
         display: none;
         flex-direction: column;
@@ -111,8 +195,6 @@ ul {
         background-color: #fff;
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         z-index: 1000;
-
-        /* Mặc định ẩn menu */
         transform: translateY(-100%);
         opacity: 0;
         visibility: hidden;

@@ -78,6 +78,7 @@ const Realtimechat = () => {
         {filteredMessages.map((msg, index) => (
           <div
             key={index}
+            style={{ whiteSpace: "pre-line", textAlign: "left" }}
             className={`my-2 ${
               msg.userName === userName ? "text-right" : "text-left"
             }`}

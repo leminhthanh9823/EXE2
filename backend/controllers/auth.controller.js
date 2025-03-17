@@ -202,7 +202,6 @@ const checkAuth = async (req, res) => {
         .status(400)
         .json({ success: false, message: "User not found" });
     }
-
     res.status(200).json({ success: true, user });
   } catch (error) {
     console.log("Error in checkAuth ", error);
@@ -226,20 +225,42 @@ const getUser = async (req, res) => {
 
 const updateUser = async (req, res) => {
   try {
-    const user = await User.findById(req.body.userId);
+    const {
+      name,
+      sex,
+      height,
+      weight,
+      age,
+      health_base,
+      health_goals,
+      exercises,
+      current_job,
+      goal_weight,
+    } = req.body; // Tìm user trước
+
+    let user = await User.findById(req.body.userId);
     if (!user) {
-      return res.status(404).json({ message: "Không Tìm Thấy Người Dùng" });
-    }
-    user.name = req.body.name || user.name;
-    user.email = req.body.email || user.email;
-    user.height = req.body.height || user.height;
-    user.weight = req.body.weight || user.weight;
-    user.age = req.body.age || user.age;
+      return res.status(404).json({ message: "Không tìm thấy người dùng" });
+    } // Kiểm tra và cập nhật các trường, nếu thiếu thì gán giá trị mặc định
+
+    user.name = name ?? user.name;
+    user.sex = sex ?? user.sex;
+    user.height = height ?? user.height ?? 0;
+    user.weight = weight ?? user.weight ?? 0;
+    user.age = age ?? user.age ?? 0;
+    user.health_base = health_base ??
+      user.health_base ?? { food_allergies: [], underlying_conditions: [] };
+    user.health_goals = health_goals ?? user.health_goals ?? "";
+    user.exercises = exercises ??
+      user.exercises ?? [{ exercise_time: 0, exercise_type: "nhẹ" }];
+    user.current_job = current_job ?? user.current_job ?? "";
+    user.goal_weight = goal_weight ?? user.goal_weight ?? 0; // Lưu lại user đã cập nhật
+
     await user.save();
-    res.status(200).json({ message: "Cập Nhật Thông Tin Thành Công" });
+
+    res.status(200).json({ message: "Cập nhật thành công", user });
   } catch (error) {
-    console.log("Error in updateUser ", error);
-    res.status(500).json({ message: "Lỗi Server" });
+    res.status(500).json({ message: "Lỗi khi cập nhật người dùng", error });
   }
 };
 
