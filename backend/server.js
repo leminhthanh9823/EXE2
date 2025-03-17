@@ -27,6 +27,8 @@ const io = new Server(server, {
   },
 });
 
+app.set("io", io);
+
 // Middleware
 const corsOptions = {
   origin: process.env.CLIENT_URL, // Your frontend URL

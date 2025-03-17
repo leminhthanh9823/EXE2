@@ -2,16 +2,15 @@ import React, { useState, useEffect } from "react";
 import io from "socket.io-client";
 import axios from "axios";
 import "tailwindcss/tailwind.css";
-import Header from "../components/header/header";
 
-const socket = io("http://localhost:5000"); // Ensure this matches your server URL
+const socket = io("http://localhost:5000"); // Cấu hình đúng server
 
 const AdminChat = () => {
   const [message, setMessage] = useState("");
   const [chats, setChats] = useState([]);
-  const [userName, setUserName] = useState("Admin"); // Admin's name
-  const [selectedUser, setSelectedUser] = useState(null); // Selected user for chat
-  const [users, setUsers] = useState([]); // List of users
+  const [userName, setUserName] = useState("Admin");
+  const [selectedUser, setSelectedUser] = useState(null);
+  const [users, setUsers] = useState([]);
 
   useEffect(() => {
     const fetchChats = async () => {
@@ -32,7 +31,6 @@ const AdminChat = () => {
     fetchChats();
 
     socket.on("message", (data) => {
-      console.log("Received message:", data);
       setChats((prevChats) => [...prevChats, data]);
     });
 
@@ -43,15 +41,28 @@ const AdminChat = () => {
 
   const sendMessage = async (e) => {
     e.preventDefault();
-    if (message.trim() && userName.trim() && selectedUser) {
+    if (message.trim() && selectedUser) {
       const data = { userName, message, to: selectedUser };
-      console.log("Sending message:", data);
       try {
         await axios.post("http://localhost:5000/api/chat/messages", data);
         setMessage("");
       } catch (error) {
         console.error("Error sending message:", error);
       }
+    }
+  };
+
+  // Gửi thông tin khách hàng
+  const sendCustomerInfo = async () => {
+    console.log("Gửi thông tin khách hàng ", selectedUser);
+
+    if (!selectedUser) return;
+    try {
+      await axios.post("http://localhost:5000/api/chat/sendCustomerInfo", {
+        to: selectedUser,
+      });
+    } catch (error) {
+      console.error("Error sending customer info:", error);
     }
   };
 
@@ -84,7 +95,7 @@ const AdminChat = () => {
             </ul>
           </div>
           <div className="w-3/4 p-4 bg-white shadow rounded mb-4 ml-4">
-            <h2 className="text-lg font-bold mb-4">Chat with {selectedUser}</h2>
+            <h2 className="text-lg font-bold mb-4">Chat với {selectedUser}</h2>
             {filteredChats.map((chat, index) => (
               <div
                 key={index}
@@ -93,7 +104,7 @@ const AdminChat = () => {
                 }`}
               >
                 <div className="font-bold mb-1">{chat.userName}</div>
-                <div
+                <div style={{ whiteSpace: "pre-line" , textAlign: "left" }}
                   className={`inline-block p-4 rounded shadow ${
                     chat.userName === userName ? "bg-green-100" : "bg-white"
                   }`}
@@ -102,6 +113,15 @@ const AdminChat = () => {
                 </div>
               </div>
             ))}
+            {/* Nút gửi thông tin khách hàng */}
+            {selectedUser && (
+              <button
+                onClick={sendCustomerInfo}
+                className="bg-gray-500 text-white p-2 rounded mt-2"
+              >
+                Gửi thông tin khách hàng
+              </button>
+            )}
           </div>
         </div>
       </div>
