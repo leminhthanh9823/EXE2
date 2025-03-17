@@ -15,6 +15,7 @@ ul {
     height: 98px;
     position: relative;
     z-index: 999;
+    background-color: #fff;
 }
 
 .header-section {

@@ -14,36 +14,41 @@ export default function Carousel({ slides }) {
   };
 
   return (
-    <div className="overflow-hidden relative">
+    <div className="overflow-hidden relative w-3/4 mx-auto mt-10 rounded-lg shadow-lg bg-white">
       <div
-        className={`flex transition ease-out duration-40`}
+        className={`flex transition-transform ease-in-out duration-500`}
         style={{
           transform: `translateX(-${current * 100}%)`,
+          width: `${slides.length * 100}%`,
         }}
       >
         {slides.map((s, index) => {
-          return <img key={index} src={s} alt={`Slide ${index}`} />; // Adding key to each img
+          return (
+            <div key={index} className="w-full flex-shrink-0">
+              <img src={s} alt={`Slide ${index}`} className="w-full h-64 object-cover" />
+            </div>
+          );
         })}
       </div>
 
-      <div className="absolute top-0 h-full w-full justify-between items-center flex text-white px-10 text-3xl">
-        <button onClick={previousSlide}>
+      <div className="absolute top-0 h-full w-full justify-between items-center flex text-white px-4 text-2xl">
+        <button onClick={previousSlide} className="bg-black bg-opacity-50 p-2 rounded-full hover:bg-opacity-75">
           <i className="fas fa-arrow-left"></i>
         </button>
-        <button onClick={nextSlide}>
+        <button onClick={nextSlide} className="bg-black bg-opacity-50 p-2 rounded-full hover:bg-opacity-75">
           <i className="fas fa-arrow-right"></i>
         </button>
       </div>
 
-      <div className="absolute bottom-0 py-4 flex justify-center gap-3 w-full">
+      <div className="absolute bottom-0 py-2 flex justify-center gap-2 w-full">
         {slides.map((s, i) => {
           return (
             <div
               onClick={() => {
                 setCurrent(i);
               }}
-              key={"circle" + i} // The key is already added here
-              className={`rounded-full w-5 h-5 cursor-pointer  ${
+              key={"circle" + i}
+              className={`rounded-full w-3 h-3 cursor-pointer  ${
                 i == current ? "bg-white" : "bg-gray-500"
               }`}
             ></div>
