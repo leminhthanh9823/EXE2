@@ -17,6 +17,7 @@ const MenuSchema = new mongoose.Schema({
   price: { type: Number, required: true },
   createdAt: { type: Date, default: Date.now },
   isDefault: { type: Boolean, default: true },
+  image: { type: String, required: false },
 });
 
 const Menu = mongoose.model("Menu", MenuSchema);

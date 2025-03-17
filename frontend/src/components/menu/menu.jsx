@@ -9,6 +9,7 @@ import {
   Typography,
 } from "@mui/material";
 import axios from "axios";
+import { Image, Container, Row, Col } from "react-bootstrap"; // Add these imports
 
 const MenuPage = () => {
   const [menus, setMenus] = useState([]);
@@ -40,6 +41,11 @@ const MenuPage = () => {
 
     fetchMyMenus();
   }, []);
+
+  const handleNavigateToDetails = (menu) => {
+    window.scrollTo(0, 0); // Scroll to top
+    navigate("/menu-details", { state: { menu } });
+  };
 
   if (loading)
     return (
@@ -73,10 +79,13 @@ const MenuPage = () => {
         margin: "0 auto",
         paddingTop: "env(safe-area-inset-top)",
         paddingBottom: "env(safe-area-inset-bottom)",
+        backgroundColor: "#f0fdf4",
+        borderRadius: "8px",
+        boxShadow: "0px 4px 8px rgba(0,0,0,0.1)",
       }}
     >
       <h1
-        style={{ fontSize: "22px", fontWeight: "bold", marginBottom: "12px" }}
+        style={{ fontSize: "24px", fontWeight: "bold", marginBottom: "16px", color: "#065f46" }}
       >
         Thực Đơn Của Tôi
       </h1>
@@ -85,44 +94,85 @@ const MenuPage = () => {
         <>
           {/* Thực đơn của tôi */}
           {myMenus.length > 0 ? (
-            myMenus.map((menu) => (
-              <Card
-                key={menu._id}
-                role="button"
-                style={{
-                  border: "1px solid #ddd",
-                  boxShadow: "0px 2px 4px rgba(0,0,0,0.1)",
-                  padding: "14px",
-                  cursor: "pointer",
-                  pointerEvents: "auto",
-                }}
-                onClick={() => navigate("/menu-details", { state: { menu } })}
-                onTouchStart={() =>
-                  navigate("/menu-details", { state: { menu } })
-                }
-              >
-                <CardContent>
-                  <h3 style={{ fontSize: "16px", fontWeight: "bold" }}>
-                    {menu.name}
-                  </h3>
-                  <p
+            <Grid container spacing={2}>
+              {myMenus.map((menu) => (
+                <Grid item xs={12} sm={6} key={menu._id}>
+                  <Card
+                    role="button"
                     style={{
-                      color: "#666",
-                      fontSize: "13px",
-                      marginBottom: "6px",
+                      border: "1px solid #ddd",
+                      boxShadow: "0px 2px 4px rgba(0,0,0,0.1)",
+                      padding: "14px",
+                      cursor: "pointer",
+                      pointerEvents: "auto",
+                      marginBottom: "12px",
+                      borderRadius: "8px",
+                      transition: "transform 0.2s",
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "center",
+                      width: "100%",
                     }}
+                    onClick={() => handleNavigateToDetails(menu)}
+                    onTouchStart={() => handleNavigateToDetails(menu)}
+                    onMouseEnter={(e) => (e.currentTarget.style.transform = "scale(1.02)")}
+                    onMouseLeave={(e) => (e.currentTarget.style.transform = "scale(1)")}
                   >
-                    {menu.details}
-                  </p>
-                  <Button variant="outlined" size="small">
-                    Xem Chi Tiết
-                  </Button>
-                </CardContent>
-              </Card>
-            ))
+                    <CardContent>
+                      <Container>
+                        <Row className="justify-content-center">
+                          <Col xs="auto">
+                            <Image
+                              src={menu.image || "https://i.postimg.cc/bw1PMHzL/NAM.png"}
+                              alt={menu.name}
+                              rounded
+                              style={{ width: "100%", height: "auto", marginBottom: "12px", objectFit: "cover" }}
+                            />
+                          </Col>
+                        </Row>
+                        <Row className="justify-content-center">
+                          <Col xs="auto">
+                            <h3 style={{ fontSize: "18px", fontWeight: "bold", color: "#065f46", textAlign: "center" }}>
+                              {menu.name}
+                            </h3>
+                          </Col>
+                        </Row>
+                        <Row className="justify-content-center">
+                          <Col xs="auto">
+                            <p
+                              style={{
+                                color: "#065f46",
+                                fontSize: "14px",
+                                marginBottom: "8px",
+                                textAlign: "center",
+                              }}
+                            >
+                              {menu.details}
+                            </p>
+                          </Col>
+                        </Row>
+                        <Row className="justify-content-center">
+                          <Col xs="auto" className="text-center">
+                            <Button
+                              variant="outlined"
+                              size="small"
+                              style={{ borderColor: "#065f46", color: "#065f46" }}
+                              onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "#065f46", e.currentTarget.style.color = "#fff")}
+                              onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "transparent", e.currentTarget.style.color = "#065f46")}
+                            >
+                              Xem Chi Tiết
+                            </Button>
+                          </Col>
+                        </Row>
+                      </Container>
+                    </CardContent>
+                  </Card>
+                </Grid>
+              ))}
+            </Grid>
           ) : (
             <Typography
-              style={{ textAlign: "center", color: "#888", marginTop: "12px" }}
+              style={{ textAlign: "center", color: "#065f46", marginTop: "12px" }}
             >
               Bạn chưa có thực đơn nào.
             </Typography>
@@ -131,9 +181,10 @@ const MenuPage = () => {
           {/* Danh sách gợi ý (các menu còn lại) */}
           <h2
             style={{
-              fontSize: "18px",
+              fontSize: "20px",
               fontWeight: "bold",
-              marginBottom: "10px",
+              marginBottom: "12px",
+              color: "#065f46",
             }}
           >
             Gợi Ý Thực Đơn Khác
@@ -149,28 +200,65 @@ const MenuPage = () => {
                     padding: "14px",
                     cursor: "pointer",
                     pointerEvents: "auto",
+                    borderRadius: "8px",
+                    transition: "transform 0.2s",
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    width: "100%",
                   }}
-                  onClick={() => navigate("/menu-details", { state: { menu } })}
-                  onTouchStart={() =>
-                    navigate("/menu-details", { state: { menu } })
-                  }
+                  onClick={() => handleNavigateToDetails(menu)}
+                  onTouchStart={() => handleNavigateToDetails(menu)}
+                  onMouseEnter={(e) => (e.currentTarget.style.transform = "scale(1.02)")}
+                  onMouseLeave={(e) => (e.currentTarget.style.transform = "scale(1)")}
                 >
                   <CardContent>
-                    <h3 style={{ fontSize: "14px", fontWeight: "bold" }}>
-                      {menu.name}
-                    </h3>
-                    <p
-                      style={{
-                        color: "#666",
-                        fontSize: "13px",
-                        marginBottom: "6px",
-                      }}
-                    >
-                      {menu.details}
-                    </p>
-                    <Button variant="outlined" size="small">
-                      Xem Chi Tiết
-                    </Button>
+                    <Container>
+                      <Row className="justify-content-center">
+                        <Col xs="auto">
+                          <Image
+                            src={menu.image || "https://i.postimg.cc/bw1PMHzL/NAM.png"}
+                            alt={menu.name}
+                            rounded
+                            style={{ width: "100%", height: "auto", marginBottom: "12px", objectFit: "cover" }}
+                          />
+                        </Col>
+                      </Row>
+                      <Row className="justify-content-center">
+                        <Col xs="auto">
+                          <h3 style={{ fontSize: "16px", fontWeight: "bold", color: "#065f46", textAlign: "center" }}>
+                            {menu.name}
+                          </h3>
+                        </Col>
+                      </Row>
+                      <Row className="justify-content-center">
+                        <Col xs="auto">
+                          <p
+                            style={{
+                              color: "#065f46",
+                              fontSize: "14px",
+                              marginBottom: "8px",
+                              textAlign: "center",
+                            }}
+                          >
+                            {menu.details}
+                          </p>
+                        </Col>
+                      </Row>
+                      <Row className="justify-content-center">
+                        <Col xs="auto" className="text-center">
+                          <Button
+                            variant="outlined"
+                            size="small"
+                            style={{ borderColor: "#065f46", color: "#065f46" }}
+                            onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "#065f46", e.currentTarget.style.color = "#fff")}
+                            onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "transparent", e.currentTarget.style.color = "#065f46")}
+                          >
+                            Xem Chi Tiết
+                          </Button>
+                        </Col>
+                      </Row>
+                    </Container>
                   </CardContent>
                 </Card>
               </Grid>
@@ -179,7 +267,7 @@ const MenuPage = () => {
         </>
       ) : (
         <Typography
-          style={{ textAlign: "center", color: "#888", marginTop: "12px" }}
+          style={{ textAlign: "center", color: "#065f46", marginTop: "12px" }}
         >
           Không có thực đơn nào.
         </Typography>

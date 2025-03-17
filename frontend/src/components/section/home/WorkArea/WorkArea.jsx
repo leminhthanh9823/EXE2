@@ -1,5 +1,6 @@
 import React from "react";
 import "./workarea.css";
+import { Link } from "react-router-dom";
 
 export default function WorkArea() {
     const sectionDescription = [
@@ -34,13 +35,14 @@ export default function WorkArea() {
     ];
     return (
         <section
-            className="work pt-32 pb-32 bg-cover bg-center"
+            className="work pt-5 pb-32 bg-cover bg-center"
             style={{
                 backgroundImage: 'url("public/assets/images/banner1.jpg")',
             }}
         >
             <div className="container mx-auto">
-                <div className="pb-16 border-b mb-16">
+                {/* first section */}
+                <div className="pb-16 border-b">
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 items-center">
                         <div>
                             <div className="section-header m-0">
@@ -76,10 +78,7 @@ export default function WorkArea() {
                                 >
                                     Hàng đầu trong thiết kế thực đơn eatclean
                                 </h2>
-                            </div>
-                        </div>
-                        <div>
-                            <p
+                                <p
                                 className="wow fadeInUp text-lg"
                                 data-wow-duration="1.6s"
                                 data-wow-delay=".6s"
@@ -95,9 +94,24 @@ export default function WorkArea() {
                                 về dinh dưỡng, giúp khách hàng duy trì lối sống khỏe mạnh thông qua 
                                 chế độ ăn uống cân bằng và phù hợp với nhu cầu cá nhân.
                             </p>
+                            </div>
+                        </div>
+                        <div>
+                            <img src="https://file.hstatic.net/200000201805/article/a_9a1cb7cc4120473d99c61950a785ef43.jpg" alt="" />
                         </div>
                     </div>
+                    {/* Nút "Thử ngay" */}
+                    <div className="flex justify-start mb-8 mt-4">
+                    <Link to="/my-menu">
+                        <button className="px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700">
+                        <strong>Thử ngay</strong>
+                        </button>
+                    </Link>
+                    </div>
                 </div>
+
+
+                {/* second section */}
                 <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
                     {sectionDescription.map((item, index) => (
                         <div

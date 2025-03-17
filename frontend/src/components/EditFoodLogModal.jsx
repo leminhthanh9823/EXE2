@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { Modal, Button, Form } from "react-bootstrap";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 const EditFoodLogModal = ({ foodLogId, onClose, onUpdate }) => {
   const [formData, setFormData] = useState({
@@ -45,42 +47,55 @@ const EditFoodLogModal = ({ foodLogId, onClose, onUpdate }) => {
   };
 
   return (
-    <div className="modal">
-      <h2>Edit Food Log</h2>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          name="menuId"
-          value={formData.menuId}
-          onChange={handleChange}
-          required
-        />
-        <input
-          type="date"
-          name="date"
-          value={formData.date}
-          onChange={handleChange}
-          required
-        />
-        {formData.meals.map((meal, mealIndex) => (
-          <div key={mealIndex}>
-            <h4>Meal {mealIndex + 1}</h4>
-            {meal.foods.map((food, foodIndex) => (
-              <div key={foodIndex}>
-                <input
-                  type="file"
-                  onChange={(e) => handleFileChange(e, mealIndex, foodIndex)}
-                />
-              </div>
-            ))}
-          </div>
-        ))}
-        <button type="submit">Update</button>
-        <button type="button" onClick={onClose}>
-          Cancel
-        </button>
-      </form>
-    </div>
+    <Modal show onHide={onClose} centered>
+      <Modal.Header closeButton style={{ backgroundColor: "#d4edda" }}>
+        <Modal.Title>Edit Food Log</Modal.Title>
+      </Modal.Header>
+      <Modal.Body style={{ backgroundColor: "#d4edda" }}>
+        <Form onSubmit={handleSubmit}>
+          <Form.Group controlId="formMenuId">
+            <Form.Label>Menu ID</Form.Label>
+            <Form.Control
+              type="text"
+              name="menuId"
+              value={formData.menuId}
+              onChange={handleChange}
+              required
+            />
+          </Form.Group>
+          <Form.Group controlId="formDate">
+            <Form.Label>Date</Form.Label>
+            <Form.Control
+              type="date"
+              name="date"
+              value={formData.date}
+              onChange={handleChange}
+              required
+            />
+          </Form.Group>
+          {formData.meals.map((meal, mealIndex) => (
+            <div key={mealIndex}>
+              <h4>Meal {mealIndex + 1}</h4>
+              {meal.foods.map((food, foodIndex) => (
+                <Form.Group key={foodIndex} controlId={`formFile${mealIndex}${foodIndex}`}>
+                  <Form.Label>Food {foodIndex + 1}</Form.Label>
+                  <Form.Control
+                    type="file"
+                    onChange={(e) => handleFileChange(e, mealIndex, foodIndex)}
+                  />
+                </Form.Group>
+              ))}
+            </div>
+          ))}
+          <Button variant="success" type="submit">
+            Update
+          </Button>
+          <Button variant="secondary" onClick={onClose}>
+            Cancel
+          </Button>
+        </Form>
+      </Modal.Body>
+    </Modal>
   );
 };
 

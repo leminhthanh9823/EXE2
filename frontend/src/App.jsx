@@ -115,7 +115,7 @@ function App() {
   return (
     <div className="min-h-screen">
       {!isAuthenticated ? ( // Kiểm tra trạng thái đăng nhập
-        <div className="bg-gradient-to-br from-gray-900 via-green-900 to-emerald-900 flex items-center justify-center min-h-screen">
+        <div className="bg-gradient-to-br from-gray-900 via-green-900 to-emerald-900 min-h-screen">
           <Routes>
             <Route path="/signup" element={<SignUpPage />} />
             <Route path="/login" element={<LoginPage />} />
