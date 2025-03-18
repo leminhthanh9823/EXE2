@@ -260,7 +260,7 @@ const MenuDetails = () => {
                     <img
                       src={meal.image}
                       alt=""
-                      className="w-full h-40 object-cover my-2 rounded-md"
+                      className="w-full h-80 object-cover my-2 rounded-md"
                     />
                   )}
                   <p>
@@ -268,8 +268,24 @@ const MenuDetails = () => {
                   </p>
                   {meal?.recipe && (
                     <p>
-                      <strong>Công thức:</strong><br></br> {meal.recipe}
+                      <strong>Công thức:</strong><br></br> {meal.recipe.split('\n').map((line, index) => (
+                        <React.Fragment key={index}>
+                          {line}
+                          <br />
+                        </React.Fragment>
+                      ))}
                     </p>
+                  )}
+                  {meal?.video && (
+                    <iframe
+                    width="100%"
+                    height="1000px"
+                    src={meal.video}
+                    title="Hướng dẫn canh chua giò chay"
+                    frameBorder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  ></iframe>
                   )}
                 </div>
               ))}
