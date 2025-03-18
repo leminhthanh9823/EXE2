@@ -90,151 +90,154 @@ export default function Profile() {
 
   return (
     <div className="profile-container">
-      <h2>Profile</h2>
+      <h1><strong>Hồ sơ người dùng</strong></h1>
       <form onSubmit={handleSubmit} className="profile-form">
-        <label>Name:</label>
-        <input
-          type="text"
-          name="name"
-          value={formData.name}
-          onChange={handleChange}
-        />
+        <div className="form-column">
+          <label>Name:</label>
+          <input
+            type="text"
+            name="name"
+            value={formData.name}
+            onChange={handleChange}
+          />
 
-        <label>Email:</label>
-        <input type="email" name="email" value={formData.email} readOnly />
+          <label>Email:</label>
+          <input type="email" name="email" value={formData.email} readOnly />
 
-        <label>Sex:</label>
-        <select
-          name="sex"
-          style={{
-            border: "1px solid #ccc",
-            padding: "8px",
-            borderRadius: "4px",
-          }}
-          value={formData.sex}
-          onChange={handleChange}
-        >
-          <option value="nam">Nam</option>
-          <option value="nữ">Nữ</option>
-          <option value="khác">Khác</option>
-        </select>
+          <label>Sex:</label>
+          <select
+            name="sex"
+            style={{
+              border: "1px solid #ccc",
+              padding: "8px",
+              borderRadius: "4px",
+            }}
+            value={formData.sex}
+            onChange={handleChange}
+          >
+            <option value="nam">Nam</option>
+            <option value="nữ">Nữ</option>
+            <option value="khác">Khác</option>
+          </select>
 
-        <label>Health Goals:</label>
-        <select
-          name="health_goals"
-          style={{
-            border: "1px solid #ccc",
-            padding: "8px",
-            borderRadius: "4px",
-          }}
-          value={formData.health_goals}
-          onChange={handleChange}
-        >
-          <option value="">Select a goal</option>
-          <option value="giảm cân">Giảm cân</option>
-          <option value="tăng cân">Tăng cân</option>
-          <option value="tăng cơ">Tăng cơ</option>
-          <option value="duy trì sức khỏe">Duy trì sức khỏe</option>
-          <option value="cải thiện năng lượng">Cải thiện năng lượng</option>
-        </select>
+          <label>Health Goals:</label>
+          <select
+            name="health_goals"
+            style={{
+              border: "1px solid #ccc",
+              padding: "8px",
+              borderRadius: "4px",
+            }}
+            value={formData.health_goals}
+            onChange={handleChange}
+          >
+            <option value="">Select a goal</option>
+            <option value="giảm cân">Giảm cân</option>
+            <option value="tăng cân">Tăng cân</option>
+            <option value="tăng cơ">Tăng cơ</option>
+            <option value="duy trì sức khỏe">Duy trì sức khỏe</option>
+            <option value="cải thiện năng lượng">Cải thiện năng lượng</option>
+          </select>
 
-        <label>Height (cm):</label>
-        <input
-          type="number"
-          name="height"
-          min="50"
-          max="250"
-          value={formData.height}
-          onChange={handleChange}
-        />
+          <label>Height (cm):</label>
+          <input
+            type="number"
+            name="height"
+            min="50"
+            max="250"
+            value={formData.height}
+            onChange={handleChange}
+          />
 
-        <label>Weight (kg):</label>
-        <input
-          type="number"
-          name="weight"
-          min="10"
-          max="500"
-          value={formData.weight}
-          onChange={handleChange}
-        />
+          <label>Weight (kg):</label>
+          <input
+            type="number"
+            name="weight"
+            min="10"
+            max="500"
+            value={formData.weight}
+            onChange={handleChange}
+          />
+        </div>
+        <div className="form-column">
+          <label>Age:</label>
+          <input
+            type="number"
+            name="age"
+            min="1"
+            max="120"
+            value={formData.age}
+            onChange={handleChange}
+          />
 
-        <label>Age:</label>
-        <input
-          type="number"
-          name="age"
-          min="1"
-          max="120"
-          value={formData.age}
-          onChange={handleChange}
-        />
+          <label>Goal Weight (kg):</label>
+          <input
+            type="number"
+            name="goal_weight"
+            min="10"
+            max="500"
+            value={formData.goal_weight}
+            onChange={handleChange}
+          />
 
-        <label>Goal Weight (kg):</label>
-        <input
-          type="number"
-          name="goal_weight"
-          min="10"
-          max="500"
-          value={formData.goal_weight}
-          onChange={handleChange}
-        />
+          <label>Current Job:</label>
+          <input
+            type="text"
+            name="current_job"
+            value={formData.current_job}
+            onChange={handleChange}
+          />
 
-        <label>Current Job:</label>
-        <input
-          type="text"
-          name="current_job"
-          value={formData.current_job}
-          onChange={handleChange}
-        />
+          <h3 style={{ fontWeight: "bolder", fontSize: "20px" }}>
+            Hoạt động thể dục, thể thao:
+          </h3>
+          {formData.exercises.map((exercise, index) => (
+            <div key={index} className="exercise-entry">
+              <label>Tần Suất Tập Thể Dục (số ngày trong tuần):</label>
+              <input
+                type="number"
+                name="exercise_time"
+                min="0"
+                max="7"
+                value={exercise.exercise_time}
+                onChange={(e) => handleExerciseChange(index, e)}
+              />
 
-        <h3 style={{ fontWeight: "bolder", fontSize: "20px" }}>
-          Hoạt động thể dục, thể thao:
-        </h3>
-        {formData.exercises.map((exercise, index) => (
-          <div key={index} className="exercise-entry">
-            <label>Tần Suất Tập Thể Dục (số ngày trong tuần):</label>
-            <input
-              type="number"
-              name="exercise_time"
-              min="0"
-              max="7"
-              value={exercise.exercise_time}
-              onChange={(e) => handleExerciseChange(index, e)}
-            />
+              <label>Loại vận động:</label>
+              <select
+                name="exercise_type"
+                style={{
+                  width: "100%",
+                  padding: "8px",
+                  border: "1px solid #ccc",
+                  borderRadius: "4px",
+                }}
+                value={exercise.exercise_type}
+                onChange={(e) => handleExerciseChange(index, e)}
+              >
+                <option value="nhẹ">Nhẹ</option>
+                <option value="vừa">Vừa</option>
+                <option value="nặng">Nặng</option>
+              </select>
+            </div>
+          ))}
 
-            <label>Loại vận động:</label>
-            <select
-              name="exercise_type"
-              style={{
-                width: "100%",
-                padding: "8px",
-                border: "1px solid #ccc",
-                borderRadius: "4px",
-              }}
-              value={exercise.exercise_type}
-              onChange={(e) => handleExerciseChange(index, e)}
-            >
-              <option value="nhẹ">Nhẹ</option>
-              <option value="vừa">Vừa</option>
-              <option value="nặng">Nặng</option>
-            </select>
-          </div>
-        ))}
+          <label>Last Login:</label>
+          <input
+            type="text"
+            name="lastLoginDate"
+            value={formData.lastLoginDate}
+            readOnly
+            disabled
+          />
 
-        <label>Last Login:</label>
-        <input
-          type="text"
-          name="lastLoginDate"
-          value={formData.lastLoginDate}
-          readOnly
-          disabled
-        />
-
-        <button type="submit" className="update-btn">
-          Update
-        </button>
+          <button type="submit" className="update-btn">
+            Update
+          </button>
+        </div>
       </form>
 
-      <button onClick={handleLogout} className="logout-btn">
+      <button onClick={handleLogout} className="logout-btn" style={{width:'50%', marginTop:'20px'}}>
         Logout
       </button>
     </div>

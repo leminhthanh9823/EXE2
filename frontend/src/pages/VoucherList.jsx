@@ -90,43 +90,51 @@ const VoucherList = () => {
       </div>
 
       {/* Hiển thị danh sách voucher */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-1">
         {vouchers.length > 0 ? (
           vouchers.map((voucher) => (
             <div
               key={voucher._id}
-              className="bg-green-500 text-white p-6 rounded-lg shadow-lg"
+              className="text-white p-6 rounded-lg shadow-lg flex transform scale-90"
+              style={{ backgroundColor: "#22c1c3" }}
             >
-              <h3 className="text-lg font-bold">{voucher.code}</h3>
-              <p className="mt-2">{voucher.description}</p>
-              <p className="mt-2">
-                <strong>Điểm cần:</strong> {voucher.pointsRequired}
-              </p>
-              <p className="mt-2">
-                <strong>Hạn sử dụng:</strong>{" "}
-                {new Date(voucher.expirationDate).toLocaleDateString()}
-              </p>
-              <p className="mt-2">
-                <strong>Trạng thái:</strong>{" "}
-                {voucher.isActive ? "Còn hiệu lực" : "Hết hạn"}
-              </p>
-              <button
-                className={`mt-4 w-full px-4 py-2 rounded text-white font-semibold 
-              ${
-                !voucher.isActive || userPoints < voucher.pointsRequired
-                  ? "bg-gray-400 cursor-not-allowed"
-                  : "bg-blue-600 hover:bg-blue-700"
-              }
-            `}
-                onClick={() =>
-                  redeemVoucher(voucher.code, voucher.pointsRequired)
-                }
-                disabled={
-                  !voucher.isActive || userPoints < voucher.pointsRequired
-                }
-              >
-                Đổi Voucher
-              </button>
+              <img
+                src="https://i.postimg.cc/5tVmPW37/surprise.png"
+                alt="Voucher"
+                className="w-1/5 h-auto mr-4 object-contain"
+              />
+              <div className="border-l-2 border-white pl-4">
+                <h3 className="text-lg font-bold">{voucher.code}</h3>
+                <p className="mt-1">{voucher.description}</p>
+                <p className="mt-1">
+                  <strong>Điểm cần:</strong> {voucher.pointsRequired}
+                </p>
+                <p className="mt-1">
+                  <strong>Hạn sử dụng:</strong>{" "}
+                  {new Date(voucher.expirationDate).toLocaleDateString()}
+                </p>
+                <p className="mt-1">
+                  <strong>Trạng thái:</strong>{" "}
+                  {voucher.isActive ? "Còn hiệu lực" : "Hết hạn"}
+                </p>
+                <button
+                  className={`mt-4 w-full px-4 py-2 rounded text-white font-semibold 
+                  ${
+                    !voucher.isActive || userPoints < voucher.pointsRequired
+                      ? "bg-gray-400 cursor-not-allowed"
+                      : "bg-blue-500 hover:bg-blue-600"
+                  }
+                `}
+                  onClick={() =>
+                    redeemVoucher(voucher.code, voucher.pointsRequired)
+                  }
+                  disabled={
+                    !voucher.isActive || userPoints < voucher.pointsRequired
+                  }
+                >
+                  Đổi Voucher
+                </button>
+              </div>
             </div>
           ))
         ) : (

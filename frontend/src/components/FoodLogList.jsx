@@ -49,57 +49,74 @@ const FoodLogList = () => {
     }
   };
 
+  const groupLogsByDate = (logs) => {
+    return logs.reduce((acc, log) => {
+      const date = log.date;
+      if (!acc[date]) {
+        acc[date] = [];
+      }
+      acc[date].push(log);
+      return acc;
+    }, {});
+  };
+
+  const groupedLogs = groupLogsByDate(foodLogs);
+
   return (
     <div className="food-log-container">
       <h2>Nhật Ký Ăn Uống</h2>
-      <div className="timeline"></div>
-
       {loading ? (
         <p>Đang tải dữ liệu...</p>
       ) : (
-        foodLogs.map((log, index) => (
-          <div
-            key={log._id}
-            className={`log-entry ${index % 2 === 0 ? "left" : "right"}`}
-            onClick={() => handleOpenModal(log)}
-          >
-            <div className="log-content">
-              <h3>Ngày: {log.date}</h3>
-              <p>Menu ID: {log.menuId || "Không có"}</p>
-              <p>Thời gian nhập: {new Date(log.createdAt).toLocaleString()}</p>
-              {log.meals?.map((meal, mealIndex) => (
-                <div key={mealIndex}>
-                  <h3>
-                    <strong>{meal.name}</strong>
-                  </h3>
-                  <ul>
-                    {meal.foods?.map((food, foodIndex) => (
-                      <li key={foodIndex}>
-                        {food.name}
-                        <div className="food-images">
-                          {food.filePath && (
-                            <img
-                              src={`http://localhost:5000/uploads/${food.filePath}`}
-                              alt={food.name}
-                              width="100"
-                            />
-                          )}
-                        </div>
-                      </li>
-                    ))}
-                  </ul>
+        Object.keys(groupedLogs).map((date) => (
+          <div key={date} className="date-group">
+            <h2>Ngày: {date}</h2>
+            <div className="timeline"></div>
+            {groupedLogs[date].map((log, index) => (
+              <div
+                key={log._id}
+                className={`log-entry ${index % 2 === 0 ? "left" : "right"}`}
+                onClick={() => handleOpenModal(log)}
+              >
+                <div className="log-content">
+                  {/* <h3>Ngày: {log.date}</h3> */}
+                  {/* <p>Menu ID: {log.menuId || "Không có"}</p> */}
+                  <p>Thời gian nhập: {new Date(log.createdAt).toLocaleString()}</p>
+                  {log.meals?.map((meal, mealIndex) => (
+                    <div key={mealIndex}>
+                      <h3>
+                        <strong>{meal.name}</strong>
+                      </h3>
+                      <ul>
+                        {meal.foods?.map((food, foodIndex) => (
+                          <li key={foodIndex}>
+                            {food.name}
+                            <div className="food-images">
+                              {food.filePath && (
+                                <img
+                                  src={`http://localhost:5000/uploads/${food.filePath}`}
+                                  alt={food.name}
+                                  width="100"
+                                />
+                              )}
+                            </div>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  ))}
                 </div>
-              ))}
-            </div>
-            <button
-              className="delete-btn"
-              onClick={(e) => {
-                e.stopPropagation();
-                handleDeleteLog(log._id);
-              }}
-            >
-              ❌
-            </button>
+                <button
+                  className="delete-btn"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleDeleteLog(log._id);
+                  }}
+                >
+                  Xóa nhật ký
+                </button>
+              </div>
+            ))}
           </div>
         ))
       )}
