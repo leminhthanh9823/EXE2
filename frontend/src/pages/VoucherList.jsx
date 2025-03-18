@@ -69,6 +69,12 @@ const VoucherList = () => {
         alert("Đổi voucher thành công!");
         fetchUserPoints(); // Cập nhật lại điểm
         fetchVouchers(); // Cập nhật lại danh sách voucher
+
+        // Save voucher to user's vouchers
+        await axios.post("http://localhost:5000/api/vouchers/user-vouchers", {
+          userId,
+          voucherId: response.data.data._id,
+        });
       } else {
         alert(response.data.message || "Đổi voucher không thành công.");
       }

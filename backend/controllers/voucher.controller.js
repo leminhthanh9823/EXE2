@@ -1,5 +1,6 @@
 import Voucher from "../models/voucher.model.js";
 import UserPoint from "../models/userPoint.model.js";
+import UserVoucher from "../models/userVoucher.model.js";
 import mongoose from "mongoose";
 
 /**
@@ -76,6 +77,13 @@ export const redeemVoucher = async (req, res) => {
     // Trừ điểm & gửi voucher
     userPoint.points -= voucher.pointsRequired;
     await userPoint.save();
+
+    // Lưu voucher vào userVoucher
+    const userVoucher = new UserVoucher({
+      userId,
+      voucherId: voucher._id,
+    });
+    await userVoucher.save();
 
     res.status(200).json({
       success: true,

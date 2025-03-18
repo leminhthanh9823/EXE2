@@ -66,6 +66,8 @@ app.use("/api/admin", adminRoutes);
 app.use("/api/chat", chatRoutes);
 //zalopay
 app.use("/api/zalopay", zalopay);
+//voucher
+app.use("/api/vouchers", voucherRoutes);
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "/frontend/dist")));
