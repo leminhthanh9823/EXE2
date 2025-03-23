@@ -25,6 +25,7 @@ const SignUpPage = () => {
     }
   };
   return (
+    <div className="flex items-center justify-center h-screen">
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
@@ -89,6 +90,8 @@ const SignUpPage = () => {
         </p>
       </div>
     </motion.div>
+  
+    </div>
   );
 };
 export default SignUpPage;

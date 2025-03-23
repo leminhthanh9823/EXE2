@@ -58,7 +58,7 @@ export default function WorkArea() {
                                     }}
                                 >
                                     <img
-                                        src="assets/images/476495700_492431837268688_7240872719589669646_n.png"
+                                        src="https://i.postimg.cc/5tW5h4Nd/fitmenulogo.png"
                                         alt="Leaf Icon"
                                         className="mr-2"
                                         style={{ width: "30%", height: "30%" }}
