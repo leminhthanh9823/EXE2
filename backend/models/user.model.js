@@ -1,4 +1,21 @@
+import { randomUUID } from "crypto";
 import mongoose from "mongoose";
+
+const chatSchema = new mongoose.Schema({
+  id: {
+    type: String,
+    default: () => randomUUID(),
+    required: true,
+  },
+  role: {
+    type: String,
+    required: true,
+  },
+  content: {
+    type: String,
+    required: true,
+  },
+});
 
 const userSchema = new mongoose.Schema(
   {
@@ -43,6 +60,7 @@ const userSchema = new mongoose.Schema(
     verificationTokenExpireAt: { type: Date },
     resetPasswordToken: { type: String },
     resetPasswordTokenExpireAt: { type: Date },
+    chats: [chatSchema],
   },
   { timestamps: true }
 );

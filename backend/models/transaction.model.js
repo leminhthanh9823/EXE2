@@ -1,8 +1,8 @@
 import mongoose from "mongoose";
 
 const transactionSchema = new mongoose.Schema({
-  userId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true }, // Người thực hiện giao dịch
-  menuId: { type: mongoose.Schema.Types.ObjectId, ref: "Menu", required: true }, // Người thực hiện giao dịch
+  userId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true }, 
+  menuId: { type: mongoose.Schema.Types.ObjectId, ref: "Menu", required: true }, 
   amount: { type: Number, required: true },
   status: {
     type: String,

@@ -68,16 +68,19 @@ export const getAllMenus = async (req, res) => {
     if (userId && userId.trim() !== "") {
       query.userId = userId;
     }
+    console.log("userId", userId);
+    
 
     const menus = await Menu.find(query).populate(
       "days.meals.breakfast days.meals.lunch days.meals.dinner"
     );
 
+    console.log("📌 Dữ liệu từ DB:", menus);
+
     const adminUserIds = await getAdminUserIds();
     const normal_menus = await Menu.find({
       userId: { $in: adminUserIds },
     }).populate("days.meals.breakfast days.meals.lunch days.meals.dinner");
-    console.log("🚀 ~ file: menu.controller.js ~ line 94 ~ getAllMenus ~ normal_menus", normal_menus);
     
     // Chuẩn hóa dữ liệu trước khi gửi về React
     const formattedMenus = menus.map((menu) => ({
@@ -91,6 +94,7 @@ export const getAllMenus = async (req, res) => {
       createdAt: menu.createdAt,
     }));
 
+
     const formattedNormalMenus = normal_menus.map((menu) => ({
       _id: menu._id,
       userId: menu.userId,
@@ -101,6 +105,7 @@ export const getAllMenus = async (req, res) => {
       days: menu.days,
       createdAt: menu.createdAt,
     }));
+    
 
     res.json({ myMenus: formattedMenus, menus: formattedNormalMenus });
   } catch (error) {

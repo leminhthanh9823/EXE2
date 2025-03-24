@@ -8,20 +8,20 @@ import adminRoutes from "./routes/admin.route.js"; // Import the admin routes
 import chatRoutes from "./routes/chat.route.js"; // Import the chat routes
 import voucherRoutes from "./routes/voucher.routes.js";
 import mealRoutes from "./routes/meal.route.js";
-import zalopay from "./routes/zalopay.route.js";
+import chatbot from "./routes/chatbot.route.js";
 import cookieParser from "cookie-parser";
 import path from "path";
 import menuRoutes from "./routes/menu.route.js";
 import transactionRoutes from "./routes/transaction.route.js";
 import { Server } from "socket.io";
 import http from "http";
-import Chat from "./models/chat.model.js"; // Import the Chat model
+import Chat from "./models/chat.model.js"; 
 
 const app = express();
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: process.env.CLIENT_URL, // Your frontend URL
+    origin: process.env.CLIENT_URL, 
     methods: ["GET", "POST"],
     credentials: true,
   },
@@ -64,8 +64,8 @@ app.use("/vouchers", voucherRoutes);
 app.use("/api/admin", adminRoutes);
 // Use the chat routes
 app.use("/api/chat", chatRoutes);
-//zalopay
-app.use("/api/zalopay", zalopay);
+//chatbot
+app.use("/api/chatbot", chatbot);
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "/frontend/dist")));
@@ -95,9 +95,9 @@ io.on("connection", (socket) => {
     console.log("Received message:", data); // Add this line for debugging
     const chatMessage = new Chat({ userName, message, to });
     try {
-      await chatMessage.save(); // Save the message to the database
+      // await chatMessage.save(); // Save the message to the database
       console.log("Message saved:", chatMessage); // Add this line for debugging
-      io.emit("message", chatMessage);
+      // io.emit("message", chatMessage);
     } catch (error) {
       console.error("Error saving message:", error); // Add this line for debugging
     }

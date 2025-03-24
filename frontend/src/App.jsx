@@ -47,6 +47,7 @@ import Practice1 from "./components/practice/practice1";
 import Practice3 from "./components/practice/practice3";
 import Practice2 from "./components/practice/practice2";
 import Practice4 from "./components/practice/practice4";
+import AdminDashboard from "./pages/AdminDashboard";
 
 // protect routes that require authentication
 const ProtectedRoute = ({ children }) => {
@@ -145,6 +146,18 @@ function App() {
                 <Header />
                 <main className="flex-grow">
                   <Home />
+                </main>
+                <Footer />
+              </div>
+            }
+          />
+          <Route
+            path="/dashboard"
+            element={
+              <div className="min-h-screen flex flex-col">
+                <Header />
+                <main className="flex-grow">
+                  <AdminDashboard />
                 </main>
                 <Footer />
               </div>
