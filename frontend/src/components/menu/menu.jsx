@@ -123,7 +123,7 @@ const MenuPage = () => {
                         <Row className="justify-content-center">
                           <Col xs="auto">
                             <Image
-                              src={menu.image || "https://i.postimg.cc/bw1PMHzL/NAM.png"}
+                              src={menu.name === 'Thực đơn 10-day' ? "https://i.postimg.cc/v8hFpjYD/Yellow-Green-Modern-Drink-Instagram-Post.png" : 'https://i.postimg.cc/bw1PMHzL/NAM.png'}
                               alt={menu.name}
                               rounded
                               style={{ width: "100%", height: "auto", marginBottom: "12px", objectFit: "cover" }}
@@ -217,7 +217,7 @@ const MenuPage = () => {
                       <Row className="justify-content-center">
                         <Col xs="auto">
                           <Image
-                            src={menu.image || "https://i.postimg.cc/bw1PMHzL/NAM.png"}
+                            src={menu.name === 'Thực đơn 10-day' ? "https://i.postimg.cc/v8hFpjYD/Yellow-Green-Modern-Drink-Instagram-Post.png" : 'https://i.postimg.cc/bw1PMHzL/NAM.png'}
                             alt={menu.name}
                             rounded
                             style={{ width: "100%", height: "auto", marginBottom: "12px", objectFit: "cover" }}

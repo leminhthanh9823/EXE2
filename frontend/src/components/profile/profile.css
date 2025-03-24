@@ -1,5 +1,5 @@
 .profile-container {
-    max-width: 500px;
+    max-width: 1000px;
     margin: 20px auto;
     padding: 20px;
     background: #fff;
@@ -10,8 +10,18 @@
   
   .profile-form {
     display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  
+  .form-column {
+    flex: 1;
+    min-width: 200px;
+    display: flex;
     flex-direction: column;
     gap: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
   }
   
   label {
@@ -57,6 +67,10 @@
       padding: 15px;
     }
   
+    .profile-form {
+      flex-direction: column;
+    }
+  
     input {
       font-size: 14px;
     }
@@ -67,4 +81,3 @@
       padding: 8px;
     }
   }
-  

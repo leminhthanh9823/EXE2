@@ -12,6 +12,7 @@ const MenuDetails = () => {
   const [currentDayIndex, setCurrentDayIndex] = useState(0);
   const [headerColor, setHeaderColor] = useState("");
   const [selectedDay, setSelectedDay] = useState(null);
+  const [userVouchers, setUserVouchers] = useState([]);
 
   useEffect(() => {
     const colors = [
@@ -41,6 +42,20 @@ const MenuDetails = () => {
       document.body.style.overflow = "auto";
     }
   }, [selectedDay]);
+
+  useEffect(() => {
+    const fetchUserVouchers = async () => {
+      try {
+        console.log("Menu detail user._id", user._id);
+        const response = await axios.get(`http://localhost:5000/api/vouchers/user-vouchers/${user._id}`);
+        console.log("User vouchers:", response.data);
+        setUserVouchers(response.data);
+      } catch (error) {
+        console.error("Error fetching user vouchers:", error);
+      }
+    };
+    fetchUserVouchers();
+  }, [user._id]);
 
   if (!menu || !menu.days) {
     return (
@@ -91,6 +106,37 @@ const MenuDetails = () => {
     }
   };
 
+  const handlePurchaseWithVoucher = async (voucherCode) => {
+    try {
+      const priceString = String(menu.price);
+      let amount = parseInt(priceString.replace(/,/g, ""), 10) || 0;
+
+      if (voucherCode === "DISCOUNT10") {
+        amount = amount * 0.9; // Apply 10% discount
+      }
+
+      const response = await axios.post(
+        "http://localhost:5000/api/transactions/create",
+        {
+          userId: user._id,
+          menuId: menu._id,
+          amount,
+          code: uuidv4(),
+        }
+      );
+
+      if (response.data.success) {
+        navigate(`/qr/${response.data.transaction._id}`, {
+          state: { userId: user._id, menuId: menu._id },
+        });
+      } else {
+        console.error("Transaction creation failed:", response.data);
+      }
+    } catch (error) {
+      console.error("Error creating transaction:", error);
+    }
+  };
+
   const handleNavigateBack = () => {
     window.scrollTo(0, 0); // Scroll to top
     navigate("/my-menu");
@@ -121,6 +167,18 @@ const MenuDetails = () => {
           >
             Mua Ngay
           </button>
+          <div className="mt-4">
+            <h3 className="text-lg font-semibold">Sử dụng Voucher:</h3>
+            {userVouchers.map((voucher) => (
+              <button
+                key={voucher._id}
+                onClick={() => handlePurchaseWithVoucher(voucher.voucherId.code)}
+                className="bg-green-500 text-white px-4 py-2 rounded-lg shadow-md hover:bg-green-600 transition-all mt-2 text-center"
+              >
+                {voucher.voucherId.code}
+              </button>
+            ))}
+          </div>
         </>
       )}
 
@@ -202,7 +260,7 @@ const MenuDetails = () => {
                     <img
                       src={meal.image}
                       alt=""
-                      className="w-full h-40 object-cover my-2 rounded-md"
+                      className="w-full h-80 object-cover my-2 rounded-md"
                     />
                   )}
                   <p>
@@ -210,8 +268,24 @@ const MenuDetails = () => {
                   </p>
                   {meal?.recipe && (
                     <p>
-                      <strong>Công thức:</strong><br></br> {meal.recipe}
+                      <strong>Công thức:</strong><br></br> {meal.recipe.split('\n').map((line, index) => (
+                        <React.Fragment key={index}>
+                          {line}
+                          <br />
+                        </React.Fragment>
+                      ))}
                     </p>
+                  )}
+                  {meal?.video && (
+                    <iframe
+                    width="100%"
+                    height="1000px"
+                    src={meal.video}
+                    title="Hướng dẫn canh chua giò chay"
+                    frameBorder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  ></iframe>
                   )}
                 </div>
               ))}

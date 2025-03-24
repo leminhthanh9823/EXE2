@@ -125,7 +125,7 @@ const FoodLogModal = ({ isOpen, onClose, logData, onSuccess }) => {
 
   return (
     <div className="modal-overlay">
-      <div className="modal-content">
+      <div className="modal-content" style={{backgroundColor:'rgb(150, 227, 173)', width:'50%'}}>
         <h2>{logData ? "Chỉnh sửa Nhật Ký" : "Thêm Nhật Ký"}</h2>
         <form onSubmit={handleSubmit}>
           <input
@@ -145,6 +145,7 @@ const FoodLogModal = ({ isOpen, onClose, logData, onSuccess }) => {
                 <div key={foodIndex}>
                   <input
                     type="text"
+                    style={{padding:'10px', margin:'10px', width:'500px'}}
                     placeholder="Tên món ăn"
                     value={food.name}
                     onChange={(e) =>
@@ -153,6 +154,7 @@ const FoodLogModal = ({ isOpen, onClose, logData, onSuccess }) => {
                   />
                   <input
                     type="file"
+                    style={{padding:'10px', margin:'10px', width:'500px'}}
                     onChange={(e) => handleFileChange(mealIndex, foodIndex, e)}
                   />
                 </div>

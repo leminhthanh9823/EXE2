@@ -95,14 +95,14 @@ export default function Home() {
   return (
     <div className="flex flex-col min-h-screen">
       {/* Header, WorkArea */}
-      <div className="w-full m-auto">
+      <div className="w-full m-auto" >
       </div>
       <WorkArea />
 
       {/* Nội dung chính */}
       <div className="min-h-screen p-4 bg-gray-50">
         {/* Tiêu đề chung */}
-        <h1 className="text-center text-3xl md:text-4xl font-bold mb-8">
+        <h1 className="text-center text-3xl md:text-4xl font-bold mb-8" style={{marginTop: "100px"}}>
           KIẾN THỨC EAT CLEAN
         </h1>
 
