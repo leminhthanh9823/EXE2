@@ -93,7 +93,7 @@ export default function Profile() {
       <h1><strong>Hồ sơ người dùng</strong></h1>
       <form onSubmit={handleSubmit} className="profile-form">
         <div className="form-column">
-          <label>Name:</label>
+          <label>Họ và tên:</label>
           <input
             type="text"
             name="name"
@@ -104,7 +104,7 @@ export default function Profile() {
           <label>Email:</label>
           <input type="email" name="email" value={formData.email} readOnly />
 
-          <label>Sex:</label>
+          <label>Giới tính:</label>
           <select
             name="sex"
             style={{
@@ -120,7 +120,7 @@ export default function Profile() {
             <option value="khác">Khác</option>
           </select>
 
-          <label>Health Goals:</label>
+          <label>Mục tiêu sức khỏe:</label>
           <select
             name="health_goals"
             style={{
@@ -131,7 +131,7 @@ export default function Profile() {
             value={formData.health_goals}
             onChange={handleChange}
           >
-            <option value="">Select a goal</option>
+            <option value="">Chọn mục tiêu</option>
             <option value="giảm cân">Giảm cân</option>
             <option value="tăng cân">Tăng cân</option>
             <option value="tăng cơ">Tăng cơ</option>
@@ -139,7 +139,7 @@ export default function Profile() {
             <option value="cải thiện năng lượng">Cải thiện năng lượng</option>
           </select>
 
-          <label>Height (cm):</label>
+          <label>Chiều cao (cm):</label>
           <input
             type="number"
             name="height"
@@ -149,7 +149,7 @@ export default function Profile() {
             onChange={handleChange}
           />
 
-          <label>Weight (kg):</label>
+          <label>Cân nặng (kg):</label>
           <input
             type="number"
             name="weight"
@@ -160,7 +160,7 @@ export default function Profile() {
           />
         </div>
         <div className="form-column">
-          <label>Age:</label>
+          <label>Tuổi:</label>
           <input
             type="number"
             name="age"
@@ -170,7 +170,7 @@ export default function Profile() {
             onChange={handleChange}
           />
 
-          <label>Goal Weight (kg):</label>
+          <label>Cân nặng mục tiêu (kg):</label>
           <input
             type="number"
             name="goal_weight"
@@ -180,7 +180,7 @@ export default function Profile() {
             onChange={handleChange}
           />
 
-          <label>Current Job:</label>
+          <label>Công việc hiện tại:</label>
           <input
             type="text"
             name="current_job"
@@ -193,7 +193,7 @@ export default function Profile() {
           </h3>
           {formData.exercises.map((exercise, index) => (
             <div key={index} className="exercise-entry">
-              <label>Tần Suất Tập Thể Dục (số ngày trong tuần):</label>
+              <label>Tần suất tập thể dục (số ngày trong tuần):</label>
               <input
                 type="number"
                 name="exercise_time"
@@ -222,7 +222,7 @@ export default function Profile() {
             </div>
           ))}
 
-          <label>Last Login:</label>
+          <label>Lần đăng nhập cuối:</label>
           <input
             type="text"
             name="lastLoginDate"
@@ -232,13 +232,13 @@ export default function Profile() {
           />
 
           <button type="submit" className="update-btn">
-            Update
+            Cập nhật
           </button>
         </div>
       </form>
 
       <button onClick={handleLogout} className="logout-btn" style={{width:'50%', marginTop:'20px'}}>
-        Logout
+        Đăng xuất
       </button>
     </div>
   );
